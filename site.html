@@ -80,8 +80,11 @@ header.nav.scr .brand .nm b{font-size:16px}
 /* index list of services (big numbers) */
 .idxlist{border-top:1px solid var(--line)}
 .idxrow{display:grid;grid-template-columns:90px 1fr auto;gap:30px;align-items:center;
-  padding:34px 0;border-bottom:1px solid var(--line);transition:padding-left .35s,background .35s}
-.idxrow:hover{padding-left:18px;background:linear-gradient(90deg,rgba(217,138,52,.06),transparent)}
+  padding:34px 0;border-bottom:1px solid var(--line);position:relative}
+.idxrow::before{content:"";position:absolute;inset:0 -24px;background:linear-gradient(90deg,rgba(217,138,52,.09),transparent 72%);opacity:0;transition:opacity .4s ease;pointer-events:none}
+.idxrow:hover::before{opacity:1}
+.idxrow .no,.idxrow .ti{position:relative;transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+.idxrow:hover .no,.idxrow:hover .ti{transform:translateX(10px)}
 .idxrow .no{font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--ac)}
 .idxrow .ti h3{font-size:clamp(24px,3.6vw,42px);letter-spacing:-.02em}
 .idxrow .ti p{margin:10px 0 0;color:var(--mut);font-size:15.5px;max-width:60ch}
@@ -98,6 +101,14 @@ header.nav.scr .brand .nm b{font-size:16px}
 .band.light .grid{background-image:linear-gradient(rgba(34,50,64,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(34,50,64,.06) 1px,transparent 1px)}
 .band .cap{position:absolute;left:40px;bottom:24px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;color:rgba(255,255,255,.6)}
 .band.light .cap{color:var(--mut)}
+/* full-width video demos */
+.viddemo{position:relative;background:#0c0f13;overflow:hidden;line-height:0}
+.viddemo video{display:block;width:100%;height:auto}
+.viddemo .vcap{position:absolute;left:34px;bottom:24px;line-height:1.4;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.8);background:rgba(12,15,19,.55);backdrop-filter:blur(4px);padding:7px 13px;border-radius:7px}
+.viddemo .vcap b{color:var(--ac);font-weight:400}
+.demogrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.demogrid .viddemo{border-radius:12px;border:1px solid var(--line)}
+@media(max-width:900px){.demogrid{grid-template-columns:1fr}}
 
 /* pull quote */
 .quote{padding:140px 0}
@@ -231,19 +242,10 @@ footer{padding:70px 0 46px}
   </div>
 </section>
 
-<!-- BAND -->
-<section class="band rv">
-  <div class="grid"></div>
-  <svg width="320" height="120" viewBox="0 0 360 120" fill="none">
-    <rect x="10" y="86" width="40" height="24" fill="#46586a"/>
-    <rect x="58" y="64" width="40" height="46" fill="#5d7286"/>
-    <rect x="106" y="40" width="40" height="70" fill="#d98a34"/>
-    <rect x="154" y="56" width="40" height="54" fill="#46586a"/>
-    <rect x="202" y="24" width="40" height="86" fill="#7d93a6"/>
-    <rect x="250" y="48" width="40" height="62" fill="#46586a"/>
-    <rect x="298" y="14" width="40" height="96" fill="#d98a34"/>
-  </svg>
-  <span class="cap">// Финмодель · выручка и чистая прибыль по месяцам</span>
+<!-- DEMO: Финмодель (full-width) -->
+<section class="viddemo rv">
+  <video src="finmodel_long.mp4" poster="finmodel_long_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+  <span class="vcap">// <b>Финмодель</b> · выручка, ВП и прогноз 2025–2027 (обезличено)</span>
 </section>
 
 <!-- INDEX OF PRODUCTS -->
@@ -289,20 +291,10 @@ footer{padding:70px 0 46px}
   </div>
 </section>
 
-<!-- BAND LIGHT -->
-<section class="band light rv">
-  <div class="grid"></div>
-  <svg width="360" height="150" viewBox="0 0 360 150" fill="none">
-    <rect x="20" y="20" width="150" height="46" rx="4" fill="#223240" opacity=".9"/>
-    <rect x="30" y="34" width="80" height="8" rx="4" fill="#d98a34"/>
-    <rect x="30" y="48" width="120" height="6" rx="3" fill="#7d8893"/>
-    <rect x="20" y="78" width="150" height="46" rx="4" fill="#cdc6b8"/>
-    <rect x="30" y="92" width="60" height="8" rx="4" fill="#223240"/>
-    <rect x="30" y="106" width="110" height="6" rx="3" fill="#9aa2a8"/>
-    <rect x="190" y="20" width="150" height="104" rx="4" fill="#223240"/>
-    <polyline points="200,108 230,90 256,98 286,60 326,44" stroke="#d98a34" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  <span class="cap">// Планировщик · загрузка бригады и заказ-наряды</span>
+<!-- DEMO: Планировщик (full-width) -->
+<section class="viddemo rv">
+  <video src="planner_long.mp4" poster="planner_long_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+  <span class="vcap">// <b>Планировщик</b> · сетка загрузки бригады и заказ-наряды</span>
 </section>
 
 <!-- PROCESS -->
@@ -319,17 +311,19 @@ footer{padding:70px 0 46px}
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- DEMO: Дашборд + Мотивация -->
 <section class="section" style="padding-top:0">
   <div class="wrap">
-    <div class="kicker rv"><span class="lbl">05 — Фрагменты</span><span class="ln"></span></div>
-    <div class="gal rv">
-      <div class="g"><span class="gc">// сетка планировщика</span></div>
-      <div class="g"><span class="gc">// финрезультат</span></div>
-      <div class="g"><span class="gc">// дашборд KPI</span></div>
-      <div class="g"><span class="gc">// карточка мотивации</span></div>
-      <div class="g"><span class="gc">// импорт из 1С</span></div>
-      <div class="g" style="background:linear-gradient(140deg,#d98a34,#b8701f)"><span class="gc" style="color:#fff">// цифровизация под ключ</span></div>
+    <div class="kicker rv"><span class="lbl">05 — Демо в деле</span><span class="ln"></span></div>
+    <div class="demogrid rv">
+      <div class="viddemo">
+        <video src="dashboard_long.mp4" poster="dashboard_long_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        <span class="vcap">// <b>Дашборд</b> · KPI, графики, помесячная динамика</span>
+      </div>
+      <div class="viddemo">
+        <video src="motivation_long.mp4" poster="motivation_long_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        <span class="vcap">// <b>Мотивация и ФОТ</b> · штат и бонусы по должностям</span>
+      </div>
     </div>
   </div>
 </section>
