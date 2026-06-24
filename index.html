@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ВебВерфь — //--- studio</title>
+<meta name="description" content="ВебВерфь — студия цифровых инструментов для грузового сервиса, оформленная как редактор кода: планировщик, финмодель, дашборд, мотивация.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1b1d22; --chrome:#26282e; --tabAct:#101216; --side:#202329;
+  --tx:#cfd2d8; --ln:#5a6068; --dim:#3a3f47; --punc:#8a9099;
+  --cmt:#5f7e57; --str:#d9a06a; --kw:#7aa2d8; --tag:#7aa2d8; --attr:#9ec7e6; --fn:#d6c98a;
+  --ac:#d98a34; --ac2:#eaa44f; --ghost:rgba(255,255,255,.045);
+  --bd:rgba(255,255,255,.07); --hl:rgba(217,138,52,.10);
+}
+html[data-theme="light"]{
+  --bg:#f3f1ea; --chrome:#e7e3d9; --tabAct:#fbfaf6; --side:#eceae2;
+  --tx:#2a3640; --ln:#a7a094; --dim:#cfc8ba; --punc:#7a8088;
+  --cmt:#5f7e57; --str:#b06f28; --kw:#3d6fb0; --tag:#3d6fb0; --attr:#4a82a8; --fn:#9a8636;
+  --ghost:rgba(34,50,64,.05); --bd:rgba(34,50,64,.1); --hl:rgba(217,138,52,.13);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--tx);
+  font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;overflow:hidden}
+.disp{font-family:Manrope,sans-serif}
+a{color:inherit;text-decoration:none}
+.cmt{color:var(--cmt)}.str{color:var(--str)}.kw{color:var(--kw)}.tag{color:var(--tag)}
+.attr{color:var(--attr)}.fn{color:var(--fn)}.punc{color:var(--punc)}
+
+/* top chrome */
+.top{height:38px;background:var(--chrome);display:flex;align-items:center;
+  border-bottom:1px solid var(--bd);position:relative;z-index:5}
+.dots{display:flex;gap:8px;padding:0 16px}
+.dots i{width:12px;height:12px;border-radius:50%;display:block}
+.dots i:nth-child(1){background:#e0625a}.dots i:nth-child(2){background:#e3b341}.dots i:nth-child(3){background:#4ec26b}
+.toptabs{display:flex;height:100%}
+.toptab{display:flex;align-items:center;gap:8px;padding:0 18px;height:100%;font-size:12px;color:var(--ln);
+  border-right:1px solid var(--bd);cursor:pointer;white-space:nowrap}
+.toptab.on{color:var(--tx);background:var(--bg)}
+.toptab .x{opacity:.4}
+.topright{margin-left:auto;display:flex;align-items:center;gap:4px;padding:0 14px}
+.iconbtn{width:30px;height:30px;display:flex;align-items:center;justify-content:center;color:var(--ln);
+  cursor:pointer;border-radius:6px}
+.iconbtn:hover{color:var(--tx);background:var(--ghost)}
+
+.shell{display:flex;height:calc(100vh - 38px);width:100%}
+
+/* left profile panel */
+.side{width:31%;min-width:300px;max-width:430px;background:var(--side);
+  border-right:1px solid var(--bd);display:flex;flex-direction:column}
+.sbtabs{display:flex;height:34px;border-bottom:1px solid var(--bd);flex:0 0 auto}
+.sbtab{padding:0 16px;height:100%;display:flex;align-items:center;font-size:11.5px;color:var(--ln);cursor:pointer;border-right:1px solid var(--bd)}
+.sbtab.on{color:var(--ac);box-shadow:inset 0 -2px 0 var(--ac)}
+.codewrap{flex:1;overflow:auto;padding:10px 0 40px}
+.cl{display:flex;min-height:21px;align-items:flex-start}
+.cl .g{flex:0 0 42px;text-align:right;padding-right:14px;color:var(--ln);opacity:.5;user-select:none;
+  font-size:12px;transition:color .12s,opacity .12s}
+.cl .c{flex:1;white-space:pre-wrap;word-break:break-word;font-size:12.5px;padding-right:14px}
+.cl:hover{background:var(--hl)}
+.cl:hover .g{color:var(--ac);opacity:1}
+.lnk{text-decoration:underline;text-decoration-color:rgba(217,138,52,.5);text-underline-offset:3px;cursor:pointer}
+.lnk:hover .str{color:var(--ac2)}
+
+/* main editor */
+.main{flex:1;position:relative;overflow:auto}
+.maintabs{display:flex;height:34px;background:var(--chrome);border-bottom:1px solid var(--bd);
+  position:sticky;top:0;z-index:4;overflow-x:auto}
+.mtab{display:flex;align-items:center;gap:9px;padding:0 16px;height:100%;font-size:12px;color:var(--ln);
+  border-right:1px solid var(--bd);cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.mtab .dot{width:8px;height:8px;border-radius:50%;background:var(--ac);opacity:.5}
+.mtab.on{color:var(--tx);background:var(--tabAct);box-shadow:inset 0 2px 0 var(--ac)}
+.mtab.on .dot{opacity:1}
+
+.canvas{position:relative;min-height:calc(100vh - 72px)}
+.texture{position:absolute;inset:0;display:flex;color:var(--ln);font-size:12px;z-index:0;overflow:hidden}
+.texture .g{flex:0 0 52px;text-align:right;padding:18px 12px 0 0}
+.texture .g span{display:block;height:21px;opacity:.45;transition:color .1s,opacity .1s}
+.texture .g span.hot{color:var(--ac);opacity:1}
+.texture .d{flex:1;padding:18px 0 0 4px;opacity:.14;white-space:pre;overflow:hidden}
+.texture .d span{display:block;height:21px}
+
+.overlay{position:relative;z-index:1;padding:26px 40px 80px 64px;pointer-events:none}
+.overlay>*{pointer-events:auto}
+.fcmt{color:var(--cmt);font-size:12.5px}
+.ghosttitle{font-family:Manrope;font-weight:800;font-size:clamp(44px,7.6vw,104px);letter-spacing:-.03em;
+  color:var(--tx);line-height:.95;margin:8px 0 0}
+.ghosttitle .sub{display:block;font-size:.32em;font-weight:600;color:var(--ln);letter-spacing:0;margin-top:14px}
+
+/* preview window */
+.preview{margin:38px 0 0;background:var(--tabAct);border:1px solid var(--bd);border-radius:8px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.35);max-width:1180px}
+.pvbar{height:42px;display:flex;align-items:center;gap:14px;padding:0 16px;background:var(--chrome);border-bottom:1px solid var(--bd)}
+.pvbar .pd{display:flex;gap:7px}.pvbar .pd i{width:11px;height:11px;border-radius:50%;display:block}
+.pvbar .pd i:nth-child(1){background:#e0625a}.pvbar .pd i:nth-child(2){background:#e3b341}.pvbar .pd i:nth-child(3){background:#4ec26b}
+.pvbar .url{flex:1;background:var(--bg);border:1px solid var(--bd);border-radius:6px;height:24px;display:flex;align-items:center;
+  padding:0 12px;font-size:11.5px;color:var(--ln)}
+.pvbar .url b{color:var(--ac);font-weight:400}
+.pvbar .badge{font-size:10.5px;color:var(--ln);border:1px solid var(--bd);border-radius:20px;padding:3px 10px;white-space:nowrap}
+.pvstage{position:relative;background:#0f1115;display:flex;align-items:center;justify-content:center}
+.pvstage video{width:100%;height:auto;display:block;background:#0f1115}
+.pvstage iframe{width:100%;height:560px;border:0;display:block;background:#fff}
+.pvstage .art{width:100%;height:420px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#243646,#141d26)}
+.cap{margin:16px 0 0;font-size:12px;color:var(--ln)}
+.cap b{color:var(--ac);font-weight:400}
+
+.metarow{display:grid;grid-template-columns:2fr 1fr;gap:50px;margin:52px 0 0;border-top:1px solid var(--bd);padding-top:26px}
+.metarow .desc{font-size:13px;color:var(--punc);max-width:62ch;line-height:1.8}
+.metarow .info b{display:block;color:var(--ac);font-weight:500;font-size:11px;letter-spacing:.05em;margin:0 0 4px;text-transform:uppercase}
+.metarow .info p{margin:0 0 18px;color:var(--tx);font-size:13px}
+.cta-inline{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.cta-inline a{font-size:12px;padding:9px 16px;border:1px solid var(--bd);border-radius:6px;color:var(--tx);transition:all .2s;cursor:pointer}
+.cta-inline a:hover{border-color:var(--ac);color:var(--ac)}
+.cta-inline a.solid{background:var(--ac);color:#191205;border-color:var(--ac);font-weight:500}
+
+.thumb{position:fixed;left:14px;bottom:38px;width:240px;background:var(--side);border:1px solid var(--bd);
+  border-radius:8px;overflow:hidden;z-index:8;box-shadow:0 18px 50px rgba(0,0,0,.4);display:none}
+.thumb .tb{height:22px;background:var(--chrome);display:flex;align-items:center;padding:0 10px;font-size:10.5px;color:var(--ln);border-bottom:1px solid var(--bd)}
+.thumb .ti{height:126px;background:linear-gradient(135deg,#e9e5db,#cfc9bb);position:relative}
+.thumb .ti .lab{position:absolute;left:12px;bottom:10px;font-family:Manrope;font-weight:800;font-size:22px;color:#223240;letter-spacing:-.02em}
+@media(min-width:1100px){.thumb{display:block}}
+
+.statusbar{position:fixed;left:0;right:0;bottom:0;height:24px;background:var(--ac);color:#1a1206;
+  display:flex;align-items:center;gap:18px;padding:0 14px;font-size:11px;z-index:9}
+.statusbar .right{margin-left:auto}
+
+@media(max-width:860px){
+  .side{display:none}
+  .overlay{padding:22px 18px 90px 22px}
+  .metarow{grid-template-columns:1fr;gap:26px}
+  .texture .d{display:none}.texture .g{flex-basis:38px}
+  .pvstage iframe{height:60vw}
+}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="dots"><i></i><i></i><i></i></div>
+  <div class="toptabs">
+    <div class="toptab on" data-tt="profile"><span>profile.html</span><span class="x">×</span></div>
+    <div class="toptab" data-tt="contact"><span>contact.config</span></div>
+  </div>
+  <div class="topright">
+    <div class="iconbtn" id="themeBtn" title="Тема">☼</div>
+    <div class="iconbtn" title="Раскладка">▦</div>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="side">
+    <div class="sbtabs">
+      <div class="sbtab on" data-sb="profile">PROFILE</div>
+      <div class="sbtab" data-sb="contact">CONTACT</div>
+    </div>
+    <div class="codewrap" id="codewrap"></div>
+  </aside>
+
+  <main class="main" id="main">
+    <div class="maintabs" id="maintabs"></div>
+    <div class="canvas" id="canvas">
+      <div class="texture"><div class="g" id="texGutter"></div><div class="d" id="texDash"></div></div>
+      <div class="overlay" id="overlay"></div>
+    </div>
+  </main>
+</div>
+
+<a class="thumb" id="thumb" href="site.html" target="_blank" rel="noopener">
+  <div class="tb">preview-сайт.html</div>
+  <div class="ti"><span class="lab">ВебВерфь</span></div>
+</a>
+
+<div class="statusbar">
+  <span>● готово</span><span>UTF-8</span><span>ВебВерфь — web studio</span>
+  <span class="right" id="stPos">Ln 1, Col 1</span>
+</div>
+
+<script>
+const DEMO="finmodel.html";
+const SITE="site.html";
+const BOT={max:'https://max.ru/se13308383_bot',tg:'https://t.me/vebverf_bot'};
+
+/* ---- left code (per-line, syntax-highlighted) ---- */
+const CODE={
+ profile:[
+  '<span class="cmt">&lt;!-- .scope-profile --&gt;</span>',
+  '<span class="punc">&lt;</span><span class="tag">section</span> <span class="attr">class</span>=<span class="str">"profile"</span><span class="punc">&gt;</span>',
+  '  <span class="punc">&lt;</span><span class="tag">h3</span><span class="punc">&gt;</span>ПРОФИЛЬ<span class="punc">&lt;/</span><span class="tag">h3</span><span class="punc">&gt;</span>',
+  '',
+  '  <span class="punc">&lt;</span><span class="tag">p</span><span class="punc">&gt;</span>ВебВерфь — студия',
+  '     цифровых инструментов для',
+  '     грузового сервиса. 26 лет',
+  '     в автобизнесе: SCANIA,',
+  '     КАМАЗ, Mercedes-Benz — от',
+  '     склада до управляющего СТО.',
+  '  <span class="punc">&lt;/</span><span class="tag">p</span><span class="punc">&gt;</span>',
+  '',
+  '  <span class="punc">&lt;</span><span class="tag">p</span><span class="punc">&gt;</span>Планировщик, финмодель',
+  '     и дашборд мы строили сами —',
+  '     для действующего сервиса.',
+  '     Поэтому попадаем в процесс',
+  '     с первого раза.',
+  '  <span class="punc">&lt;/</span><span class="tag">p</span><span class="punc">&gt;</span>',
+  '',
+  '  <span class="punc">&lt;</span><span class="tag">p</span><span class="punc">&gt;</span>Разбор бесплатно ·',
+  '     смета за 1 день ·',
+  '     предоплата 50%.<span class="punc">&lt;/</span><span class="tag">p</span><span class="punc">&gt;</span>',
+  '<span class="punc">&lt;/</span><span class="tag">section</span><span class="punc">&gt;</span>'
+ ],
+ contact:[
+  '<span class="cmt">// contact.config</span>',
+  '<span class="kw">export const</span> <span class="fn">contact</span> = {',
+  '  <span class="attr">max</span>:      <a class="lnk" href="https://max.ru/se13308383_bot" target="_blank" rel="noopener"><span class="str">"@se13308383_bot"</span></a>,',
+  '  <span class="attr">telegram</span>: <a class="lnk" href="https://t.me/vebverf_bot" target="_blank" rel="noopener"><span class="str">"@vebverf_bot"</span></a>,',
+  '  <span class="attr">email</span>:    <a class="lnk" href="mailto:587free@proton.me"><span class="str">"587free@proton.me"</span></a>,',
+  '  <span class="attr">phone</span>:    <span class="str">"—"</span>,',
+  '  <span class="attr">status</span>:   <span class="str">"самозанятый"</span>,',
+  '  <span class="attr">city</span>:     <span class="str">"Москва"</span>,',
+  '  <span class="attr">offer</span>:    <span class="fn">free</span>(<span class="str">"разбор"</span>),',
+  '};',
+  '',
+  '<span class="cmt">// пишите в бот —</span>',
+  '<span class="cmt">// ответим в течение дня</span>'
+ ]
+};
+function renderCode(which){
+  const w=document.getElementById('codewrap');
+  w.innerHTML=CODE[which].map((html,i)=>
+    `<div class="cl"><span class="g">${i+1}</span><span class="c">${html||' '}</span></div>`).join('');
+}
+
+/* ---- project files ---- */
+const FILES=[
+ {tab:"вебверфь.js", title:"ВебВерфь", sub:"Цифровая верфь грузового сервиса",
+  url:"vebverf.studio", type:"live", src:SITE, badge:"live · сайт",
+  cap:"живой предпросмотр сайта-студии",
+  desc:"Студия одного практика: 26 лет в грузовом автобизнесе. Пять инструментов — планировщик, финмодель, дашборд, мотивация, цифровизация под ключ. Данные клиента остаются у клиента.",
+  info:{Студия:"ВебВерфь · web studio", Формат:"самозанятый, НПД", Сайт:"готовится"}},
+
+ {tab:"планировщик.jsx", title:"Планировщик", sub:"Графическая загрузка ремонта",
+  url:"vebverf.studio/планировщик", type:"video", src:"planner_long.mp4", poster:"planner_long_poster.jpg",
+  badge:"55 сек · HD",
+  cap:"запись работы планировщика — сетка загрузки и сводный отчёт",
+  desc:"Каждый механик — строка, загрузка по дням — полосками заказ-нарядов. 7 статусов цветом, контроль перегрузки по часам, карточка ЗН с VIN, импорт истории из 1С.",
+  info:{Цена:"от 50 000 ₽", Кейс:"внедряли на действующем СТО", Стек:"web · 1С-импорт"}},
+
+ {tab:"финмодель.html", title:"Финмодель", sub:"Факт, прогноз и сценарии · живое демо",
+  url:"vebverf.studio/финмодель", type:"live", src:DEMO, badge:"live · обезличено",
+  cap:"обезличенное демо — работает прямо здесь, ползунки активны",
+  desc:"Выручка и чистая прибыль по месяцам, маржинальная лестница, прогноз на 2 года на ползунках, модуль «Мотивация и ФОТ». Демо обезличено: реальных цифр клиента нет.",
+  info:{Цена:"от 75 000 ₽", Демо:"обезличенное, live", Хранение:"локально, в браузере"}},
+
+ {tab:"дашборд.jsx", title:"Дашборд", sub:"Управленческая аналитика сервиса",
+  url:"vebverf.studio/дашборд", type:"video", src:"dashboard_long.mp4", poster:"dashboard_long_poster.jpg",
+  badge:"55 сек · HD",
+  cap:"запись дашборда — KPI, графики и помесячная динамика",
+  desc:"Все цифры сервиса или сети цехов на одном экране: выручка, прибыль, эффективность на сотрудника, тренды, блок МСФО. Ежедневный дайджест в мессенджер.",
+  info:{Цена:"от 50 000 ₽", Данные:"ваши выгрузки, помесячно", Доступ:"роли + защита"}},
+
+ {tab:"мотивация.js", title:"Мотивация", sub:"Прозрачный ФОТ и бонусы",
+  url:"vebverf.studio/мотивация", type:"video", src:"motivation_long.mp4", poster:"motivation_long_poster.jpg", badge:"28 сек · HD",
+  cap:"модуль «Мотивация и ФОТ» в финмодели — штат и бонусы по должностям",
+  desc:"Оклад плюс бонус от чёткой базы — маржа, прибыль или нормо-часы. Динамическое штатное расписание по выработке цеха, документы по должностям.",
+  info:{Цена:"в составе финмодели", База:"ВП / ЧП / нормо-час", Документ:"для подписания"}}
+];
+
+function art(kind){
+  const A={motiv:`<svg width="360" height="220" viewBox="0 0 360 220" fill="none">
+    <circle cx="110" cy="80" r="30" stroke="#d98a34" stroke-width="4"/>
+    <circle cx="245" cy="80" r="24" stroke="#46586a" stroke-width="4"/>
+    <path d="M60 160 q50 -46 100 0" stroke="#d98a34" stroke-width="4" fill="none"/>
+    <path d="M195 160 q40 -38 90 0" stroke="#46586a" stroke-width="4" fill="none"/>
+    <rect x="80" y="186" width="60" height="8" rx="4" fill="#d98a34" opacity=".6"/>
+    <rect x="210" y="186" width="60" height="8" rx="4" fill="#46586a" opacity=".6"/></svg>`};
+  return A[kind]||A.motiv;
+}
+
+const main=document.getElementById('main');
+const tabsEl=document.getElementById('maintabs');
+const overlay=document.getElementById('overlay');
+
+FILES.forEach((f,i)=>{
+  const t=document.createElement('div');
+  t.className='mtab'+(i===0?' on':'');
+  t.innerHTML=`<span class="dot"></span>${f.tab}`;
+  t.onclick=()=>select(i);
+  tabsEl.appendChild(t);
+});
+
+/* texture: line numbers + faint comment dashes */
+const texSpans=[];
+(function(){
+  const g=document.getElementById('texGutter'), d=document.getElementById('texDash');
+  const pats=['//————————————','/* ============ */','//———','// ········','//——————————————','/*··········*/','//————————','// ———————————'];
+  let gh='',dh='';
+  for(let i=1;i<=90;i++){gh+='<span>'+String(i).padStart(2,'0')+'</span>';dh+='<span>'+pats[(i*7)%pats.length]+'</span>';}
+  g.innerHTML=gh; d.innerHTML=dh;
+  g.querySelectorAll('span').forEach(s=>texSpans.push(s));
+})();
+
+function stage(f){
+  if(f.type==='video') return `<div class="pvstage"><video src="${f.src}" poster="${f.poster}" autoplay muted loop playsinline preload="metadata"></video></div>`;
+  if(f.type==='live')  return `<div class="pvstage"><iframe loading="lazy" src="${f.src}"></iframe></div>`;
+  return `<div class="pvstage"><div class="art">${art(f.art)}</div></div>`;
+}
+function select(i){
+  const f=FILES[i];
+  document.querySelectorAll('.mtab').forEach((t,k)=>t.classList.toggle('on',k===i));
+  overlay.innerHTML=`
+    <div class="fcmt">// ${f.tab} — открыт файл проекта</div>
+    <h1 class="ghosttitle disp">${f.title}<span class="sub">${f.sub}</span></h1>
+    <div class="preview">
+      <div class="pvbar"><div class="pd"><i></i><i></i><i></i></div>
+        <div class="url">https://<b>${f.url}</b></div><span class="badge">${f.badge}</span></div>
+      ${stage(f)}
+    </div>
+    <div class="cap">— <b>${f.title}</b> · ${f.cap}</div>
+    <div class="metarow">
+      <div class="desc"><span class="cmt">/*</span> ${f.desc} <span class="cmt">*/</span>
+        <div class="cta-inline">
+          <a class="solid" data-bot="max">Написать в MAX</a>
+          <a data-bot="tg">Telegram</a>
+          ${f.type==='live'?`<a href="${f.src}" target="_blank" rel="noopener">Открыть в новой вкладке ↗</a>`:''}
+        </div>
+      </div>
+      <div class="info">${Object.entries(f.info).map(([k,v])=>`<b>${k}</b><p>${v}</p>`).join('')}</div>
+    </div>`;
+  overlay.querySelectorAll('[data-bot]').forEach(a=>a.onclick=e=>{e.preventDefault();const u=BOT[a.dataset.bot];if(u)open(u,'_blank','noopener');});
+  main.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* left sidebar + top tabs switch profile/contact */
+function setSide(which){
+  document.querySelectorAll('.sbtab').forEach(x=>x.classList.toggle('on',x.dataset.sb===which));
+  document.querySelectorAll('.toptab').forEach(x=>x.classList.toggle('on',x.dataset.tt===which));
+  renderCode(which);
+}
+document.querySelectorAll('.sbtab').forEach(t=>t.onclick=()=>setSide(t.dataset.sb));
+document.querySelectorAll('.toptab').forEach(t=>t.onclick=()=>setSide(t.dataset.tt));
+
+/* main editor: hover highlights the line number you're on */
+const canvas=document.getElementById('canvas');
+let lastHot=-1;
+canvas.addEventListener('mousemove',e=>{
+  const r=canvas.getBoundingClientRect();
+  const idx=Math.floor((e.clientY-r.top-18)/21);
+  if(idx===lastHot) return;
+  if(texSpans[lastHot]) texSpans[lastHot].classList.remove('hot');
+  if(idx>=0&&texSpans[idx]){texSpans[idx].classList.add('hot');lastHot=idx;
+    document.getElementById('stPos').textContent='Ln '+(idx+1)+', Col 1';}
+},{passive:true});
+canvas.addEventListener('mouseleave',()=>{if(texSpans[lastHot])texSpans[lastHot].classList.remove('hot');lastHot=-1;},{passive:true});
+
+/* theme toggle */
+document.getElementById('themeBtn').onclick=function(){
+  const h=document.documentElement,light=h.getAttribute('data-theme')==='light';
+  h.setAttribute('data-theme',light?'dark':'light');this.textContent=light?'☼':'☾';
+};
+
+renderCode('profile');
+select(0);
+</script>
+</body>
+</html>

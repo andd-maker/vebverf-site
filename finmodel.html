@@ -1,0 +1,626 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Финмодель СТО — ДЕМО (обезличенная)</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0b0f17;--card:#121826;--mut:#8b97a6;--bd:#1c2330;--ac:#3b82f6;--pos:#22c55e;--neg:#ef4444;--txt:#e6edf3;--chip:#0e1420;--tick:#8b97a6;--grid:#1c2330}
+body[data-theme="light"]{--bg:#e9edf2;--card:#fbfcfe;--mut:#5b6675;--bd:#dde3ec;--ac:#3b6fd4;--pos:#15923f;--neg:#cc3a3a;--txt:#222a35;--chip:#eef2f7;--tick:#5b6675;--grid:#e3e8ef}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.45 -apple-system,Segoe UI,Roboto,Arial}
+header{padding:12px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font-size:17px;margin:0}.sub{color:var(--mut);font-size:12px}
+.spacer{flex:1}
+.btn{padding:6px 11px;border:1px solid var(--bd);border-radius:8px;cursor:pointer;background:var(--chip);color:var(--txt);font-size:12px}
+.btn.active{background:var(--ac);border-color:var(--ac);color:#fff}
+.tabs{display:flex;gap:6px;padding:10px 16px 0;flex-wrap:wrap;position:sticky;top:0;z-index:6;background:var(--bg)}
+.toolbar{display:flex;gap:14px;padding:10px 16px;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--bd);position:sticky;top:44px;z-index:6;background:var(--bg)}
+.toolbar .group{display:flex;gap:5px;align-items:center}.toolbar .glabel{color:var(--mut);font-size:11px;margin-right:2px}
+.wrap{display:grid;grid-template-columns:300px 1fr;gap:16px;padding:16px}
+@media(max-width:920px){.wrap{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;align-self:start;position:sticky;top:10px;max-height:92vh;overflow:auto}
+.grp{margin-bottom:10px}.grp h4{margin:6px 0;color:var(--ac);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.ctrl{margin:7px 0}.ctrl label{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:12px;color:var(--txt)}.ctrl .lbl{flex:1 1 auto;min-width:0}
+.ctrl input[type=range]{width:100%;accent-color:var(--ac)}.ctrl .val{flex:0 0 auto;white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;min-width:3.6em;color:var(--ac);font-weight:600}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
+.card h3{margin:0 0 10px;font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.kpi{background:var(--chip);border:1px solid var(--bd);border-radius:10px;padding:10px}
+.kpi .lbl{color:var(--mut);font-size:11px}.kpi .v{font-size:18px;font-weight:700;margin-top:3px}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+table{border-collapse:collapse;width:100%;font-size:11px}th,td{padding:3px 6px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--card);min-width:185px;z-index:1}
+.tblwrap{overflow:auto;max-height:70vh}
+tr.tot td{font-weight:700;border-top:1px solid var(--bd)}.tblwrap{overflow:auto}
+th.fcol,td.fcol{background:rgba(90,184,138,0.10);box-shadow:inset 0 2px 0 rgba(90,184,138,0.55)}
+th.fcol{color:#5cb88a}
+.factchip{display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(90,184,138,0.25);box-shadow:inset 0 2px 0 rgba(90,184,138,0.55);vertical-align:middle;margin-right:5px}
+.presets{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+.ptitle{font-size:11px;color:var(--mut);margin-bottom:7px;font-weight:700}
+.preset{display:flex;gap:5px;margin-bottom:5px}
+.preset .pload{flex:1;text-align:left;opacity:.5;font-size:12px;overflow:hidden;text-overflow:ellipsis}
+.preset.has .pload{opacity:1;border-color:var(--ac);color:var(--fg)}
+.preset .psave{flex:none;width:36px;padding:6px 0}
+.chartbox{height:300px}
+.note{background:var(--chip);border-left:3px solid var(--ac);padding:8px 10px;border-radius:6px;color:var(--mut);font-size:12px;margin:8px 0}
+/* ===== Мотивация и ФОТ ===== */
+.mottbl input,.mottbl select{background:var(--chip);color:var(--txt);border:1px solid var(--bd);border-radius:6px;padding:3px 5px;font-size:11px}
+.mottbl input{width:88px;text-align:right}.mottbl select{width:108px}
+.mottbl td.ratecell{text-align:left;white-space:nowrap}
+.mottbl td.ratecell input{width:62px}
+.mottbl td.ratecell .unit{display:inline-block;width:42px;margin-left:5px;color:var(--mut);font-size:10px;text-align:left}
+.mottbl td,.mottbl th{vertical-align:middle}
+.mottbl th{position:sticky;top:0;z-index:2;background:var(--card)}
+.mottbl th:first-child{z-index:3}
+.mottbl tr.tot td{position:sticky;bottom:0;background:var(--card);z-index:1}
+.mottbl tr.tot td:first-child{z-index:2}
+.docsec{margin:24px 0 10px;font-size:17px;font-weight:800;color:#111;line-height:1.2}
+.docsec:first-child{margin-top:18px}
+.doctblwrap{margin-top:8px}
+.doctbl{width:100%;border-collapse:collapse;font-size:14px}
+.doctbl td{border:1px solid #d6d6d6;padding:13px 16px;text-align:left;color:#333}
+.doctbl td.val{text-align:right;font-weight:700;color:#111;white-space:nowrap}
+.doctbl tr.head td{background:#f2f2f2;font-weight:800;color:#111}
+.doctbl tr.total td{font-weight:800;color:#111}
+.doctbl tr.total td:first-child{font-size:15px}
+.docformula{background:#f5f5f5;border:1px solid #d6d6d6;border-radius:8px;padding:16px 20px;font-weight:800;font-size:17px;margin-top:8px;color:#111}
+.docnote{color:#777;font-size:13px;margin:10px 0 0;line-height:1.6}
+.docbig{font-size:16px;font-weight:800;color:#111}
+.docblock{border-bottom:1px solid #d6d6d6;padding-bottom:20px;margin-bottom:22px}
+.docfoot{border-top:1px solid #d6d6d6;margin-top:24px;padding-top:14px;color:#8a8a8a;font-size:12.5px;line-height:1.6}
+@media print{@page{margin:14mm}.docblock{page-break-inside:avoid}}
+.deptrow td{background:rgba(59,130,246,0.10);color:var(--ac);font-weight:700;text-transform:uppercase;letter-spacing:.4px;font-size:10px;text-align:left!important}
+tr.prodrow td:first-child{color:var(--mut)}
+.motbtn{padding:4px 8px;border:1px solid var(--ac);border-radius:7px;cursor:pointer;background:transparent;color:var(--ac);font-size:11px;white-space:nowrap}
+.motbtn:hover{background:var(--ac);color:#fff}
+.modalbk{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:flex-start;justify-content:center;z-index:50;padding:28px 14px;overflow:auto}
+.motcard{background:#fff;color:#1c1c1c;border:1px solid #cfcfcf;border-radius:6px;max-width:700px;width:100%;padding:0;box-shadow:0 18px 60px rgba(0,0,0,.45);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.mc-head{padding:26px 30px 16px;border-bottom:2px solid #111;display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.mc-head h2{margin:0;font-size:23px;font-weight:800;color:#111}
+.mc-head .mc-dept{color:#8a8a8a;font-size:13px;white-space:nowrap}
+.mc-body{padding:8px 30px 24px}
+.mc-foot{padding:14px 22px;border-top:1px solid #e0e0e0;display:flex;gap:8px;justify-content:flex-end}
+.mc-foot .btn{background:#f0f0f0;color:#222;border:1px solid #c8c8c8}
+.mc-foot .btn.print{background:#222;border-color:#222;color:#fff}
+@media print{
+ body{background:#fff;color:#000}
+ body>*{display:none!important}
+ .modalbk{display:block!important;position:static;background:#fff;padding:0;overflow:visible}
+ .modalbk .mc-foot{display:none}
+ .motcard{box-shadow:none;border:none;max-width:100%}
+}
+</style></head>
+<body data-theme="dark">
+<header>
+  <h1>Финмодель СТО — ДЕМО <span style="font-size:.5em;vertical-align:middle;background:#f59e0b;color:#1a1205;padding:2px 8px;border-radius:6px;font-weight:800;letter-spacing:.5px">ДЕМО · обезличенные данные</span></h1>
+  <span class="sub">тыс. ₽, без НДС · 2025 демо-база · прогноз 2026–2027 · цифры синтетические</span>
+  <span class="spacer"></span>
+  <button class="btn" id="themeBtn">☀︎ Светлая</button>
+</header>
+<div class="tabs" id="tabs"></div>
+<div class="toolbar">
+  <div class="group"><span class="glabel">Год:</span><span id="years"></span></div>
+  <div class="group"><span class="glabel">Детализация:</span><span id="grans"></span></div>
+</div>
+<div class="wrap">
+  <div class="panel" id="controls"></div>
+  <div id="view">
+    <div id="kpis" class="card"><div class="kpis"></div></div>
+    <div class="card" id="chartcard"><h3 id="chartTitle"></h3><div class="chartbox"><canvas id="chart"></canvas></div></div>
+    <div id="tables"></div>
+  </div>
+</div>
+<script>
+/* ===== БАЛАНСОВЫЕ КОНСТАНТЫ (демо, обезличено, тыс.₽, без НДС) — для Баланса/ДДС ===== */
+const B={otherIncPct:12.7,opexPct:34.4,amort:407.44,vk:207.02,fixed0:10522.6,vatDebt:1856.3,advances:1759.09,payrollL:2413.86,otherLiab:1872.85,VK:25933.8,RE0:-3085.61};
+/* ===== ДЕМО 2025 = синтетические помесячные данные (обезличено, реальных цифр клиента нет) ===== */
+/* значения синтетические, иллюстрируют логику модели; любые совпадения случайны. */
+const BASE2025=[
+ {revS:4071.7,revG:17960.3,cogsS:-2847.9,cogsG:-12551.7,mechanics:24,hours:2685.1,hoursTot:3293.4,posts:17,personnel:63,area:2568,orders:467.7,costHr:2.933},
+ {revS:3489.2,revG:15630.8,cogsS:-2583.2,cogsG:-11563.3,mechanics:32,hours:2156.3,hoursTot:3788.4,posts:17,personnel:63,area:2708,orders:445.2,costHr:2.941},
+ {revS:5884.4,revG:21020.6,cogsS:-3599.4,cogsG:-12876,mechanics:33,hours:3427,hoursTot:4314,posts:17,personnel:63,area:2708,orders:674.4,costHr:2.727},
+ {revS:4923.5,revG:22578.8,cogsS:-3799.6,cogsG:-17410.4,mechanics:35,hours:3098.6,hoursTot:3897.4,posts:17,personnel:63,area:2708,orders:528.8,costHr:3.098},
+ {revS:4182.5,revG:17779.5,cogsS:-2952.9,cogsG:-11241,mechanics:37,hours:2451,hoursTot:4394.2,posts:17,personnel:63,area:2707.7,orders:474.3,costHr:3.502},
+ {revS:7806.7,revG:28012.2,cogsS:-4468.5,cogsG:-17915.1,mechanics:34,hours:4546.6,hoursTot:4518.9,posts:17,personnel:63,area:2707.7,orders:715.3,costHr:2.863},
+ {revS:4880.2,revG:17947.5,cogsS:-3857.4,cogsG:-14174.5,mechanics:34,hours:3124.9,hoursTot:4061,posts:17,personnel:63,area:2707.7,orders:501.3,costHr:2.602},
+ {revS:5135.6,revG:14653,cogsS:-3471.9,cogsG:-8881.1,mechanics:35,hours:2913.6,hoursTot:4331,posts:17,personnel:63,area:2707.7,orders:618.6,costHr:2.674},
+ {revS:5199.3,revG:13584.2,cogsS:-3322.3,cogsG:-9687.6,mechanics:33,hours:2961.4,hoursTot:4209.9,posts:17,personnel:63,area:2707.7,orders:495.6,costHr:2.76},
+ {revS:4834.6,revG:18520.2,cogsS:-3554.1,cogsG:-13604.3,mechanics:33,hours:2206.2,hoursTot:2669.9,posts:17,personnel:63,area:2708,orders:430.5,costHr:2.9},
+ {revS:5031.9,revG:19261,cogsS:-3310.2,cogsG:-12688.6,mechanics:33,hours:2299,hoursTot:2780,posts:17,personnel:63,area:2708,orders:447.9,costHr:2.9},
+ {revS:4686.6,revG:17964.6,cogsS:-3449.6,cogsG:-13211.9,mechanics:33,hours:2391.9,hoursTot:2890.1,posts:17,personnel:63,area:2708,orders:417.5,costHr:2.9}];
+const P={gRev:15,mechanics:33,hoursPerMech:103,posts:17,costHr:1.21,partsRatio:3.75,cogsGoodsPct:68.8,opexPct:B.opexPct,amort:B.amort,
+ otherIncPct:B.otherIncPct,taxRate:0,vk:B.vk,capex:230,dso:31,dio:29,dpo:10};
+const DEF_P=JSON.parse(JSON.stringify(P));
+const SLD=[
+ ["Прогноз 2026–2027",[["gRev","Рост выручки, %/год",-20,100,0.5]]],
+ ["Основа расчёта (выработка, прогноз 2026–2027)",[["mechanics","Механиков, чел.",5,80,1],["hoursPerMech","Часов на 1 механика, н/ч/мес",40,260,1],["posts","Постов, шт",4,40,1],["costHr","Себестоимость н/часа (услуги), тыс ₽",0.3,4,0.01],["partsRatio","Продажи ЗЧ к услугам, × (руб ЗЧ / руб услуг)",0,8,0.05]]],
+ ["Маржа и расходы (прогноз 2026–2027)",[["cogsGoodsPct","Себест. ЗЧ, % выр. ЗЧ",40,95,0.5],["opexPct","Операц. расходы, % выручки",10,60,0.5],["amort","Амортизация, тыс ₽/мес",0,1500,5]]]
+];
+const SLIDER_IDS=SLD.flatMap(g=>g[1]).map(d=>d[0]);   // id всех ползунков (для пресетов)
+const PRESET_NAMES0=["Базовый","Оптимистичный","Пессимистичный","Рост","Экономия","Резерв"];
+let PRESETS=(function(){try{const s=localStorage.getItem("prodfin_presets_v1");if(s)return JSON.parse(s);}catch(e){}return PRESET_NAMES0.map(n=>({name:n,params:null}));})();
+function savePresets(){try{localStorage.setItem("prodfin_presets_v1",JSON.stringify(PRESETS));}catch(e){}}
+const MON=["Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"];
+const sum=a=>a.reduce((x,y)=>x+y,0), mean=a=>a.length?sum(a)/a.length:0;
+/* ===== МОТИВАЦИЯ И ФОТ ===== */
+/* Динамическое штатное расписание (из «орг стр-ра 22»): штат по 7 диапазонам выработки н/ч в месяц.
+   Оклады/бонусы — демонстрационные значения (₽), обезличены. prod=true → продуктивный
+   персонал (механики/диагносты): их ЗП уже в себестоимости услуг, в ФОТ НЕ включаются.
+   base: 'vpSTO'=ВП СТО · 'vpZCH'=ВП ЗЧ · 'vpUSL'=ВП Услуги · 'chp'=ЧП · 'nch'=кол-во н/ч.
+   rate: для ВП/ЧП — доля (0.05=5%); для н/ч — ₽ за 1 н/ч. */
+const BRK=["500–999","1000–1499","1500–1999","2000–2999","3000–3999","4000–4999","5000+"];
+const POS0=[
+ {dept:"Руководство",name:"Директор СТО",staff:[1,1,1,1,1,1,1],prod:false,O:18500,UO:132000,base:"vpSTO",rate:5},
+ {dept:"Коммерческий отдел",name:"Руководитель коммерческого отдела",staff:[1,1,1,1,1,1,1],prod:false,O:18000,UO:64500,base:"vpSTO",rate:0.5},
+ {dept:"Коммерческий отдел",name:"Старший менеджер коммерческого отдела",staff:[1,1,1,1,1,1,1],prod:false,O:19000,UO:35500,base:"vpSTO",rate:0.3},
+ {dept:"Коммерческий отдел",name:"Менеджер по работе с клиентами (активные продажи)",staff:[2,3,3,3,4,4,4],prod:false,O:13000,UO:21500,base:"vpSTO",rate:0.2},
+ {dept:"Коммерческий отдел",name:"Менеджер по тендерам",staff:[0,1,1,1,1,1,1],prod:false,O:16000,UO:14500,base:"vpSTO",rate:0.3},
+ {dept:"Производство",name:"Технический директор",staff:[1,1,1,1,1,1,1],prod:false,O:13000,UO:90500,base:"nch",rate:1},
+ {dept:"Производство",name:"Начальник производства",staff:[0,1,1,1,1,1,1],prod:false,O:15000,UO:59500,base:"nch",rate:2},
+ {dept:"Производство",name:"Мастер производства",staff:[2,3,3,4,4,4,4],prod:false,O:13000,UO:69000,base:"nch",rate:1},
+ {dept:"Производство",name:"Автоэлектрик-диагност",staff:[2,4,4,5,5,6,8],prod:true,O:16000,UO:0,base:"nch",rate:0},
+ {dept:"Производство",name:"Слесарь по ремонту автомобилей",staff:[8,10,12,18,22,26,30],prod:true,O:13500,UO:0,base:"nch",rate:0},
+ {dept:"Производство",name:"Оператор мойки",staff:[1,2,2,2,3,4,4],prod:false,O:16000,UO:5500,base:"nch",rate:0},
+ {dept:"Производство",name:"Инструментальщик",staff:[1,1,1,2,2,2,2],prod:false,O:13500,UO:23000,base:"nch",rate:1},
+ {dept:"Производство",name:"Технолог",staff:[0,1,1,1,1,1,1],prod:false,O:16000,UO:51500,base:"vpSTO",rate:0.35},
+ {dept:"Производство",name:"Администратор",staff:[2,3,3,3,3,3,3],prod:false,O:13500,UO:26000,base:"vpSTO",rate:0.1},
+ {dept:"Производство",name:"Старший мастер-приёмщик",staff:[1,1,1,1,1,1,1],prod:false,O:16500,UO:46500,base:"nch",rate:1.5},
+ {dept:"Производство",name:"Мастер-приёмщик",staff:[2,3,3,4,4,4,4],prod:false,O:14500,UO:49500,base:"nch",rate:1},
+ {dept:"Производство",name:"Сервисный консультант",staff:[0,0,0,1,1,2,2],prod:false,O:16500,UO:42500,base:"nch",rate:1.5},
+ {dept:"Производство",name:"Старший инженер по гарантии",staff:[1,1,1,1,1,1,1],prod:false,O:22000,UO:33000,base:"vpZCH",rate:0.36},
+ {dept:"Производство",name:"Инженер по гарантии",staff:[1,1,1,1,2,2,2],prod:false,O:15500,UO:48500,base:"vpZCH",rate:0},
+ {dept:"Отдел запасных частей",name:"Начальник отдела запасных частей",staff:[1,1,1,1,1,1,1],prod:false,O:12500,UO:49500,base:"vpZCH",rate:1},
+ {dept:"Отдел запасных частей",name:"Менеджер по продажам запасных частей",staff:[1,2,2,2,2,2,2],prod:false,O:15500,UO:18000,base:"vpZCH",rate:0.6},
+ {dept:"Отдел запасных частей",name:"Менеджер по продажам запасных частей (опт)",staff:[1,2,2,2,2,2,2],prod:false,O:13000,UO:22000,base:"vpZCH",rate:0.6},
+ {dept:"Отдел запасных частей",name:"Логист",staff:[1,1,1,1,1,1,1],prod:false,O:15000,UO:18500,base:"vpZCH",rate:0},
+ {dept:"Отдел запасных частей",name:"Менеджер по снабжению (закупки)",staff:[1,1,1,1,1,1,1],prod:false,O:13000,UO:32500,base:"vpZCH",rate:0.6},
+ {dept:"Отдел запасных частей",name:"Экспедитор",staff:[1,1,2,2,2,2,2],prod:false,O:15000,UO:11000,base:"vpZCH",rate:0},
+ {dept:"Склад",name:"Начальник склада",staff:[0,1,1,1,1,1,1],prod:false,O:13000,UO:25000,base:"vpZCH",rate:0.4},
+ {dept:"Склад",name:"Кладовщик",staff:[2,4,4,4,4,5,5],prod:false,O:16000,UO:18500,base:"vpZCH",rate:0.4}
+];
+const BASE_LABELS={vpSTO:"ВП СТО",vpZCH:"ВП ЗЧ",vpUSL:"ВП Услуги",chp:"ЧП",nch:"кол-во н/ч"};
+let MOT=(function(){try{const s=localStorage.getItem("prodfin_mot_v2");if(s){const o=JSON.parse(s);if(o&&o.pos&&o.pos.length)return o;}}catch(e){}
+ return {basis:"uo",pos:JSON.parse(JSON.stringify(POS0))};})();
+function saveMOT(){try{localStorage.setItem("prodfin_mot_v2",JSON.stringify(MOT));}catch(e){}}
+function brIdx(h){if(h<1000)return 0;if(h<1500)return 1;if(h<2000)return 2;if(h<3000)return 3;if(h<4000)return 4;if(h<5000)return 5;return 6;}
+function baseVal(code,m){switch(code){
+ case"vpSTO":return m.gp*1000; case"vpZCH":return (m.revG+m.cogsG)*1000;
+ case"vpUSL":return (m.revS+m.cogsS)*1000; case"chp":return (m.npBeforeFOT||0)*1000;
+ case"nch":return m.hours; default:return 0;}}
+/* штат + ФОТ за «месяц» m (значения месяца: gp,revG,cogsG,revS,cogsS,hours,npBeforeFOT — в тыс ₽, hours в н/ч).
+   Возвращает ₽: fot (непродукт.), fotTax (×0,5), fotTotal (×1,5), построчно rows[]. */
+function computeStaff(m){
+ const bi=brIdx(m.hours||0); let fot=0; const rows=[];
+ MOT.pos.forEach((p,i)=>{
+  const count=p.staff[bi]||0;
+  const mult=(p.base==="nch")?(+p.rate||0):((+p.rate||0)/100);
+  const bonus=mult*Math.max(0,baseVal(p.base,m));      // бонус на 1 чел, ₽/мес (только при положительной базе; для ВП/ЧП ставка в %)
+  const baseSal=(MOT.basis==="official"?(+p.O||0):(+p.UO||0));
+  const zp=baseSal+bonus;                               // ЗП на 1 чел (без продуктивных)
+  const fotPos=p.prod?0:count*zp;
+  if(!p.prod)fot+=fotPos;
+  rows.push({i,dept:p.dept,name:p.name,prod:p.prod,O:+p.O||0,UO:+p.UO||0,base:p.base,rate:+p.rate||0,count,bonus,baseSal,zp,fotPos});
+ });
+ return {bi,fot,fotTax:fot*0.5,fotTotal:fot*1.5,rows};
+}
+/* ===== ДВИЖОК 36 мес ===== */
+let ANCHORS={}, PENDING=null;   // ANCHORS: {индекс месяца 0–35 → объект факта}; PENDING — распознан, ещё не применён
+const INP_KEYS=["revS","revG","cogsS","cogsG","mechanics","hours","hoursTot","posts","personnel","area","orders"];
+const INP_LABELS=[["Выручка услуг, тыс ₽","revS"],["Выручка ЗЧ/товаров, тыс ₽","revG"],["Себестоимость услуг, тыс ₽","cogsS"],["Себестоимость ЗЧ, тыс ₽","cogsG"],["Механиков, чел.","mechanics"],["Н/часы проданные, н/ч","hours"],["Общее время (ёмкость), ч","hoursTot"],["Постов, шт","posts"],["Численность персонала, чел.","personnel"],["Площадь, кв.м","area"],["Заказ-нарядов, шт","orders"]];
+function eff2025(){return Array.from({length:12},(_,i)=>ANCHORS[i]||BASE2025[i]);}   // 2025 с учётом якорей
+function avg2025(){const a=eff2025(),k=INP_KEYS,o={};k.forEach(x=>o[x]=a.reduce((s,b)=>s+(b[x]||0),0)/a.length);return o;}
+function forecastInp(i){     // прогноз 2026–2027: ползунки-основа × рост; ставки услуг/ЗЧ и производит. — из факта 2025
+ const f=Math.pow(1+P.gRev/100,(i-11)/12),a=avg2025();   // годовой рост, компаундится помесячно
+ const sellRate=a.hours>0?a.revS/a.hours:0;        // выручка услуг за проданный час (факт 2025)
+ const prod=a.hoursTot>0?a.hours/a.hoursTot:1;     // производительность (факт 2025)
+ const hours=P.mechanics*P.hoursPerMech*f;         // проданные н/часы = механики × часов/механик × рост
+ const revS=hours*sellRate, revG=revS*P.partsRatio;
+ const cogsS=-hours*P.costHr, cogsG=-revG*P.cogsGoodsPct/100;   // себест услуг = часы × себест.н/часа; себест ЗЧ = % выр.ЗЧ (ползунки)
+ const hoursTot=prod>0?hours/prod:hours, orders=a.orders*f;
+ return {revS,revG,cogsS,cogsG,mechanics:P.mechanics,hours,hoursTot,posts:P.posts,personnel:a.personnel,area:a.area,orders};
+}
+function finish(inp,par,st){          // из абсолютов месяца → отчёт + 15 KPI + баланс + ДДС
+ const {revS,revG,cogsS,cogsG,mechanics,hours,hoursTot,posts,personnel,area,orders}=inp;
+ const rev=revS+revG,cogs=cogsS+cogsG,gp=rev+cogs;
+ const oth=rev*par.otherIncPct/100,amort=-par.amort,vk=-par.vk;
+ const opexAmt=rev*par.opexPct/100;                              // совокупные операц. расходы, тыс ₽ (вкл. ФОТ)
+ // предварит. ЧП без ФОТ — нужна как база для бонусов от ЧП
+ const opP0=gp+oth-opexAmt, preT0=opP0+amort+vk, tax0=preT0>0?-preT0*par.taxRate/100:0, npBeforeFOT=preT0+tax0;
+ // ФОТ непродуктивного персонала по динамическому штату (₽ → тыс ₽)
+ const stf=computeStaff({gp,revG,cogsG,revS,cogsS,hours,npBeforeFOT});
+ const fot=-stf.fot/1000, fotTax=-stf.fotTax/1000, fotItogo=stf.fotTotal/1000, fotTotal=-fotItogo;  // тыс ₽; fotTotal=ФОТ+налоги (справочно)
+ const staffTotal=stf.rows.reduce((s,r)=>s+r.count,0), staffMech=stf.rows.filter(r=>r.prod).reduce((s,r)=>s+r.count,0);  // численность из динамического штата (зависит от н/ч)
+ const opexOther=-Math.max(0,opexAmt-fotItogo);                 // прочие операц. расходы = opex − ФОТ ИТОГО (без двойного счёта)
+ const opex=opexOther+fot+fotTax;                               // фактическая сумма операц. расходов (для совместимости)
+ const opProfit=gp+oth+opexOther+fot+fotTax,ebitda=opProfit,preTax=opProfit+amort+vk,tax=preTax>0?-preTax*par.taxRate/100:0,np=preTax+tax;
+ const vyr=revS/(mechanics||1),nchMech=hours/(mechanics||1),prod=hoursTot>0?hours/hoursTot:0;   // 15 KPI
+ const costHr=hours>0?-cogsS/hours:0;              // себестоимость н/часа = себест. услуг ÷ проданный час
+ const gpM2=gp/(area||1),gpWork=gp/(staffTotal||1),partsHr=revS>0?revG/revS:0,orderVal=orders>0?rev/orders:0,gpPost=gp/(posts||1);
+ const AR=rev*par.dso/30,INV=-cogs*par.dio/30,AP=-cogs*par.dpo/30,fixed=st.fixedPrev+par.capex+amort,RE=st.rePrev+np;
+ const liabEq=AP+B.advances+B.payrollL+B.vatDebt+B.otherLiab+B.VK+RE,cash=liabEq-(AR+INV+fixed),assets=cash+AR+INV+fixed;
+ const dAR=st.first?0:AR-st.arPrev,dINV=st.first?0:INV-st.invPrev,dAP=st.first?0:AP-st.apPrev;
+ const opCF=np-amort-dAR-dINV+dAP,invCF=-par.capex,finCF=(cash-st.cashPrev)-opCF-invCF;
+ return {vals:{revS,revG,rev,cogsS,cogsG,cogs,gp,oth,opex,opexOther,fot,fotTax,fotTotal,npBeforeFOT,opProfit,ebitda,amort,vk,preTax,tax,np,
+   mechanics,hours,hoursTot,posts,personnel,staffTotal,staffMech,area,orders,costHr,vyr,nchMech,prod,gpM2,gpWork,partsHr,orderVal,gpPost,
+   AR,INV,AP,fixed,RE,cash,assets,liabEq,opCF,invCF,finCF,netCF:cash-st.cashPrev},
+  nst:{cashPrev:cash,fixedPrev:fixed,rePrev:RE,arPrev:AR,invPrev:INV,apPrev:AP,first:false}};
+}
+function engine(){
+ let st={cashPrev:457.93,fixedPrev:B.fixed0,rePrev:B.RE0,arPrev:0,invPrev:0,apPrev:0,first:true};
+ const out=[];
+ for(let i=0;i<36;i++){
+  const yr=2025+Math.floor(i/12),mi=i%12;
+  let inp,par,fact;
+  if(ANCHORS[i]){inp=ANCHORS[i];par=DEF_P;fact=true;}        // якорь — заморожен, ползунки не влияют
+  else if(i<12){inp=BASE2025[i];par=DEF_P;fact=true;}        // 2025 — базовый факт (заморожен)
+  else {inp=forecastInp(i);par=P;fact=false;}                // 2026–2027 — прогноз (ползунки)
+  const r=finish(inp,par,st); out.push({yr,mi,m:MON[mi],fact,...r.vals}); st=r.nst;
+ }
+ return out;
+}
+/* ===== СОСТОЯНИЕ ===== */
+let cur="pl",year=2025,gran="m",chart=null,motMonth="avg";
+const TABS=[["pl","П&У (ОПиУ)"],["kpi","Коэффициенты / KPI"],["mot","👥 Мотивация и ФОТ"],["bal","Баланс"],["cf","ДДС"],["data","📥 Данные (факт)"]];
+const GRANS=[["m","Месяцы"],["q","Кварталы"],["y","Год"]];
+/* row def: [имя, key, type('flow'|'stock'|'avg'), total?] — единицы в имени */
+const DEFS={
+ pl:[["Выручка услуг, тыс ₽","revS","flow"],["Выручка ЗЧ/товаров, тыс ₽","revG","flow"],["= Выручка, тыс ₽","rev","flow",1],
+   ["− Себестоимость услуг, тыс ₽","cogsS","flow"],["− Себестоимость ЗЧ, тыс ₽","cogsG","flow"],["= Валовая прибыль, тыс ₽","gp","flow",1],
+   ["+ Прочие доходы, тыс ₽","oth","flow"],["− Операц. расходы (кроме ФОТ), тыс ₽","opexOther","flow"],
+   ["− ФОТ непродукт. персонала, тыс ₽","fot","flow"],["− ФОТ налоги (×0,5), тыс ₽","fotTax","flow"],["= ФОТ ИТОГО (ФОТ+налоги), тыс ₽","fotTotal","flow",1],
+   ["= Операционная прибыль, тыс ₽","opProfit","flow",1],
+   ["EBITDA, тыс ₽","ebitda","flow"],["− Амортизация, тыс ₽","amort","flow"],["− Налог на прибыль, тыс ₽","tax","flow"],
+   ["= ЧИСТАЯ ПРИБЫЛЬ, тыс ₽","np","flow",1]],
+ kpi:[["Механиков (чел.), на конец","mechanics","stock",0,"f0"],["Численность персонала (чел.), на конец — по штату от н/ч","staffTotal","stock",0,"f0"],
+   ["Общее время (ч)","hoursTot","flow",0,"f0"],["Площадь СТО (кв.м)","area","stock",0,"f0"],
+   ["Валовая прибыль (тыс ₽)","gp","flow",1,"f0"],["ВП на 1 кв.м (тыс ₽/кв.м)","gpM2","avg",0,"f2"],
+   ["Н/ч на 1 механика (н/ч)","nchMech","avg",0,"f1"],["Выработка на 1 механика (тыс ₽)","vyr","avg",0,"f1"],
+   ["Себестоимость н/часа (тыс ₽)","costHr","avg",0,"f2"],["ВП на 1 работника (тыс ₽)","gpWork","avg",0,"f1"],
+   ["Производительность (%)","prod","avg",0,"pct"],["Продажи ЗЧ на 1 час работы","partsHr","avg",0,"f2"],
+   ["Стоимость 1 заказ-наряда (тыс ₽)","orderVal","avg",0,"f1"],["Постов (шт), на конец","posts","stock",0,"f0"],
+   ["ВП на пост (тыс ₽)","gpPost","avg",1,"f0"]],
+ bal:[["Денежные средства, тыс ₽","cash","stock"],["Дебиторская задолженность, тыс ₽","AR","stock"],["Запасы (ТМЗ), тыс ₽","INV","stock"],
+   ["ОС и прочие активы, тыс ₽","fixed","stock"],["= ИТОГО АКТИВОВ, тыс ₽","assets","stock",1],
+   ["Кредиторская задолженность, тыс ₽","AP","stock"],["Нераспределённая прибыль, тыс ₽","RE","stock"],
+   ["= Пассив (об-ва + капитал), тыс ₽","liabEq","stock",1]],
+ cf:[["Операционный поток, тыс ₽","opCF","flow"],["Инвестиционный поток, тыс ₽","invCF","flow"],["Финансовый поток, тыс ₽","finCF","flow"],
+   ["= Чистый денежный поток, тыс ₽","netCF","flow",1],["Остаток ДС на конец, тыс ₽","cash","stock",1]]
+};
+/* ===== агрегация по гранулярности ===== */
+function columns(rowsY){
+ if(gran==="m")return rowsY.map((r,i)=>({label:r.m+" '"+String(year).slice(2),idx:[i]}));
+ if(gran==="q")return [0,1,2,3].map(q=>({label:"Q"+(q+1)+" '"+String(year).slice(2),idx:[q*3,q*3+1,q*3+2]}));
+ return [{label:String(year),idx:[0,1,2,3,4,5,6,7,8,9,10,11]}];
+}
+function agg(rowsY,idx,key,type){
+ const vals=idx.map(i=>rowsY[i][key]);
+ if(type==="stock")return vals[vals.length-1];
+ if(type==="avg")return mean(vals);
+ return sum(vals);
+}
+function aggRows(rs,key,type){const vals=rs.map(r=>r[key]);if(type==="stock")return vals[vals.length-1];if(type==="avg")return mean(vals);return sum(vals);}
+const f0=v=>Math.round(v).toLocaleString("ru-RU"),f1=v=>v.toLocaleString("ru-RU",{maximumFractionDigits:1});
+const f2=v=>v.toLocaleString("ru-RU",{minimumFractionDigits:2,maximumFractionDigits:2});
+function FMT(v,fmt){if(fmt==="f1")return f1(v);if(fmt==="f2")return f2(v);if(fmt==="pct")return Math.round(v*100)+"%";return f0(v);}
+const TH=()=>({tick:getComputedStyle(document.body).getPropertyValue('--tick').trim()||'#8b97a6',
+ grid:getComputedStyle(document.body).getPropertyValue('--grid').trim()||'#1c2330'});
+function copts(stack){const t=TH();return{responsive:true,maintainAspectRatio:false,animation:{duration:650,easing:'easeOutCubic'},
+ plugins:{legend:{labels:{color:t.tick,font:{size:11}}},tooltip:{callbacks:{label:c=>c.dataset.label+": "+f0(c.parsed.y)}}},
+ scales:{x:{stacked:!!stack,ticks:{color:t.tick,font:{size:9},maxRotation:55},grid:{color:t.grid}},
+  y:{stacked:!!stack,ticks:{color:t.tick,font:{size:9},callback:f0},grid:{color:t.grid}}}};}
+function smartChart(cfg){const el=document.getElementById("chart");
+ if(chart&&chart.canvas===el){chart.data.labels=cfg.data.labels;cfg.data.datasets.forEach((d,i)=>{if(chart.data.datasets[i])Object.assign(chart.data.datasets[i],d);else chart.data.datasets[i]=d;});while(chart.data.datasets.length>cfg.data.datasets.length)chart.data.datasets.pop();chart.options=cfg.options;chart.update();}
+ else{if(chart)chart.destroy();chart=new Chart(el,cfg);}}
+/* ===== UI шапки/панели (строится один раз при смене вкладки/года/темы) ===== */
+function buildShell(){
+ const OFF=["bal","cf"];   // временно отключены (расчёт идёт в фоне)
+ document.getElementById("tabs").innerHTML=TABS.map(([k,n])=>{const d=OFF.includes(k);return `<button class="btn ${k===cur?'active':''}" data-k="${k}" ${d?'disabled title="В разработке — пересчёт идёт в фоне" style="opacity:.38;cursor:not-allowed"':''}>${n}${d?' 🔒':''}</button>`;}).join("");
+ document.querySelectorAll("#tabs .btn").forEach(b=>b.onclick=()=>{if(OFF.includes(b.dataset.k))return;cur=b.dataset.k;buildShell();refresh();});
+ document.getElementById("years").innerHTML=[2025,2026,2027,"all"].map(y=>`<button class="btn ${(""+y)===(""+year)?'active':''}" data-y="${y}">${y==="all"?"Все (по годам)":y}</button>`).join(" ");
+ document.querySelectorAll("#years .btn").forEach(b=>b.onclick=()=>{year=b.dataset.y==="all"?"all":+b.dataset.y;buildShell();refresh();});
+ document.getElementById("grans").innerHTML=GRANS.map(([k,n])=>`<button class="btn ${k===gran?'active':''}" data-g="${k}">${n}</button>`).join(" ");
+ document.querySelectorAll("#grans .btn").forEach(b=>b.onclick=()=>{gran=b.dataset.g;buildShell();refresh();});
+}
+function controls(){
+ const c=document.getElementById("controls");
+ c.innerHTML=`<div style="font-weight:700;margin-bottom:8px">⚙️ Параметры</div>`+SLD.map(([t,items])=>`<div class="grp"><h4>${t}</h4>`+
+  items.map(([id,lbl,mn,mx,st])=>`<div class="ctrl"><label><span class="lbl">${lbl}</span><span class="val" id="v_${id}"></span></label><input type="range" id="s_${id}" min="${mn}" max="${mx}" step="${st}" value="${P[id]}"></div>`).join("")+`</div>`).join("")
+  +`<button class="btn" id="reset" style="width:100%;margin-top:6px">Сбросить к базе</button>`;
+ SLD.flatMap(x=>x[1]).forEach(([id])=>{const s=document.getElementById("s_"+id),v=document.getElementById("v_"+id);
+  v.textContent=(+P[id]).toLocaleString("ru-RU");
+  s.oninput=()=>{P[id]=+s.value;v.textContent=(+s.value).toLocaleString("ru-RU");refresh();};});
+ document.getElementById("reset").onclick=()=>{Object.assign(P,JSON.parse(JSON.stringify(DEF_P)));controls();refresh();};
+ // ── блок сохранённых сценариев (пресеты ползунков) ──
+ const ph=`<div class="presets"><div class="ptitle">📌 Сохранённые сценарии <span style="font-weight:400">(💾 — записать текущие · клик — применить · 2× клик — переименовать)</span></div>`+
+  PRESETS.map((p,i)=>`<div class="preset ${p.params?'has':''}"><button class="btn pload" data-i="${i}" title="${p.params?'Применить сценарий':'Слот пуст — сохраните 💾'}">${p.name}</button><button class="btn psave" data-i="${i}" title="Сохранить текущие параметры">💾</button></div>`).join("")+`</div>`;
+ c.insertAdjacentHTML("beforeend",ph);
+ c.querySelectorAll(".psave").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,o={};SLIDER_IDS.forEach(id=>o[id]=P[id]);PRESETS[i].params=o;savePresets();controls();});
+ c.querySelectorAll(".pload").forEach(b=>{b.onclick=()=>{const pr=PRESETS[+b.dataset.i].params;if(!pr)return;SLIDER_IDS.forEach(id=>{if(pr[id]!=null)P[id]=pr[id];});controls();refresh();};
+  b.ondblclick=()=>{const i=+b.dataset.i,nn=prompt("Название сценария:",PRESETS[i].name);if(nn&&nn.trim()){PRESETS[i].name=nn.trim().slice(0,20);savePresets();controls();}};});
+}
+/* ===== перерасчёт + обновление данных (на каждый ползунок; canvas НЕ пересоздаётся) ===== */
+function refresh(){
+ if(cur==="data"){renderData();return;}
+ if(cur==="mot"){renderMot();return;}
+ document.getElementById("kpis").style.display="";
+ document.getElementById("chartcard").style.display="";
+ const rows=engine();
+ let cols, kpiScope, ylabel;
+ if(year==="all"){
+  if(gran==="y"){
+   cols=[2025,2026,2027].map(y=>({label:String(y),rows:rows.filter(r=>r.yr===y)}));
+  } else if(gran==="q"){
+   cols=[];[2025,2026,2027].forEach(y=>{const ry=rows.filter(r=>r.yr===y);[0,1,2,3].forEach(q=>cols.push({label:"Q"+(q+1)+" '"+String(y).slice(2),rows:ry.slice(q*3,q*3+3)}));});
+  } else {
+   cols=rows.map(r=>({label:r.m+" '"+String(r.yr).slice(2),rows:[r]}));
+  }
+  kpiScope=rows; ylabel="2025–2027";
+ } else {
+  const rowsY=rows.filter(r=>r.yr===year), cc=columns(rowsY);
+  cols=cc.map(c=>({label:c.label,rows:c.idx.map(i=>rowsY[i])}));
+  kpiScope=rowsY; ylabel=String(year);
+ }
+ cols.forEach(c=>c.fact=c.rows.length>0&&c.rows.every(r=>r.fact));   // период = факт, если все его месяцы факт
+ const factArr=cols.map(c=>c.fact), anyFact=factArr.some(Boolean);
+ const yr=(k,t)=>aggRows(kpiScope,k,t);
+ const kpiCards={
+  pl:[["Выручка "+ylabel+", тыс ₽",f0(yr("rev","flow"))],["Валовая прибыль, тыс ₽",f0(yr("gp","flow"))],["EBITDA, тыс ₽",f0(yr("ebitda","flow"))],["Чистая прибыль, тыс ₽",f0(yr("np","flow"))]],
+  kpi:[["Валовая прибыль "+ylabel+", тыс ₽",f0(yr("gp","flow"))],["Выработка/механик, тыс ₽",f1(yr("vyr","avg"))],["Н/ч на механика",f1(yr("nchMech","avg"))],["Производительность",Math.round(yr("prod","avg")*100)+"%"],["ЗЧ на 1 час работы",f2(yr("partsHr","avg"))],["ВП на пост, тыс ₽",f0(yr("gpPost","avg"))]],
+  bal:[["Активы (конец), тыс ₽",f0(yr("assets","stock"))],["Касса (конец), тыс ₽",f0(yr("cash","stock"))],["Капитал нераспр. (конец), тыс ₽",f0(yr("RE","stock"))]],
+  cf:[["Опер. поток "+ylabel+", тыс ₽",f0(yr("opCF","flow"))],["Чистый поток, тыс ₽",f0(yr("netCF","flow"))],["Остаток ДС (конец), тыс ₽",f0(yr("cash","stock"))]]
+ }[cur];
+ document.querySelector("#kpis .kpis").innerHTML=kpiCards.map(([l,v])=>{const neg=(typeof v==="string"&&v.includes("−"))||(typeof v==="number"&&v<0);return `<div class="kpi"><div class="lbl">${l}</div><div class="v ${neg?'neg':''}">${v}</div></div>`;}).join("");
+ // таблица
+ const defs=DEFS[cur];
+ const head=`<tr><th>Показатель</th>${cols.map(c=>`<th class="${c.fact?'fcol':''}">${c.label}</th>`).join("")}</tr>`;
+ const body=defs.map(([nm,key,type,tot,fmt])=>`<tr class="${tot?'tot':''}"><td>${nm}</td>${cols.map(c=>{const v=aggRows(c.rows,key,type);return `<td class="${v<0?'neg':''}${c.fact?' fcol':''}">${FMT(v,fmt)}</td>`;}).join("")}</tr>`).join("");
+ const factLeg=anyFact?`<div class="note" style="border-left-color:#5cb88a"><span class="factchip"></span>Подсвеченные периоды — фактические данные (заякорены, ползунки на них не влияют).</div>`:"";
+ document.getElementById("tables").innerHTML=`<div class="card tblwrap"><table>${head}${body}</table></div>${factLeg}${noteFor(cur)}`;
+ // график
+ const lab=cols.map(c=>c.label), col=(k,t)=>cols.map(c=>aggRows(c.rows,k,t));
+ document.getElementById("chartTitle").textContent=chartTitle();
+ if(cur==="pl"){const o=copts();o.scales.y.title={display:true,text:"Выручка",color:TH().tick,font:{size:9}};
+  o.scales.y1={position:"right",ticks:{color:"#22c55e",font:{size:9},callback:f0},grid:{drawOnChartArea:false},title:{display:true,text:"Чистая прибыль",color:"#22c55e",font:{size:9}}};
+  smartChart({data:{labels:lab,datasets:[{type:"bar",label:"Выручка",data:col("rev","flow"),backgroundColor:"rgba(73,131,229,0.62)",borderColor:factArr.map(f=>f?"rgba(90,184,138,0.95)":"rgba(73,131,229,0.75)"),borderWidth:factArr.map(f=>f?2:1),order:1,yAxisID:"y"},{type:"line",label:"Чистая прибыль",data:col("np","flow"),borderColor:"#22c55e",backgroundColor:"#22c55e",borderWidth:3,tension:.25,pointRadius:factArr.map(f=>f?3:0),pointBackgroundColor:"#5cb88a",pointBorderColor:"#0f2a17",order:2,yAxisID:"y1"}]},options:o});}
+ else if(cur==="kpi"){const o=copts();o.scales.y.title={display:true,text:"Выработка/механик",color:"#3b82f6",font:{size:9}};
+  o.scales.y1={position:"right",ticks:{color:"#22c55e",font:{size:9},callback:f0},grid:{drawOnChartArea:false},title:{display:true,text:"ВП/пост",color:"#22c55e",font:{size:9}}};
+  smartChart({data:{labels:lab,datasets:[{type:"bar",label:"Выработка/механик",data:col("vyr","avg"),backgroundColor:"#3b82f6",borderColor:factArr.map(f=>f?"rgba(90,184,138,0.95)":"transparent"),borderWidth:factArr.map(f=>f?2:0),yAxisID:"y"},{type:"bar",label:"ВП/пост",data:col("gpPost","avg"),backgroundColor:"#22c55e",borderColor:factArr.map(f=>f?"rgba(90,184,138,0.95)":"transparent"),borderWidth:factArr.map(f=>f?2:0),yAxisID:"y1"}]},options:o});}
+ else if(cur==="bal")smartChart({data:{labels:lab,datasets:[{label:"ДС",data:col("cash","stock"),backgroundColor:"#22c55e",stack:"a"},{label:"Дебиторка",data:col("AR","stock"),backgroundColor:"#3b82f6",stack:"a"},{label:"Запасы",data:col("INV","stock"),backgroundColor:"#f59e0b",stack:"a"},{label:"ОС/прочее",data:col("fixed","stock"),backgroundColor:"#8b5cf6",stack:"a"}]},options:copts(true)});
+ else smartChart({data:{labels:lab,datasets:[{label:"Операционный",data:col("opCF","flow"),backgroundColor:"#22c55e"},{label:"Инвестиционный",data:col("invCF","flow"),backgroundColor:"#ef4444"},{label:"Финансовый",data:col("finCF","flow"),backgroundColor:"#3b82f6"}]},options:copts()});
+}
+function chartTitle(){const base={pl:"Выручка и чистая прибыль",kpi:"Выработка и ВП на пост",bal:"Структура активов (на конец периода)",cf:"Денежные потоки"}[cur];
+ if(year==="all"){const ga={m:"по месяцам",q:"по кварталам",y:"по годам"}[gran];return base+" — 2025–2027 "+ga;}
+ const g={m:"по месяцам",q:"по кварталам",y:"за год"}[gran];return base+" — "+year+" "+g;}
+function noteFor(t){const n={
+ pl:"Все суммы — тыс ₽ без НДС. Кварталы/год = сумма месяцев. Выбирай год кнопками сверху.",
+ kpi:"2025 — демо-факт по месяцам (обезличенные данные). Численность персонала берётся из динамического штатного расписания (зависит от выработки н/ч). Прогноз 2026–2027 строится от средних значений 2025 × рост. Ставки/коэффициенты при схлопывании усредняются, ВП и Общее время — суммируются.",
+ bal:"Балансовые статьи — на конец периода (не суммируются). Баланс сходится: касса — балансир. Актив = Пассив.",
+ cf:"Потоки — сумма за период; остаток ДС — на конец. Опер.= ЧП + амортизация − Δдебиторки − Δзапасов + Δкредиторки."}[t];
+ return `<div class="note">${n}</div>`;}
+/* тема */
+document.getElementById("themeBtn").onclick=function(){const b=document.body,light=b.getAttribute("data-theme")==="light";
+ b.setAttribute("data-theme",light?"dark":"light");this.textContent=light?"☀︎ Светлая":"☾ Тёмная";refresh();};
+/* ===== раздел «Данные (факт)»: шаблон ⬇, загрузка ⬆, пересчёт ===== */
+function renderData(){
+ document.getElementById("kpis").style.display="none";
+ document.getElementById("chartcard").style.display="none";
+ const nA=Object.keys(ANCHORS).length, nP=PENDING?Object.keys(PENDING).length:0;
+ const status = nA
+   ? `<span style="color:var(--pos);font-weight:700">● Заякорено фактических периодов: ${nA}. Ползунки на них не влияют.</span>`
+   : (nP ? `<span style="color:#f59e0b;font-weight:700">● Файл распознан: ${nP} периодов с флагом «Факт». Нажмите «Пересчитать / обновить».</span>`
+         : '○ Пока факт = только демо-2025 (обезличенные данные). Отметьте периоды флагом «Факт» в шаблоне, чтобы заякорить свои данные.');
+ const rows=engine();
+ const head=`<tr><th>Показатель</th>${rows.map(r=>`<th class="${r.fact?'fcol':''}">${r.m+" '"+String(r.yr).slice(2)}</th>`).join("")}</tr>`;
+ const cell=v=>Math.round(v).toLocaleString("ru-RU");
+ const bodyR=[`<tr style="font-weight:700"><td>Факт?</td>${rows.map(r=>`<td class="${r.fact?'fcol':''}">${r.fact?'✓':''}</td>`).join("")}</tr>`].concat(
+   INP_LABELS.map(([nm,k])=>`<tr><td>${nm}</td>${rows.map(r=>`<td class="${r[k]<0?'neg':''}${r.fact?' fcol':''}">${cell(r[k])}</td>`).join("")}</tr>`)).join("");
+ document.getElementById("tables").innerHTML=`
+  <div class="card">
+   <h3>📥 Данные клиента — факт по месяцам (2025–2027)</h3>
+   <div class="note" style="margin-bottom:10px">${status}</div>
+   <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+     <button class="btn" id="dlTpl">⬇️ Выгрузить шаблон (CSV)</button>
+     <label class="btn" style="cursor:pointer">⬆️ Загрузить заполненный<input type="file" id="upFile" accept=".csv,.txt" style="display:none"></label>
+     <button class="btn" id="recalc" ${nP?'':'disabled style="opacity:.45;cursor:default"'}>🔄 Пересчитать / обновить</button>
+     ${nA?'<button class="btn" id="clrOv">↩︎ Снять все якоря</button>':''}
+   </div>
+   <div class="grp"><h4>Памятка: как заякорить фактические периоды</h4>
+    <div class="note" style="line-height:1.7">
+     <b>1.</b> «Выгрузить шаблон» — файл <i>Шаблон_факт_Центр.csv</i>: строки-показатели × 36 столбцов месяцев (2025–2027), предзаполненные текущими значениями.<br>
+     <b>2.</b> В строке <b>«Факт? (1=да)»</b> поставьте <b>1</b> под месяцами, по которым у вас есть фактические данные. Незаякоренные месяцы останутся прогнозом (зависят от ползунков).<br>
+     <b>3.</b> В отмеченных столбцах впишите свой факт по строкам-показателям. Единицы — <b>тыс ₽, без НДС</b>; расходные строки (себестоимость) — со знаком <b>минус</b>; механики / часы / посты / площадь — числом.<br>
+     <b>4.</b> Не меняйте названия строк. Сохраните в <b>CSV (разделитель «;»)</b> → «Загрузить заполненный» → «Пересчитать / обновить».<br>
+     <b>5.</b> Отмеченные периоды <b>заякорятся</b>: их значения зафиксируются и не будут меняться ползунками (подсветка зелёной кромкой в таблицах и графиках). Прогноз (от средних факта × рост) считается только по незаякоренным месяцам.
+    </div>
+   </div>
+   <div class="note" style="margin:8px 0 4px"><span class="factchip"></span>Подсвеченные столбцы — заякоренный факт. Сейчас предзаполнены текущие значения модели.</div>
+   <div class="tblwrap"><table>${head}${bodyR}</table></div>
+  </div>`;
+ document.getElementById("dlTpl").onclick=downloadTemplate;
+ document.getElementById("upFile").onchange=e=>{const f=e.target.files[0];if(f)parseFile(f);};
+ const rc=document.getElementById("recalc"); if(rc&&nP)rc.onclick=()=>{ANCHORS=Object.assign({},ANCHORS,PENDING);PENDING=null;buildShell();renderData();};
+ const cl=document.getElementById("clrOv"); if(cl)cl.onclick=()=>{ANCHORS={};PENDING=null;buildShell();renderData();};
+}
+function downloadTemplate(){
+ const rows=engine(), sep=";";
+ let csv="﻿"+["Показатель",...rows.map(r=>r.m+" "+r.yr)].join(sep)+"\n";
+ csv+=["Факт? (1=да, пусто=прогноз)",...rows.map(r=>r.fact?1:"")].join(sep)+"\n";
+ INP_LABELS.forEach(([nm,k])=>{csv+=[nm,...rows.map(r=>Math.round(r[k]))].join(sep)+"\n";});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+ a.download="Шаблон_факт_Центр.csv"; a.click();
+}
+function parseFile(f){
+ const r=new FileReader();
+ r.onload=()=>{
+  try{
+   const text=(""+r.result).replace(/^﻿/,"");
+   const sep=text.indexOf(";")>=0?";":",";
+   const lines=text.split(/\r?\n/).filter(l=>l.trim());
+   let flagRow=null, dataLines=lines.slice(1);
+   if(/факт/i.test(lines[1]||"")){flagRow=lines[1].split(sep).slice(1,37).map(v=>(""+v).trim());dataLines=lines.slice(2);}
+   const map={};
+   dataLines.forEach(l=>{const c=l.split(sep),nm=(c[0]||"").trim(),hit=INP_LABELS.find(x=>x[0]===nm);
+    if(hit)map[hit[1]]=c.slice(1,37).map(v=>parseFloat((""+(v||"0")).replace(/\s|₽|"/g,"").replace(",","."))||0);});
+   if(Object.keys(map).length<6){alert("Не удалось распознать строки. Используйте выгруженный шаблон и не меняйте названия показателей.");return;}
+   if(!flagRow){alert("Не найдена строка «Факт? (1=да)». Скачайте шаблон заново и отметьте фактические месяцы единицей.");return;}
+   const anchors={};
+   for(let i=0;i<36;i++){const fl=parseFloat((flagRow[i]||"").replace(",","."));if(fl===1){const o={};INP_KEYS.forEach(k=>o[k]=(map[k]&&map[k][i])||0);anchors[i]=o;}}
+   if(!Object.keys(anchors).length){alert("Не отмечено ни одного фактического периода. В строке «Факт?» поставьте 1 под нужными месяцами.");return;}
+   PENDING=anchors; renderData();
+  }catch(e){alert("Ошибка чтения файла: "+e);}
+ };
+ r.readAsText(f,"utf-8");
+}
+/* ===== вкладка «Мотивация и ФОТ» ===== */
+function motScope(){
+ const rows=engine(), yr=(year==="all")?2026:year, ry=rows.filter(r=>r.yr===yr);
+ let m,label;
+ if(motMonth==="avg"){const ks=["gp","revG","cogsG","revS","cogsS","hours","npBeforeFOT"];m={};ks.forEach(k=>m[k]=mean(ry.map(r=>r[k])));label="среднее за "+yr;}
+ else{const i=Math.min(11,Math.max(0,+motMonth));m=ry[i]||ry[0];label=MON[i]+" "+yr;}
+ return {m,label,yr};
+}
+/* варианты мотивации (оклады + ставки бонусов) */
+const MOT_PRESET_NAMES0=["Вариант 1","Вариант 2","Вариант 3","Вариант 4"];
+let MOT_PRESETS=(function(){try{const s=localStorage.getItem("prodfin_motpresets_v1");if(s){const a=JSON.parse(s);if(a&&a.length)return a;}}catch(e){}return MOT_PRESET_NAMES0.map(n=>({name:n,data:null}));})();
+function saveMotPresets(){try{localStorage.setItem("prodfin_motpresets_v1",JSON.stringify(MOT_PRESETS));}catch(e){}}
+function captureMot(){return {basis:MOT.basis,pos:MOT.pos.map(p=>({O:p.O,UO:p.UO,base:p.base,rate:p.rate}))};}
+function applyMot(d){if(!d)return;if(d.basis)MOT.basis=d.basis;(d.pos||[]).forEach((q,i)=>{if(MOT.pos[i]){MOT.pos[i].O=q.O;MOT.pos[i].UO=q.UO;MOT.pos[i].base=q.base;MOT.pos[i].rate=q.rate;}});saveMOT();}
+/* документы мотивации */
+const STATION="Демо-СТО";
+function today(){return new Date().toLocaleDateString("ru-RU");}
+function baseDef(code){return ({
+ vpSTO:"<b>ВП СТО (валовая прибыль станции)</b> = Выручка без НДС − себестоимость услуг и запасных частей. Прибыль станции после прямых затрат на запчасти и труд механиков, до накладных расходов.",
+ vpZCH:"<b>ВП ЗЧ (валовая прибыль по запчастям)</b> = Выручка по запчастям без НДС − себестоимость запасных частей.",
+ vpUSL:"<b>ВП Услуги (валовая прибыль по услугам)</b> = Выручка по услугам без НДС − себестоимость нормо-часов (оплата труда механиков).",
+ chp:"<b>ЧП (чистая прибыль станции)</b> = ВП СТО за вычетом всех остальных расходов (ФОТ и премии руководства, аренда, охрана, коммунальные, реклама, налоги, амортизация).",
+ nch:"<b>Количество н/ч (нормо-часов)</b> = суммарная проданная выработка станции за период, без учёта рекламационного ремонта."
+})[code];}
+/* блок документа по должности i: mode='sign' (для подписания, без текущих цифр) | 'calc' (с расчётом) */
+function motDocBlock(i,mode){
+ const p=MOT.pos[i], isNch=p.base==="nch";
+ const okl=(MOT.basis==="official"?p.O:p.UO);     // фиксированный оклад (официальный влит в управленческий)
+ const kTxt=isNch?(p.rate.toLocaleString("ru-RU")+" ₽ / н·ч"):(p.rate.toLocaleString("ru-RU",{maximumFractionDigits:3})+" %");
+ const formula=isNch?"ЗП за месяц = Оклад + База (н/ч) × К (₽/н·ч)":"ЗП за месяц = Оклад + max(0; База) × К";
+ let html=`
+  <div class="docsec">1. Выставленные параметры</div>
+  <div class="doctblwrap"><table class="doctbl">
+   <tr><td>Оклад (фиксированный)</td><td class="val">${f0(okl)} ₽ / мес</td></tr>
+   <tr><td>Коэффициент бонуса (К)</td><td class="val">${kTxt}</td></tr>
+   <tr><td>База начисления бонуса</td><td class="val">${BASE_LABELS[p.base]}</td></tr>
+  </table></div>
+  <div class="docsec">2. Формула заработной платы</div>
+  <div class="docformula">${formula}</div>
+  <div class="docnote">Бонус начисляется только при положительной базе. Если База ≤ 0 — выплачивается только оклад. База считается до начисления бонуса данного сотрудника.</div>
+  <div class="docsec">3. Определения базы</div>
+  <div class="docnote">${baseDef(p.base)}</div>`;
+ if(mode==="calc"){
+  const unit=isNch?" н/ч":" ₽";
+  const y26=projYear(p,2026), y27=projYear(p,2027);
+  html+=`
+  <div class="docsec">4. Ожидаемый результат (по прогнозу), среднемесячно</div>
+  <div class="doctblwrap"><table class="doctbl">
+   <tr class="head"><td>Показатель</td><td class="val">2026</td><td class="val">2027</td></tr>
+   <tr><td>База начисления (${BASE_LABELS[p.base]})</td><td class="val">${f0(y26.avgBase)}${unit}</td><td class="val">${f0(y27.avgBase)}${unit}</td></tr>
+   <tr><td>Бонус (К = ${kTxt})</td><td class="val">${f0(y26.avgBonus)} ₽</td><td class="val">${f0(y27.avgBonus)} ₽</td></tr>
+   <tr class="total"><td>Зарплата (оклад + бонус)</td><td class="val"><span class="docbig">${f0(y26.avgZp)} ₽</span></td><td class="val"><span class="docbig">${f0(y27.avgZp)} ₽</span></td></tr>
+  </table></div>
+  <div class="docnote">Месяцев с начислением бонуса за 2026–2027: <b>${y26.paid+y27.paid} из ${y26.n+y27.n}</b>. Бонус усредняется помесячно: в месяцы с базой ≤ 0 выплачивается только оклад.${p.prod?" Должность продуктивная — ФОТ учтён в себестоимости услуг.":""}</div>`;
+ }
+ html+=`<div class="docfoot">Документ носит расчётно-иллюстративный характер. Суммы — прогноз финмодели СТО «${STATION}» (2026–2027) от усреднённого факта. Оклад — фиксированная (управленческая) часть, бонус — переменная.</div>`;
+ return html;
+}
+function projYear(p,yr){
+ const rows=engine().filter(r=>r.yr===yr);
+ const isNch=p.base==="nch", mult=isNch?(+p.rate||0):((+p.rate||0)/100);
+ const okl=(MOT.basis==="official"?(+p.O||0):(+p.UO||0));
+ let sBase=0,sBonus=0,paid=0;
+ rows.forEach(r=>{const bv=baseVal(p.base,r), bon=mult*Math.max(0,bv);sBase+=bv;sBonus+=bon;if(bv>0)paid++;});
+ const n=rows.length||1;
+ return {avgBase:sBase/n,avgBonus:sBonus/n,avgZp:okl+sBonus/n,paid,n};
+}
+function openMotCard(i,mode){
+ const p=MOT.pos[i], sub=(mode==="sign")?"документ для подписания":"ожидаемый результат (прогноз)";
+ const card=`<div class="modalbk" id="motModal"><div class="motcard">
+   <div class="mc-head"><h2>Мотивация сотрудника — ${p.name}</h2><div class="mc-dept">СТО «${STATION}» · ${today()} · ${sub}</div></div>
+   <div class="mc-body">${motDocBlock(i,mode)}</div>
+   <div class="mc-foot"><button class="btn print" onclick="window.print()">🖨 Печать / PDF</button><button class="btn" onclick="document.getElementById('motModal').remove()">Закрыть</button></div>
+  </div></div>`;
+ document.body.insertAdjacentHTML("beforeend",card);
+ document.getElementById("motModal").onclick=e=>{if(e.target.id==="motModal")e.target.remove();};
+}
+function openCombinedDoc(){
+ let blocks="",lastDept="";
+ MOT.pos.forEach((p,i)=>{
+  let head="";if(p.dept!==lastDept){head=`<div class="docsec" style="color:var(--ac);font-size:13px;text-transform:uppercase;letter-spacing:.4px">${p.dept}</div>`;lastDept=p.dept;}
+  blocks+=head+`<div class="docblock"><h3 style="margin:0 0 8px">${p.name}</h3>${motDocBlock(i,"sign")}</div>`;
+ });
+ const card=`<div class="modalbk" id="motModal"><div class="motcard" style="max-width:780px">
+   <div class="mc-head"><h2>Сводная мотивация персонала</h2><div class="mc-dept">СТО «${STATION}» · ${today()} · документ для подписания</div></div>
+   <div class="mc-body">${blocks}</div>
+   <div class="mc-foot"><button class="btn print" onclick="window.print()">🖨 Печать / PDF</button><button class="btn" onclick="document.getElementById('motModal').remove()">Закрыть</button></div>
+  </div></div>`;
+ document.body.insertAdjacentHTML("beforeend",card);
+ document.getElementById("motModal").onclick=e=>{if(e.target.id==="motModal")e.target.remove();};
+}
+function renderMot(){
+ document.getElementById("kpis").style.display="none";
+ document.getElementById("chartcard").style.display="none";
+ const {m,label,yr}=motScope(), stf=computeStaff(m);
+ const totCnt=stf.rows.reduce((s,r)=>s+r.count,0);
+ const prodCnt=stf.rows.filter(r=>r.prod).reduce((s,r)=>s+r.count,0), nonProdCnt=totCnt-prodCnt;
+ const sO=stf.rows.reduce((s,r)=>s+r.O,0),sUO=stf.rows.reduce((s,r)=>s+r.UO,0),sBon=stf.rows.reduce((s,r)=>s+r.bonus,0),sZp=stf.rows.reduce((s,r)=>s+r.zp,0);
+ const basisCtl=`<div class="group"><span class="glabel">Платим оклад:</span>
+   <button class="btn ${MOT.basis==='uo'?'active':''}" data-basis="uo">Управленческий (по умолч.)</button>
+   <button class="btn ${MOT.basis==='official'?'active':''}" data-basis="official">Официальный</button></div>`;
+ const monCtl=`<div class="group"><span class="glabel">Период:</span><select id="motMon" class="btn"><option value="avg" ${motMonth==='avg'?'selected':''}>Среднее за ${yr}</option>${MON.map((mn,i)=>`<option value="${i}" ${(''+motMonth)===(''+i)?'selected':''}>${mn} ${yr}</option>`).join("")}</select></div>`;
+ const presetsHtml=`<div class="presets" style="border-top:none;padding-top:0;margin:0 0 4px"><div class="ptitle">📌 Варианты мотивации <span style="font-weight:400">(💾 — записать оклады+ставки · клик — применить · 2× клик — переименовать)</span></div>`+
+   MOT_PRESETS.map((p,i)=>`<span class="preset ${p.data?'has':''}" style="display:inline-flex;width:auto;margin:0 6px 6px 0;vertical-align:top"><button class="btn pload" data-mp="${i}" title="${p.data?'Применить вариант':'Слот пуст — сохраните 💾'}">${p.name}</button><button class="btn psave" data-mp="${i}" title="Сохранить текущие оклады и ставки">💾</button></span>`).join("")+`</div>`;
+ let body="",lastDept="";
+ stf.rows.forEach(r=>{
+  if(r.dept!==lastDept){body+=`<tr class="deptrow"><td colspan="10">${r.dept}</td></tr>`;lastDept=r.dept;}
+  const baseSel=Object.keys(BASE_LABELS).map(k=>`<option value="${k}" ${r.base===k?'selected':''}>${BASE_LABELS[k]}</option>`).join("");
+  body+=`<tr class="${r.prod?'prodrow':''}">
+    <td>${r.name}${r.prod?' · <span style="color:var(--mut);font-size:10px">продукт.</span>':''}</td>
+    <td><input data-i="${r.i}" data-f="O" type="text" inputmode="numeric" value="${f0(r.O)}"></td>
+    <td><input data-i="${r.i}" data-f="UO" type="text" inputmode="numeric" value="${f0(r.UO)}"></td>
+    <td><select data-i="${r.i}" data-f="base">${baseSel}</select></td>
+    <td class="ratecell"><input data-i="${r.i}" data-f="rate" type="number" step="${r.base==='nch'?0.1:0.05}" value="${r.rate}"><span class="unit">${r.base==='nch'?'₽/н·ч':'%'}</span></td>
+    <td>${r.count}</td><td>${f0(r.bonus)}</td><td>${f0(r.zp)}</td>
+    <td>${r.prod?'<span style="color:var(--mut)">в себест.</span>':f0(r.fotPos)}</td>
+    <td style="white-space:nowrap"><button class="motbtn" data-sign="${r.i}" title="Документ для подписания: оклад + формула, без текущих цифр">✍️ Подписать</button> <button class="motbtn" data-calc="${r.i}" title="С расчётом за выбранный период">🧮 Расчёт</button></td></tr>`;
+ });
+ const head=`<tr><th>Должность</th><th>Офиц. оклад, ₽</th><th>Упр. оклад, ₽</th><th>База бонуса</th><th>Ставка</th><th>Штат</th><th>Бонус/чел, ₽</th><th>ЗП/чел, ₽</th><th>ФОТ, ₽</th><th>Документы (PDF)</th></tr>`;
+ const totals=`<tr class="tot"><td>ИТОГО · непрод. ${nonProdCnt} · прод. ${prodCnt}</td><td>${f0(sO)}</td><td>${f0(sUO)}</td><td></td><td></td><td>${totCnt}</td><td>${f0(sBon)}</td><td>${f0(sZp)}</td><td>${f0(stf.fot)}</td><td></td></tr>`;
+ document.getElementById("tables").innerHTML=`
+  <div class="toolbar" style="position:static;border:none;padding:0 0 8px;gap:14px">${basisCtl}${monCtl}<button class="btn" id="motCombined">📚 Сводный документ (все должности)</button><button class="btn" id="motReset">↩︎ Сбросить оклады</button></div>
+  ${presetsHtml}
+  <div class="card">
+   <h3>👥 Динамическое штатное расписание и мотивация по должностям</h3>
+   <div class="note">Штат каждой должности привязан к выработке н/ч за период. Текущий диапазон: <b>${BRK[stf.bi]}</b> н/ч (${f0(m.hours)} н/ч/мес). Продуктивный персонал (механики/диагносты) в ФОТ не входит — его ЗП учтена в себестоимости услуг. ЗП = <b>${MOT.basis==='uo'?'Управленческий оклад':'Официальный оклад'}</b> + Бонус. Ставка бонуса: для ВП/ЧП — в процентах (5 = 5%); для н/ч — ₽ за 1 н/ч.</div>
+   <div class="tblwrap"><table class="mottbl">${head}${body}${totals}</table></div>
+   <div class="kpis" style="margin-top:14px">
+     <div class="kpi"><div class="lbl">ФОТ непродукт., ₽/мес</div><div class="v">${f0(stf.fot)}</div></div>
+     <div class="kpi"><div class="lbl">ФОТ налоги (×0,5), ₽/мес</div><div class="v">${f0(stf.fotTax)}</div></div>
+     <div class="kpi"><div class="lbl">ФОТ ИТОГО, ₽/мес</div><div class="v">${f0(stf.fotTotal)}</div></div>
+     <div class="kpi"><div class="lbl">ФОТ ИТОГО, тыс ₽/мес</div><div class="v">${f0(stf.fotTotal/1000)}</div></div>
+   </div>
+   <div class="note">Эти суммы попадают в «П&У» отдельными строками «ФОТ / ФОТ налоги / ФОТ ИТОГО», а «Операц. расходы» уменьшаются на ФОТ ИТОГО (без двойного счёта). Любое изменение окладов, бонусов или числа н/ч пересчитывает П&У автоматически. Изменения и варианты сохраняются в браузере.</div>
+  </div>`;
+ document.querySelectorAll('[data-basis]').forEach(b=>b.onclick=()=>{MOT.basis=b.dataset.basis;saveMOT();refresh();});
+ document.getElementById("motMon").onchange=e=>{motMonth=e.target.value;refresh();};
+ document.getElementById("motCombined").onclick=openCombinedDoc;
+ document.getElementById("motReset").onclick=()=>{if(confirm("Сбросить все оклады/бонусы к демо-значениям?")){MOT.pos=JSON.parse(JSON.stringify(POS0));MOT.basis="uo";saveMOT();refresh();}};
+ document.querySelectorAll('.mottbl input,.mottbl select').forEach(el=>{
+   el.onchange=()=>{const i=+el.dataset.i,f=el.dataset.f;let v;
+     if(f==="base")v=el.value;
+     else if(f==="rate")v=+el.value||0;
+     else v=+(""+el.value).replace(/[^\d.-]/g,"")||0;   // оклады: убрать пробелы-разряды
+     MOT.pos[i][f]=v;saveMOT();refresh();};});
+ document.querySelectorAll('[data-sign]').forEach(b=>b.onclick=()=>openMotCard(+b.dataset.sign,"sign"));
+ document.querySelectorAll('[data-calc]').forEach(b=>b.onclick=()=>openMotCard(+b.dataset.calc,"calc"));
+ document.querySelectorAll('.pload[data-mp]').forEach(b=>{b.onclick=()=>{const pr=MOT_PRESETS[+b.dataset.mp].data;if(!pr)return;applyMot(pr);refresh();};
+   b.ondblclick=()=>{const i=+b.dataset.mp,nn=prompt("Название варианта:",MOT_PRESETS[i].name);if(nn&&nn.trim()){MOT_PRESETS[i].name=nn.trim().slice(0,24);saveMotPresets();refresh();}};});
+ document.querySelectorAll('.psave[data-mp]').forEach(b=>b.onclick=()=>{MOT_PRESETS[+b.dataset.mp].data=captureMot();saveMotPresets();refresh();});
+}
+buildShell();controls();refresh();
+</script>
+</body></html>
