@@ -112,7 +112,7 @@ header.nav.scr .brand .nm b{font-size:16px}
 .product.open .exp{color:var(--ac)}.product.open .exp .ar{transform:rotate(180deg)}
 .rowdemo{max-height:0;overflow:hidden;opacity:0;transition:max-height .65s cubic-bezier(.2,.8,.2,1),opacity .5s ease}
 .product.open .rowdemo{max-height:1100px;opacity:1}
-.rdwrap{width:66%;max-width:1000px;margin:8px auto 38px}
+.rdwrap{width:78%;max-width:1240px;margin:8px auto 38px}
 @media(max-width:900px){.rdwrap{width:94%}}
 .rdframe{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0c0f13;line-height:0;
   box-shadow:0 36px 80px rgba(34,50,64,.18);transform:translateY(24px) scale(.965);opacity:0;
@@ -122,7 +122,7 @@ header.nav.scr .brand .nm b{font-size:16px}
 .rdcap{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mut);margin-top:12px;line-height:1.5}
 .rdcap b{color:var(--ac);font-weight:400}
 /* carousel — «Демо в деле» */
-.carousel{width:66%;max-width:1000px;margin:0 auto}
+.carousel{width:78%;max-width:1240px;margin:0 auto}
 @media(max-width:900px){.carousel{width:96%}}
 .cstage{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0c0f13;line-height:0;box-shadow:0 30px 70px rgba(34,50,64,.16)}
 .cslide{display:none}.cslide.active{display:block;animation:cfade .5s ease}
@@ -137,6 +137,15 @@ header.nav.scr .brand .nm b{font-size:16px}
 .cdots{display:flex;gap:8px;justify-content:center;margin-top:14px}
 .cdot{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer;transition:background .25s}
 .cdot.on{background:var(--ac)}
+/* fullscreen button on every video */
+.rdframe,.cslide{position:relative}
+.fsbtn{position:absolute;top:12px;right:12px;z-index:4;display:inline-flex;align-items:center;gap:7px;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.03em;line-height:1;color:#fff;
+  background:rgba(12,15,19,.62);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.2);
+  border-radius:9px;padding:8px 13px;cursor:pointer;transition:all .2s}
+.fsbtn:hover{background:var(--ac);border-color:var(--ac);color:#1a1206}
+.fsbtn .ic{font-size:15px;line-height:1}
+@media(max-width:600px){.fsbtn .t{display:none}.fsbtn{padding:8px 10px}}
 
 /* pull quote */
 .quote{padding:140px 0}
@@ -423,6 +432,22 @@ document.querySelectorAll('.product .idxrow[data-src]').forEach(row=>{
       setTimeout(()=>row.scrollIntoView({behavior:'smooth',block:'nearest'}),120); }
     else if(v)v.pause();
   });
+});
+
+/* fullscreen button on every video */
+document.querySelectorAll('.rdframe, .cslide').forEach(box=>{
+  const b=document.createElement('button');
+  b.type='button'; b.className='fsbtn';
+  b.innerHTML='<span class="ic">⛶</span><span class="t">во весь экран</span>';
+  b.addEventListener('click',e=>{
+    e.stopPropagation();
+    const v=box.querySelector('video'); if(!v)return;
+    if(!v.getAttribute('src')&&v.dataset.src)v.setAttribute('src',v.dataset.src);
+    v.muted=true; v.play().catch(()=>{});
+    const fn=v.requestFullscreen||v.webkitRequestFullscreen||v.webkitEnterFullscreen||v.msRequestFullscreen;
+    if(fn)try{fn.call(v);}catch(_){}
+  });
+  box.appendChild(b);
 });
 
 /* carousel «Демо в деле» */
