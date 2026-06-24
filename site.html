@@ -43,7 +43,13 @@ header.nav.scr .brand .nm b{font-size:16px}
 .menu a{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.04em;color:var(--mut);transition:color .2s}
 .menu a:hover{color:var(--ink)}
 .menu a.navcta{color:var(--ac)}
-.burger{display:none;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink);cursor:pointer}
+.burger{display:none;font-family:'IBM Plex Mono',monospace;font-size:22px;line-height:1;color:var(--ink);cursor:pointer;background:none;border:0;padding:6px 4px}
+.mobmenu{position:fixed;inset:0 0 auto 0;z-index:55;background:rgba(243,241,234,.98);backdrop-filter:blur(14px);
+  padding:84px 28px 30px;display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);
+  transform:translateY(-101%);visibility:hidden;transition:transform .42s cubic-bezier(.2,.8,.2,1),visibility .42s}
+.mobmenu.open{transform:none;visibility:visible}
+.mobmenu a{font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:.03em;color:var(--ink);padding:15px 2px;border-bottom:1px solid var(--line2)}
+.mobmenu a.navcta{color:var(--ac);border-bottom:0;margin-top:10px}
 
 /* hero */
 .hero{padding:168px 0 0}
@@ -204,12 +210,31 @@ footer{padding:70px 0 46px}
 @media(max-width:900px){
   .wrap{padding:0 22px}.nav-in{padding:16px 22px}.menu{display:none}.burger{display:block}
   .split{grid-template-columns:1fr;gap:36px}
-  .idxrow{grid-template-columns:50px 1fr;gap:16px}.idxrow .pr{grid-column:2;margin-top:6px}
+  .metaTable .row{grid-template-columns:1fr;gap:4px}
+  .idxrow{grid-template-columns:48px 1fr;gap:16px}
+  .rmeta{grid-column:1 / -1;flex-direction:row;align-items:center;justify-content:space-between;gap:14px;margin-top:12px}
+  .idxrow:hover .no,.idxrow:hover .ti{transform:none}
   .steps4{grid-template-columns:1fr 1fr}.steps4 .st{border-bottom:1px solid var(--line2)}
-  .gal{grid-template-columns:1fr 1fr}.foot{grid-template-columns:1fr 1fr}
-  .hero{padding:130px 0 0}.section{padding:80px 0}.quote{padding:90px 0}
+  .foot{grid-template-columns:1fr 1fr}
+  .hero{padding:128px 0 0}.section{padding:80px 0}.quote{padding:90px 0}
+  .rdwrap,.carousel{width:94%;max-width:none}
 }
-@media(max-width:540px){.gal{grid-template-columns:1fr}.foot{grid-template-columns:1fr}.steps4{grid-template-columns:1fr}}
+@media(max-width:600px){
+  .wrap{padding:0 18px}
+  .hero{padding:116px 0 0}.hero h1{font-size:clamp(38px,15vw,70px)}
+  .hero .kickline{font-size:11px;letter-spacing:.1em;margin-bottom:18px}
+  .hero .sub p{font-size:17px}.hero .sub{margin:26px 0 46px}
+  .heroimg{height:42vh;min-height:240px}.heroimg .hull{width:170px;height:auto}
+  .section{padding:58px 0}.quote{padding:58px 0}.kicker{margin-bottom:26px}
+  .h2{font-size:clamp(27px,8.4vw,40px)}.lead{font-size:clamp(20px,6.2vw,27px)}
+  .quote blockquote{font-size:clamp(26px,8vw,40px)}
+  .idxrow{padding:26px 0}.idxrow .ti h3{font-size:clamp(23px,7.4vw,31px)}.idxrow .ti p{font-size:14.5px}
+  .rdwrap,.carousel{width:100%}.rdframe{border-radius:10px}
+  .carr{width:46px;height:46px;font-size:20px}.ccap{font-size:11px}.cnav{gap:10px}
+  .steps4{grid-template-columns:1fr}.foot{grid-template-columns:1fr;gap:28px}
+  .cta h2{font-size:clamp(29px,9vw,46px)}.btns{flex-direction:column}.cta .btn{width:100%;justify-content:center;padding:16px}
+  .fsbtn{top:10px;right:10px}
+}
 </style>
 </head>
 <body>
@@ -231,9 +256,16 @@ footer{padding:70px 0 46px}
       <a href="#process">Процесс</a>
       <a class="navcta" href="#contact">Связаться →</a>
     </nav>
-    <div class="burger" onclick="location.hash='#contact'">МЕНЮ</div>
+    <button class="burger" id="burger" aria-label="Меню">☰</button>
   </div>
 </header>
+<nav class="mobmenu" id="mobmenu">
+  <a href="#about">О студии</a>
+  <a href="#index">Продукты</a>
+  <a href="#process">Процесс</a>
+  <a href="#demo">Демо в деле</a>
+  <a class="navcta" href="#contact">Связаться →</a>
+</nav>
 
 <!-- HERO -->
 <section class="hero" id="top">
@@ -419,6 +451,23 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 const BOT={max:'https://max.ru/se13308383_bot',tg:'https://t.me/vebverf_bot'};
 document.querySelectorAll('[data-bot]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const u=BOT[a.dataset.bot];if(u)open(u,'_blank','noopener');}));
+
+/* mobile burger menu */
+(function(){
+  const burger=document.getElementById('burger'), mob=document.getElementById('mobmenu'); if(!burger||!mob)return;
+  function close(){mob.classList.remove('open');burger.textContent='☰';}
+  burger.addEventListener('click',()=>{const o=mob.classList.toggle('open');burger.textContent=o?'✕':'☰';});
+  mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+})();
+
+/* carousel swipe (touch) */
+(function(){
+  const stage=document.querySelector('.cstage'); if(!stage)return;
+  let x0=null;
+  stage.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;},{passive:true});
+  stage.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40){const b=document.getElementById(dx<0?'cnext':'cprev');if(b)b.click();}x0=null;},{passive:true});
+})();
 
 /* product rows: magic click-to-expand video */
 document.querySelectorAll('.product .idxrow[data-src]').forEach(row=>{
