@@ -461,7 +461,8 @@ addEventListener('scroll',()=>nav.classList.toggle('scr',scrollY>16),{passive:tr
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 const BOT={max:'https://max.ru/se13308383_bot',tg:'https://t.me/vebverf_bot'};
-document.querySelectorAll('[data-bot]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const u=BOT[a.dataset.bot];if(u)open(u,'_blank','noopener');}));
+document.querySelectorAll('[data-bot]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const b=a.dataset.bot;const u=BOT[b];if(window.ym)ym(110117064,'reachGoal',b==='max'?'click_max':'click_tg');if(u)open(u,'_blank','noopener');}));
+document.querySelectorAll('a[href="finmodel.html"]').forEach(a=>a.addEventListener('click',()=>{if(window.ym)ym(110117064,'reachGoal','open_finmodel');}));
 
 /* mobile burger menu */
 (function(){
@@ -487,6 +488,7 @@ document.querySelectorAll('.product .idxrow[data-src]').forEach(row=>{
     const p=row.parentElement, opening=!p.classList.contains('open');
     document.querySelectorAll('.product.open').forEach(o=>{if(o!==p){o.classList.remove('open');const ov=o.querySelector('video');if(ov)ov.pause();}});
     p.classList.toggle('open',opening);
+    if(opening&&window.ym)ym(110117064,'reachGoal','view_demo');
     const v=p.querySelector('video');
     if(opening&&v){ if(!v.getAttribute('src'))v.setAttribute('src',v.dataset.src); v.play().catch(()=>{});
       setTimeout(()=>row.scrollIntoView({behavior:'smooth',block:'nearest'}),120); }
