@@ -101,14 +101,42 @@ header.nav.scr .brand .nm b{font-size:16px}
 .band.light .grid{background-image:linear-gradient(rgba(34,50,64,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(34,50,64,.06) 1px,transparent 1px)}
 .band .cap{position:absolute;left:40px;bottom:24px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;color:rgba(255,255,255,.6)}
 .band.light .cap{color:var(--mut)}
-/* full-width video demos */
-.viddemo{position:relative;background:#0c0f13;overflow:hidden;line-height:0}
-.viddemo video{display:block;width:100%;height:auto}
-.viddemo .vcap{position:absolute;left:34px;bottom:24px;line-height:1.4;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.8);background:rgba(12,15,19,.55);backdrop-filter:blur(4px);padding:7px 13px;border-radius:7px}
-.viddemo .vcap b{color:var(--ac);font-weight:400}
-.demogrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.demogrid .viddemo{border-radius:12px;border:1px solid var(--line)}
-@media(max-width:900px){.demogrid{grid-template-columns:1fr}}
+/* product rows with click-to-expand video (magic open, 2/3 width) */
+.product{border-bottom:1px solid var(--line)}
+.product .idxrow{border-bottom:0;cursor:pointer;user-select:none}
+.product .idxrow.nodemo{cursor:default}
+.rmeta{display:flex;flex-direction:column;align-items:flex-end;gap:9px;white-space:nowrap}
+.exp{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.04em;color:var(--dim);display:inline-flex;align-items:center;gap:6px;transition:color .3s}
+.exp .ar{display:inline-block;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.product:hover .exp{color:var(--ac)}
+.product.open .exp{color:var(--ac)}.product.open .exp .ar{transform:rotate(180deg)}
+.rowdemo{max-height:0;overflow:hidden;opacity:0;transition:max-height .65s cubic-bezier(.2,.8,.2,1),opacity .5s ease}
+.product.open .rowdemo{max-height:1100px;opacity:1}
+.rdwrap{width:66%;max-width:1000px;margin:8px auto 38px}
+@media(max-width:900px){.rdwrap{width:94%}}
+.rdframe{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0c0f13;line-height:0;
+  box-shadow:0 36px 80px rgba(34,50,64,.18);transform:translateY(24px) scale(.965);opacity:0;
+  transition:transform .72s cubic-bezier(.16,.84,.3,1),opacity .55s ease}
+.product.open .rdframe{transform:none;opacity:1}
+.rdframe video{display:block;width:100%;height:auto}
+.rdcap{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mut);margin-top:12px;line-height:1.5}
+.rdcap b{color:var(--ac);font-weight:400}
+/* carousel — «Демо в деле» */
+.carousel{width:66%;max-width:1000px;margin:0 auto}
+@media(max-width:900px){.carousel{width:96%}}
+.cstage{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0c0f13;line-height:0;box-shadow:0 30px 70px rgba(34,50,64,.16)}
+.cslide{display:none}.cslide.active{display:block;animation:cfade .5s ease}
+@keyframes cfade{from{opacity:.25}to{opacity:1}}
+.cslide video{display:block;width:100%;height:auto}
+.cnav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px}
+.carr{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);
+  font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;flex:0 0 auto}
+.carr:hover{border-color:var(--ac);color:var(--ac)}
+.ccap{flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mut)}
+.ccap b{color:var(--ac);font-weight:400}
+.cdots{display:flex;gap:8px;justify-content:center;margin-top:14px}
+.cdot{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer;transition:background .25s}
+.cdot.on{background:var(--ac)}
 
 /* pull quote */
 .quote{padding:140px 0}
@@ -242,42 +270,50 @@ footer{padding:70px 0 46px}
   </div>
 </section>
 
-<!-- DEMO: Финмодель (full-width) -->
-<section class="viddemo rv">
-  <video src="finmodel_long.mp4" poster="finmodel_long_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
-  <span class="vcap">// <b>Финмодель</b> · выручка, ВП и прогноз 2025–2027 (обезличено)</span>
-</section>
-
 <!-- INDEX OF PRODUCTS -->
 <section class="section" id="index">
   <div class="wrap">
     <div class="kicker rv"><span class="lbl">03 — Продукты</span><span class="ln"></span></div>
     <h2 class="h2 rv" style="margin-bottom:50px">Пять инструментов одной верфи</h2>
     <div class="idxlist">
-      <div class="idxrow rv">
-        <span class="no">01</span>
-        <div class="ti"><h3>Планировщик ремонта</h3><p>Графическая загрузка механиков, заказ-наряды на сетке, 7 статусов, контроль перегрузки по часам, импорт истории из 1С.</p></div>
-        <span class="pr">от 50 000 ₽</span>
+      <div class="product rv">
+        <div class="idxrow" data-src="planner_long.mp4">
+          <span class="no">01</span>
+          <div class="ti"><h3>Планировщик ремонта</h3><p>Графическая загрузка механиков, заказ-наряды на сетке, 7 статусов, контроль перегрузки по часам, импорт истории из 1С.</p></div>
+          <div class="rmeta"><span class="pr">от 50 000 ₽</span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
+        </div>
+        <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="planner_long.mp4" poster="planner_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Планировщик</b> · сетка загрузки бригады и заказ-наряды</div></div></div>
       </div>
-      <div class="idxrow rv">
-        <span class="no">02</span>
-        <div class="ti"><h3>Финмодель сервиса</h3><p>Факт и прогноз на 2 года, маржинальная лестница, сценарии на ползунках, модуль «Мотивация и ФОТ».</p></div>
-        <span class="pr">от 75 000 ₽ · <a href="finmodel.html" target="_blank" rel="noopener">демо →</a></span>
+      <div class="product rv">
+        <div class="idxrow" data-src="finmodel_long.mp4">
+          <span class="no">02</span>
+          <div class="ti"><h3>Финмодель сервиса</h3><p>Факт и прогноз на 2 года, маржинальная лестница, сценарии на ползунках, модуль «Мотивация и ФОТ».</p></div>
+          <div class="rmeta"><span class="pr">от 75 000 ₽ · <a href="finmodel.html" target="_blank" rel="noopener">интерактив →</a></span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
+        </div>
+        <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="finmodel_long.mp4" poster="finmodel_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Финмодель</b> · выручка, ВП и прогноз 2025–2027 (обезличено)</div></div></div>
       </div>
-      <div class="idxrow rv">
-        <span class="no">03</span>
-        <div class="ti"><h3>Управленческий дашборд</h3><p>Все цифры сервиса или сети цехов на одном экране: выручка, прибыль, эффективность, тренды, блок МСФО.</p></div>
-        <span class="pr">от 50 000 ₽</span>
+      <div class="product rv">
+        <div class="idxrow" data-src="dashboard_long.mp4">
+          <span class="no">03</span>
+          <div class="ti"><h3>Управленческий дашборд</h3><p>Все цифры сервиса или сети цехов на одном экране: выручка, прибыль, эффективность, тренды, блок МСФО.</p></div>
+          <div class="rmeta"><span class="pr">от 50 000 ₽</span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
+        </div>
+        <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="dashboard_long.mp4" poster="dashboard_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Дашборд</b> · KPI, графики, помесячная динамика</div></div></div>
       </div>
-      <div class="idxrow rv">
-        <span class="no">04</span>
-        <div class="ti"><h3>Мотивация и ФОТ</h3><p>Оклад плюс бонус от чёткой базы — маржа, прибыль, нормо-часы. Динамический штат, документы по должностям.</p></div>
-        <span class="pr">в составе финмодели</span>
+      <div class="product rv">
+        <div class="idxrow" data-src="motivation_long.mp4">
+          <span class="no">04</span>
+          <div class="ti"><h3>Мотивация и ФОТ</h3><p>Оклад плюс бонус от чёткой базы — маржа, прибыль, нормо-часы. Динамический штат, документы по должностям.</p></div>
+          <div class="rmeta"><span class="pr">в составе финмодели</span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
+        </div>
+        <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="motivation_long.mp4" poster="motivation_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Мотивация и ФОТ</b> · штат и бонусы по должностям</div></div></div>
       </div>
-      <div class="idxrow rv">
-        <span class="no">05</span>
-        <div class="ti"><h3>Цифровизация под ключ</h3><p>Система под ваш процесс из готовых модулей, связанная с учётом, под ваши роли — недели, а не месяцы.</p></div>
-        <span class="pr">от 50 000 ₽</span>
+      <div class="product rv">
+        <div class="idxrow nodemo">
+          <span class="no">05</span>
+          <div class="ti"><h3>Цифровизация под ключ</h3><p>Система под ваш процесс из готовых модулей, связанная с учётом, под ваши роли — недели, а не месяцы.</p></div>
+          <div class="rmeta"><span class="pr">от 50 000 ₽</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -289,12 +325,6 @@ footer{padding:70px 0 46px}
     <blockquote>«Мы понимаем не только код, но и <em>нормо-час, маржу</em> и то, как живёт цех в высокий сезон».</blockquote>
     <div class="by">// Принцип студии</div>
   </div>
-</section>
-
-<!-- DEMO: Планировщик (full-width) -->
-<section class="viddemo rv">
-  <video src="planner_long.mp4" poster="planner_long_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
-  <span class="vcap">// <b>Планировщик</b> · сетка загрузки бригады и заказ-наряды</span>
 </section>
 
 <!-- PROCESS -->
@@ -311,19 +341,23 @@ footer{padding:70px 0 46px}
   </div>
 </section>
 
-<!-- DEMO: Дашборд + Мотивация -->
-<section class="section" style="padding-top:0">
+<!-- DEMO: карусель всех инструментов -->
+<section class="section" id="demo" style="padding-top:0">
   <div class="wrap">
     <div class="kicker rv"><span class="lbl">05 — Демо в деле</span><span class="ln"></span></div>
-    <div class="demogrid rv">
-      <div class="viddemo">
-        <video src="dashboard_long.mp4" poster="dashboard_long_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
-        <span class="vcap">// <b>Дашборд</b> · KPI, графики, помесячная динамика</span>
+    <div class="carousel rv" id="carousel">
+      <div class="cstage">
+        <div class="cslide active"><video data-src="planner_long.mp4" poster="planner_long_poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="cslide"><video data-src="finmodel_long.mp4" poster="finmodel_long_poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="cslide"><video data-src="dashboard_long.mp4" poster="dashboard_long_poster.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="cslide"><video data-src="motivation_long.mp4" poster="motivation_long_poster.jpg" muted loop playsinline preload="none"></video></div>
       </div>
-      <div class="viddemo">
-        <video src="motivation_long.mp4" poster="motivation_long_poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
-        <span class="vcap">// <b>Мотивация и ФОТ</b> · штат и бонусы по должностям</span>
+      <div class="cnav">
+        <button class="carr" id="cprev" aria-label="Назад">‹</button>
+        <div class="ccap" id="ccap">// <b>Планировщик</b> · сетка загрузки и заказ-наряды</div>
+        <button class="carr" id="cnext" aria-label="Вперёд">›</button>
       </div>
+      <div class="cdots" id="cdots"></div>
     </div>
   </div>
 </section>
@@ -376,6 +410,46 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 const BOT={max:'https://max.ru/se13308383_bot',tg:'https://t.me/vebverf_bot'};
 document.querySelectorAll('[data-bot]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const u=BOT[a.dataset.bot];if(u)open(u,'_blank','noopener');}));
+
+/* product rows: magic click-to-expand video */
+document.querySelectorAll('.product .idxrow[data-src]').forEach(row=>{
+  row.addEventListener('click',e=>{
+    if(e.target.closest('a'))return;
+    const p=row.parentElement, opening=!p.classList.contains('open');
+    document.querySelectorAll('.product.open').forEach(o=>{if(o!==p){o.classList.remove('open');const ov=o.querySelector('video');if(ov)ov.pause();}});
+    p.classList.toggle('open',opening);
+    const v=p.querySelector('video');
+    if(opening&&v){ if(!v.getAttribute('src'))v.setAttribute('src',v.dataset.src); v.play().catch(()=>{});
+      setTimeout(()=>row.scrollIntoView({behavior:'smooth',block:'nearest'}),120); }
+    else if(v)v.pause();
+  });
+});
+
+/* carousel «Демо в деле» */
+(function(){
+  const car=document.getElementById('carousel'); if(!car)return;
+  const slides=[...car.querySelectorAll('.cslide')], cap=document.getElementById('ccap'), dotsEl=document.getElementById('cdots');
+  const CCAP=[
+    '// <b>Планировщик</b> · сетка загрузки и заказ-наряды',
+    '// <b>Финмодель</b> · выручка, ВП и прогноз 2025–2027 (обезличено)',
+    '// <b>Дашборд</b> · KPI, графики, помесячная динамика',
+    '// <b>Мотивация и ФОТ</b> · штат и бонусы по должностям'
+  ];
+  let i=0, seen=false;
+  slides.forEach((_,k)=>{const d=document.createElement('span');d.className='cdot'+(k===0?' on':'');d.onclick=()=>go(k);dotsEl.appendChild(d);});
+  function play(s){const v=s.querySelector('video');if(v){if(!v.getAttribute('src'))v.setAttribute('src',v.dataset.src);v.play().catch(()=>{});}}
+  function go(n){
+    const cur=slides[i],cv=cur.querySelector('video'); cur.classList.remove('active'); if(cv)cv.pause();
+    i=(n+slides.length)%slides.length;
+    slides[i].classList.add('active'); cap.innerHTML=CCAP[i];
+    dotsEl.querySelectorAll('.cdot').forEach((d,k)=>d.classList.toggle('on',k===i));
+    play(slides[i]);
+  }
+  document.getElementById('cprev').onclick=()=>go(i-1);
+  document.getElementById('cnext').onclick=()=>go(i+1);
+  // play first slide only when carousel scrolls into view
+  new IntersectionObserver((es,ob)=>{es.forEach(e=>{if(e.isIntersecting&&!seen){seen=true;play(slides[0]);}});},{threshold:.3}).observe(car);
+})();
 </script>
 </body>
 </html>
