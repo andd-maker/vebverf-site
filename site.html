@@ -460,9 +460,10 @@ const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('scr',scrollY>16),{passive:true});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const YM_ID=110117064; function goal(n){try{if(window.ym)ym(YM_ID,'reachGoal',n);}catch(e){}}
 const BOT={max:'https://max.ru/se13308383_bot',tg:'https://t.me/vebverf_bot'};
-document.querySelectorAll('[data-bot]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const b=a.dataset.bot;const u=BOT[b];if(window.ym)ym(110117064,'reachGoal',b==='max'?'click_max':'click_tg');if(u)open(u,'_blank','noopener');}));
-document.querySelectorAll('a[href="finmodel.html"]').forEach(a=>a.addEventListener('click',()=>{if(window.ym)ym(110117064,'reachGoal','open_finmodel');}));
+document.querySelectorAll('[data-bot]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goal(a.dataset.bot==='max'?'contact_max':'contact_tg');const u=BOT[a.dataset.bot];if(u)open(u,'_blank','noopener');}));
+document.querySelectorAll('a[href$="finmodel.html"],a[href$="finance_model_DEMO.html"]').forEach(a=>a.addEventListener('click',()=>goal('finmodel_interactive')));
 
 /* mobile burger menu */
 (function(){
@@ -488,7 +489,7 @@ document.querySelectorAll('.product .idxrow[data-src]').forEach(row=>{
     const p=row.parentElement, opening=!p.classList.contains('open');
     document.querySelectorAll('.product.open').forEach(o=>{if(o!==p){o.classList.remove('open');const ov=o.querySelector('video');if(ov)ov.pause();}});
     p.classList.toggle('open',opening);
-    if(opening&&window.ym)ym(110117064,'reachGoal','view_demo');
+    if(opening)goal('demo_open');
     const v=p.querySelector('video');
     if(opening&&v){ if(!v.getAttribute('src'))v.setAttribute('src',v.dataset.src); v.play().catch(()=>{});
       setTimeout(()=>row.scrollIntoView({behavior:'smooth',block:'nearest'}),120); }
@@ -503,6 +504,7 @@ document.querySelectorAll('.rdframe, .cslide').forEach(box=>{
   b.innerHTML='<span class="ic">⛶</span><span class="t">во весь экран</span>';
   b.addEventListener('click',e=>{
     e.stopPropagation();
+    goal('demo_fullscreen');
     const v=box.querySelector('video'); if(!v)return;
     if(!v.getAttribute('src')&&v.dataset.src)v.setAttribute('src',v.dataset.src);
     v.muted=true; v.play().catch(()=>{});
