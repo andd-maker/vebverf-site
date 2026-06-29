@@ -507,12 +507,15 @@ function openSectionFromHash(){
   p.classList.add('in','open');
   var v=p.querySelector('video');
   if(v){ if(!v.getAttribute('src')&&v.dataset.src)v.setAttribute('src',v.dataset.src); v.play().catch(function(){}); }
-  // instant-скролл (глушим глобальный smooth) + повтор: на live плавный скролл сбивается подгрузкой постеров/reveal
-  var jump=function(){ var pe=document.documentElement.style.scrollBehavior; document.documentElement.style.scrollBehavior='auto'; window.scrollTo(0, p.getBoundingClientRect().top+window.pageYOffset-84); document.documentElement.style.scrollBehavior=pe; };
-  jump(); setTimeout(jump,150); setTimeout(jump,450); setTimeout(jump,900);
+  // мгновенно позиционируем, доводим ТОЛЬКО если позицию реально сдвинуло (>2px) и лишь на точках
+  // стабилизации (шрифты готовы / картинки загрузились) — без слепых повторов, поэтому без дёрганья
+  var fix=function(){ var w=Math.round(p.getBoundingClientRect().top+window.pageYOffset-84); if(Math.abs(window.pageYOffset-w)<=2)return; var pe=document.documentElement.style.scrollBehavior; document.documentElement.style.scrollBehavior='auto'; window.scrollTo(0,w); document.documentElement.style.scrollBehavior=pe; };
+  fix();
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){requestAnimationFrame(fix);});
+  window.addEventListener('load',function(){requestAnimationFrame(fix);},{once:true});
+  setTimeout(fix,700);
 }
 window.addEventListener('hashchange',openSectionFromHash);
-window.addEventListener('load',function(){setTimeout(openSectionFromHash,120);});
 if(document.readyState!=='loading') setTimeout(openSectionFromHash,60);
 else document.addEventListener('DOMContentLoaded',function(){setTimeout(openSectionFromHash,60);});
 
