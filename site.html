@@ -507,10 +507,14 @@ function openSectionFromHash(){
   p.classList.add('in','open');
   var v=p.querySelector('video');
   if(v){ if(!v.getAttribute('src')&&v.dataset.src)v.setAttribute('src',v.dataset.src); v.play().catch(function(){}); }
-  setTimeout(function(){p.scrollIntoView({behavior:'smooth',block:'start'});},220);
+  // instant-скролл (глушим глобальный smooth) + повтор: на live плавный скролл сбивается подгрузкой постеров/reveal
+  var jump=function(){ var pe=document.documentElement.style.scrollBehavior; document.documentElement.style.scrollBehavior='auto'; window.scrollTo(0, p.getBoundingClientRect().top+window.pageYOffset-84); document.documentElement.style.scrollBehavior=pe; };
+  jump(); setTimeout(jump,150); setTimeout(jump,450); setTimeout(jump,900);
 }
 window.addEventListener('hashchange',openSectionFromHash);
-window.addEventListener('load',function(){setTimeout(openSectionFromHash,260);});
+window.addEventListener('load',function(){setTimeout(openSectionFromHash,120);});
+if(document.readyState!=='loading') setTimeout(openSectionFromHash,60);
+else document.addEventListener('DOMContentLoaded',function(){setTimeout(openSectionFromHash,60);});
 
 /* fullscreen button on every video */
 document.querySelectorAll('.rdframe, .cslide').forEach(box=>{
