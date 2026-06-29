@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ВебВерфь</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap">
+<style>
+:root{
+  --navy:#223240; --orange:#d98a34;
+  --bg:#ffffff; --bg2:#f2f4f6; --text:#223240; --muted:#647480; --hint:#9aa6b0;
+  --accent:#d98a34; --accent-bg:#fbf1e2; --line:#e5e9ec; --ok:#1d9e75; --ok-bg:#e3f4ee;
+  --warn:#cf5a2c; --primary:#223240; --on-primary:#ffffff;
+}
+html[data-theme="dark"]{
+  --bg:#19232e; --bg2:#223240; --text:#e8edf1; --muted:#93a2af; --hint:#5f6f7c;
+  --accent:#e8a04e; --accent-bg:#2b2516; --line:#2c3a47; --ok:#3ecf9a; --ok-bg:#123129;
+  --warn:#e8794f; --primary:#e8a04e; --on-primary:#17212b;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg2);font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--text);display:flex;justify-content:center;min-height:100vh}
+#app{width:100%;max-width:430px;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+header{height:54px;flex:0 0 54px;display:flex;align-items:center;gap:6px;padding:0 10px;border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:5}
+.navbtn{background:none;border:none;color:var(--accent);cursor:pointer;padding:6px;display:flex;align-items:center;border-radius:8px}
+.navbtn:active{background:var(--bg2)}
+.navbtn svg{display:block}
+.navbtn.icbtn{color:var(--muted)}
+#back{display:none}
+.brand{display:flex;align-items:center;gap:8px;color:var(--text);margin-left:2px}
+.brand .mark{width:25px;height:auto;color:var(--text)}
+.brand .wm{font-family:'Manrope',sans-serif;font-weight:800;font-size:16px;letter-spacing:-.3px}
+header .spacer{margin-left:auto}
+main{flex:1;overflow-y:auto}
+.screen{display:none;padding:16px 16px 96px;animation:fade .18s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+h1,h2{font-family:'Manrope',sans-serif}
+h1{font-size:23px;font-weight:800;margin:0 0 6px;letter-spacing:-.4px}
+h2{font-size:18px;font-weight:700;margin:0 0 6px;letter-spacing:-.3px}
+p.lead{font-size:14px;color:var(--muted);line-height:1.5;margin:0 0 18px}
+.hero-logo{display:flex;align-items:center;gap:10px;margin:6px 0 12px}
+.hero-logo .mark{width:38px;color:var(--navy)}
+html[data-theme="dark"] .hero-logo .mark{color:#fff}
+.hero-logo .wm{font-family:'Manrope',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.6px}
+.hero-logo .wm span{color:var(--accent)}
+.hero-logo small{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--hint);font-weight:500;margin-top:2px}
+.seg{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.tile{border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;background:var(--bg);transition:.15s}
+.tile:active{background:var(--bg2)}
+.tile i{font-size:22px;color:var(--accent);width:26px;text-align:center}
+.tile .tx{flex:1}
+.tile .tx b{font-size:15px;font-weight:600;display:block}
+.tile .tx small{font-size:12px;color:var(--muted)}
+.tile .chev{font-size:18px;color:var(--hint)}
+.price{font-size:13px;color:var(--accent);font-weight:600;margin:2px 0 14px}
+.card{background:var(--bg2);border-radius:12px;padding:14px;margin:0 0 12px}
+ul.feat{margin:0 0 16px;padding-left:18px}
+ul.feat li{font-size:14px;line-height:1.6;color:var(--text)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:12px;font-size:15px;font-weight:600;border:none;cursor:pointer;margin-bottom:10px}
+.btn.primary{background:var(--primary);color:var(--on-primary)}
+.btn:disabled{opacity:.6}
+.btn.ghost{background:var(--bg2);color:var(--text)}
+.btn.outline{background:var(--bg);color:var(--text);border:1px solid var(--line)}
+.mainbtn{position:absolute;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--bg);border-top:1px solid var(--line)}
+.mainbtn .btn{margin:0}
+label.fl{font-size:12px;color:var(--muted);display:block;margin:12px 0 4px}
+input,select,textarea{width:100%;font-size:15px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-family:inherit;color:var(--text)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+.badge{font-size:11px;padding:2px 8px;border-radius:10px;background:var(--accent-bg);color:var(--accent);font-weight:600}
+.grid{display:grid;grid-template-columns:58px repeat(5,1fr);gap:4px;font-size:10px;margin:6px 0 10px}
+.grid .dh{text-align:center;color:var(--muted);padding-bottom:2px}
+.grid .mh{display:flex;align-items:center;font-size:11px;font-weight:600}
+.cell{min-height:46px;background:var(--bg2);border-radius:6px;display:flex;flex-direction:column;gap:3px;padding:3px}
+.cell.over{outline:1.5px solid var(--warn)}
+.zn{border:none;width:100%;border-radius:4px;font-size:10px;line-height:1.15;padding:4px 2px;text-align:center;cursor:pointer;font-weight:600}
+.zn.b{background:#b5d4f4;color:#0c447c}.zn.a{background:#fac775;color:#854f0b}.zn.t{background:#9fe1cb;color:#0f6e56}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin-bottom:10px}
+.legend .sw{display:inline-block;width:8px;height:8px;border-radius:2px;vertical-align:1px;margin-right:4px}
+.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.slider-row label{font-size:13px;color:var(--muted);width:120px}
+.slider-row .out{font-size:13px;font-weight:600;width:78px;text-align:right}
+input[type=range]{-webkit-appearance:none;height:4px;background:var(--line);border-radius:2px;padding:0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 14px}
+.metric{background:var(--bg2);border-radius:10px;padding:10px 12px}
+.metric small{font-size:12px;color:var(--muted);display:block;margin-bottom:3px}
+.metric b{font-size:20px;font-weight:700;font-family:'Manrope',sans-serif}
+.bartrack{height:6px;border-radius:3px;background:var(--accent-bg);margin-top:6px}
+.barfill{height:6px;border-radius:3px;background:var(--accent)}
+.chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.chip{font-size:12px;padding:6px 12px;border-radius:16px;border:1px solid var(--line);background:var(--bg);cursor:pointer;color:var(--text)}
+.chip.active{background:var(--accent);color:#17212b;border-color:var(--accent)}
+#chart{display:flex;align-items:flex-end;gap:6px;height:104px;margin-bottom:14px}
+#chart .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end}
+#chart .bv{font-size:9px;color:var(--muted);text-align:center;margin-bottom:3px}
+#chart .bar{width:100%;background:var(--accent);border-radius:3px 3px 0 0;min-height:4px;transition:height .25s}
+#chart .bl{font-size:9px;color:var(--hint);text-align:center;margin-top:3px}
+.player{margin:0 0 12px}
+.player video{width:100%;border-radius:10px;border:1px solid var(--line);background:#000;display:block}
+.q{margin-bottom:18px}
+.q .qt{font-size:14px;font-weight:600;margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font-size:13px;padding:9px 13px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;color:var(--text)}
+.opt.sel{border-color:var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:600}
+.calcout{background:var(--accent-bg);border-radius:12px;padding:16px;text-align:center;margin:6px 0 14px}
+.calcout small{font-size:13px;color:var(--accent);display:block;margin-bottom:4px}
+.calcout b{font-size:26px;font-weight:800;color:var(--accent);font-family:'Manrope',sans-serif}
+.thanks{text-align:center;padding-top:40px}
+.thanks .ic{width:72px;height:72px;border-radius:50%;background:var(--ok-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--ok);font-size:38px}
+.note{font-size:11px;color:var(--hint);text-align:center;margin-top:8px}
+.sitecard{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:14px}
+.sitecard .sh b{font-size:15px;font-weight:600}
+.sitecard .sh span{font-size:12px;color:var(--muted);margin-left:6px}
+.frame{height:430px;border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:8px 0;background:#fff}
+.frame iframe{width:100%;height:100%;border:0;display:block}
+.swipehint{font-size:11px;color:var(--hint);margin:0 0 8px;display:flex;align-items:center;gap:5px}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <button class="navbtn" id="back" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 120 75" aria-hidden="true"><polygon points="10.8,0 109.2,0 120,47 0,47" fill="currentColor"/><rect x="0" y="56" width="120" height="5" rx="2.5" fill="#d98a34"/><rect x="16" y="70" width="88" height="3" rx="1.5" fill="currentColor" opacity="0.3"/></svg>
+      <span class="wm">ВебВерфь</span>
+    </div>
+    <span class="spacer"></span>
+    <button class="navbtn icbtn" id="themebtn" aria-label="Сменить тему"></button>
+  </header>
+
+  <main>
+    <section class="screen active" id="s-hero">
+      <div class="hero-logo">
+        <svg class="mark" viewBox="0 0 120 75" aria-hidden="true"><polygon points="10.8,0 109.2,0 120,47 0,47" fill="currentColor"/><rect x="0" y="56" width="120" height="5" rx="2.5" fill="#d98a34"/><rect x="16" y="70" width="88" height="3" rx="1.5" fill="currentColor" opacity="0.3"/></svg>
+        <div><div class="wm">Веб<span>Верфь</span></div><small>ИНСТРУМЕНТЫ ГРУЗОСЕРВИСА</small></div>
+      </div>
+      <p class="lead">Цифровые инструменты для грузового сервиса — от практика, который сам управлял СТО. Планировщик, финмодель, дашборд на языке нарядов и нормо-часов.</p>
+      <p style="font-size:13px;color:var(--muted);margin:0 0 8px">Кто вы?</p>
+      <div class="seg">
+        <div class="tile" data-role="owner" data-go="s-hub"><i class="ti ti-building-warehouse"></i><div class="tx"><b>Владелец СТО</b><small>финрезультат, мотивация, контроль</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-role="manager" data-go="s-hub"><i class="ti ti-user-cog"></i><div class="tx"><b>Управляющий / мастер</b><small>планирование цеха и загрузки</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-role="look" data-go="s-hub"><i class="ti ti-eye"></i><div class="tx"><b>Просто смотрю</b><small>что вы вообще умеете</small></div><i class="ti ti-chevron-right chev"></i></div>
+      </div>
+    </section>
+
+    <section class="screen" id="s-hub">
+      <h1>Решения</h1>
+      <p class="lead" id="hub-lead">Инструменты для грузового СТО. Каждый можно потрогать в демо и посмотреть видео.</p>
+      <div class="seg">
+        <div class="tile" data-go="s-planner"><i class="ti ti-layout-grid"></i><div class="tx"><b>Планировщик</b><small>загрузка механиков по дням · от 50 000 ₽</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-roles="owner look" data-go="s-finance"><i class="ti ti-chart-line"></i><div class="tx"><b>Финрезультат и мотивация</b><small>маржа, прибыль, бонусы · от 50 000 ₽</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-go="s-dash"><i class="ti ti-dashboard"></i><div class="tx"><b>Управленческий дашборд</b><small>все цифры на экране · от 50 000 ₽</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-go="s-turnkey"><i class="ti ti-truck-loading"></i><div class="tx"><b>Цифровизация под ключ</b><small>всё вместе под ваш процесс</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-go="s-calc"><i class="ti ti-calculator"></i><div class="tx"><b>Калькулятор сметы</b><small>прикинуть бюджет за минуту</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-go="s-sites"><i class="ti ti-browser"></i><div class="tx"><b>Наши сайты и примеры</b><small>визитка и основной сайт студии</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-go="s-other"><i class="ti ti-dots-circle-horizontal"></i><div class="tx"><b>Прочие решения</b><small>магазины, поддержка</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-go="s-docs"><i class="ti ti-file-text"></i><div class="tx"><b>Документы и реквизиты</b><small>соглашение, политика</small></div><i class="ti ti-chevron-right chev"></i></div>
+      </div>
+    </section>
+
+    <section class="screen" id="s-planner">
+      <h2>Планировщик для грузового СТО</h2>
+      <p class="price">от 50 000 ₽ · точная по смете после бесплатного разбора</p>
+      <p class="lead">Механик — строка, загрузка по дням — полосками заказ-нарядов. Перетащил, растянул, поменял прямо на сетке. Тапните наряд — карточка ЗН.</p>
+      <div class="grid">
+        <div></div><div class="dh">Пн</div><div class="dh">Вт</div><div class="dh">Ср</div><div class="dh">Чт</div><div class="dh">Пт</div>
+        <div class="mh">Сергей</div>
+        <div class="cell"><button class="zn b" data-zn="ЗН-104|КАМАЗ 5490|замена сцепления|4 ч|12 400 ₽|В работе">104·4ч</button></div>
+        <div class="cell"><button class="zn b" data-zn="ЗН-111|SCANIA R450|ТО-2|6 ч|18 900 ₽|В работе">111·6ч</button></div>
+        <div class="cell"></div>
+        <div class="cell"><button class="zn t" data-zn="ЗН-118|МАЗ 6430|диагностика|3 ч|5 200 ₽|Готов">118·3ч</button></div>
+        <div class="cell"></div>
+        <div class="mh">Игорь</div>
+        <div class="cell over"><button class="zn b" data-zn="ЗН-106|MB Actros|ремонт КПП|6 ч|31 000 ₽|В работе">106·6ч</button><button class="zn a" data-zn="ЗН-109|КАМАЗ 65115|сход-развал|4 ч|6 800 ₽|Заявка">109·4ч</button></div>
+        <div class="cell"></div>
+        <div class="cell"><button class="zn b" data-zn="ЗН-114|SCANIA G440|тормоза|5 ч|14 300 ₽|В работе">114·5ч</button></div>
+        <div class="cell"></div>
+        <div class="cell"><button class="zn a" data-zn="ЗН-120|DAF XF|электрика|2 ч|4 100 ₽|Заявка">120·2ч</button></div>
+        <div class="mh">Андрей</div>
+        <div class="cell"></div>
+        <div class="cell"><button class="zn t" data-zn="ЗН-112|КАМАЗ 43118|замена масла|2 ч|3 400 ₽|Готов">112·2ч</button></div>
+        <div class="cell"><button class="zn b" data-zn="ЗН-116|МАЗ 5440|ремонт подвески|7 ч|22 700 ₽|В работе">116·7ч</button></div>
+        <div class="cell"></div>
+        <div class="cell"><button class="zn b" data-zn="ЗН-122|SCANIA P280|ТО-1|4 ч|9 600 ₽|В работе">122·4ч</button></div>
+      </div>
+      <div class="legend">
+        <span><span class="sw" style="background:#378add"></span>В работе</span>
+        <span><span class="sw" style="background:#f0997b"></span>Заявка</span>
+        <span><span class="sw" style="background:#5dcaa5"></span>Готов</span>
+        <span style="color:var(--warn)"><i class="ti ti-alert-triangle"></i> перегруз &gt; 8 ч</span>
+      </div>
+      <div class="card" id="zn-detail" style="font-size:13px;color:var(--muted)"><i class="ti ti-hand-finger"></i> Тапните заказ-наряд в сетке выше</div>
+      <button class="btn outline vid" data-vid="planner_long"><i class="ti ti-player-play"></i> Видео-презентация</button>
+      <div class="player" data-player="planner_long" style="display:none"></div>
+      <ul class="feat">
+        <li>контроль перегрузки по часам (норма ч/день)</li>
+        <li>7 статусов заказа от «Заявка» до «Закрыт»</li>
+        <li>карточка ЗН: клиент, ТС (модель, госномер, VIN), сумма</li>
+        <li>график вахт 7/7, 14/14, 30/30 и больничные</li>
+        <li>импорт из 1С, роли доступа, бэкап</li>
+      </ul>
+      <div class="mainbtn"><button class="btn primary" data-lead="Планировщик">Оставить заявку на разбор</button></div>
+    </section>
+
+    <section class="screen" id="s-finance">
+      <h2>Финрезультат и мотивация</h2>
+      <p class="price">от 50 000 ₽ · точная по смете после бесплатного разбора</p>
+      <p class="lead">Финмодель сервиса и прозрачная мотивация в одном. Двигайте ползунки на своих цифрах — маржа и прибыль считаются вживую.</p>
+      <div class="slider-row"><label>Выручка / мес</label><input type="range" id="f-rev" min="500000" max="5000000" step="100000" value="2000000"><span class="out" id="f-rev-o"></span></div>
+      <div class="slider-row"><label>Запчасти, % выр.</label><input type="range" id="f-parts" min="25" max="60" step="1" value="45"><span class="out" id="f-parts-o"></span></div>
+      <div class="slider-row"><label>ФОТ, % выр.</label><input type="range" id="f-fot" min="15" max="45" step="1" value="28"><span class="out" id="f-fot-o"></span></div>
+      <div class="metrics">
+        <div class="metric"><small>GM1 (после запчастей)</small><b id="f-gm1"></b><div class="bartrack"><div class="barfill" id="f-b1"></div></div></div>
+        <div class="metric"><small>GM2 (после ФОТ)</small><b id="f-gm2"></b><div class="bartrack"><div class="barfill" id="f-b2"></div></div></div>
+      </div>
+      <div class="metric" style="margin-bottom:14px"><small>Чистая прибыль / мес</small><b id="f-net" style="color:var(--ok)"></b><div class="bartrack" style="background:var(--ok-bg)"><div class="barfill" id="f-b3" style="background:var(--ok)"></div></div></div>
+      <button class="btn outline vid" data-vid="finmodel_long"><i class="ti ti-player-play"></i> Видео-презентация</button>
+      <div class="player" data-player="finmodel_long" style="display:none"></div>
+      <div class="mainbtn"><button class="btn primary" data-lead="Финмодель">Оставить заявку на разбор</button></div>
+    </section>
+
+    <section class="screen" id="s-dash">
+      <h2>Управленческий дашборд сервиса</h2>
+      <p class="price">от 50 000 ₽ · точная по смете после бесплатного разбора</p>
+      <p class="lead">Все цифры бизнеса — на одном экране. Переключите цех — метрики и график пересчитаются.</p>
+      <div class="chips" id="shops">
+        <button class="chip active" data-shop="all">Все цеха</button>
+        <button class="chip" data-shop="s1">Цех 1</button>
+        <button class="chip" data-shop="s2">Цех 2</button>
+      </div>
+      <div class="metrics">
+        <div class="metric"><small>Выручка / мес</small><b id="d-rev"></b></div>
+        <div class="metric"><small>Валовая прибыль</small><b id="d-gp"></b></div>
+        <div class="metric"><small>Маржа</small><b id="d-margin" style="color:var(--ok)"></b></div>
+        <div class="metric"><small>Ср. чек наряда</small><b id="d-check"></b></div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin:0 0 8px">Выручка по месяцам, млн ₽ <span style="color:var(--hint)">(масштаб общий)</span></p>
+      <div id="chart"></div>
+      <button class="btn outline vid" data-vid="dashboard_long"><i class="ti ti-player-play"></i> Видео-презентация</button>
+      <div class="player" data-player="dashboard_long" style="display:none"></div>
+      <div class="card" style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)"><i class="ti ti-brand-telegram" style="color:var(--accent)"></i> Ежедневный дайджест цифр приходит сюда, в Telegram</div>
+      <div class="mainbtn"><button class="btn primary" data-lead="Дашборд">Оставить заявку на разбор</button></div>
+    </section>
+
+    <section class="screen" id="s-turnkey">
+      <h2>Цифровизация СТО под ключ</h2>
+      <p class="price">от 50 000 ₽ · точная по смете после бесплатного разбора</p>
+      <p class="lead">Не отдельные кусочки, а система под ваш процесс: планировщик + финрезультат + аналитика, связанные с вашим учётом (1С), под ваши роли и отчётность.</p>
+      <ul class="feat">
+        <li>собираем из готовых модулей — недели, а не месяцы</li>
+        <li>бесплатный разбор и смета за 1 рабочий день</li>
+        <li>предоплата 50%, дальше внедрение и поддержка</li>
+      </ul>
+      <button class="btn outline vid" data-vid="motivation_long"><i class="ti ti-player-play"></i> Видео-презентация</button>
+      <div class="player" data-player="motivation_long" style="display:none"></div>
+      <div class="mainbtn"><button class="btn primary" data-lead="Под ключ">Оставить заявку на разбор</button></div>
+    </section>
+
+    <section class="screen" id="s-sites">
+      <h2>Наши сайты и примеры</h2>
+      <p class="lead">Два сайта, которые мы сделали для самой ВебВерфи. Листайте разделы прямо здесь или откройте целиком.</p>
+      <div class="sitecard">
+        <div class="sh"><b>Визитка</b><span>IDE-стиль, обложка студии</span></div>
+        <p class="swipehint"><i class="ti ti-arrows-vertical"></i> листайте внутри окна</p>
+        <div class="frame"><iframe src="https://andd-maker.github.io/vebverf-site/" loading="lazy" title="Визитка ВебВерфь"></iframe></div>
+        <button class="btn outline" data-open="https://andd-maker.github.io/vebverf-site/"><i class="ti ti-external-link"></i> Открыть визитку</button>
+      </div>
+      <div class="sitecard">
+        <div class="sh"><b>Основной сайт</b><span>лендинг с демо-видео</span></div>
+        <p class="swipehint"><i class="ti ti-arrows-vertical"></i> листайте внутри окна</p>
+        <div class="frame"><iframe src="https://andd-maker.github.io/vebverf-site/site.html" loading="lazy" title="Основной сайт ВебВерфь"></iframe></div>
+        <button class="btn outline" data-open="https://andd-maker.github.io/vebverf-site/site.html"><i class="ti ti-external-link"></i> Открыть сайт</button>
+      </div>
+      <div class="mainbtn"><button class="btn primary" data-lead="Сайт под ключ">Хочу такой сайт</button></div>
+    </section>
+
+    <section class="screen" id="s-other">
+      <h2>Прочие решения</h2>
+      <p class="lead">Помимо грузового направления делаем и общие digital-продукты.</p>
+      <div class="seg">
+        <div class="tile" data-lead="Интернет-магазин"><i class="ti ti-shopping-cart"></i><div class="tx"><b>Интернет-магазин</b><small>каталог, корзина, оплата</small></div><i class="ti ti-chevron-right chev"></i></div>
+        <div class="tile" data-lead="Поддержка"><i class="ti ti-tool"></i><div class="tx"><b>Поддержка и доработки</b><small>правки, доработки, хостинг</small></div><i class="ti ti-chevron-right chev"></i></div>
+      </div>
+    </section>
+
+    <section class="screen" id="s-calc">
+      <h2>Калькулятор сметы</h2>
+      <p class="lead">Четыре вопроса — и увидите ориентир по бюджету. Точная смета бесплатно после разбора.</p>
+      <div class="q" data-q="dir"><div class="qt">1. Что нужно?</div><div class="opts">
+        <div class="opt" data-v="planner" data-base="50000">Планировщик</div>
+        <div class="opt" data-v="finance" data-base="50000">Финмодель</div>
+        <div class="opt" data-v="dash" data-base="60000">Дашборд</div>
+        <div class="opt" data-v="turnkey" data-base="150000">Под ключ</div></div></div>
+      <div class="q" data-q="size"><div class="qt">2. Размер сервиса?</div><div class="opts">
+        <div class="opt" data-v="1" data-k="1">1–3 поста</div>
+        <div class="opt" data-v="2" data-k="1.4">4–8 постов</div>
+        <div class="opt" data-v="3" data-k="1.9">9+ постов / сеть</div></div></div>
+      <div class="q" data-q="onec"><div class="qt">3. Импорт из 1С?</div><div class="opts">
+        <div class="opt" data-v="no" data-add="0">Не нужен</div>
+        <div class="opt" data-v="yes" data-add="20000">Нужен</div></div></div>
+      <div class="q" data-q="urg"><div class="qt">4. Сроки?</div><div class="opts">
+        <div class="opt" data-v="calm" data-k="0.95">Без спешки</div>
+        <div class="opt" data-v="month" data-k="1.1">В течение месяца</div>
+        <div class="opt" data-v="fast" data-k="1.35">Срочно</div></div></div>
+      <div class="calcout" id="calc-out"><small>Ориентир по бюджету</small><b id="calc-val">ответьте на вопросы</b></div>
+      <div class="mainbtn"><button class="btn primary" data-lead="Калькулятор">Получить точную смету бесплатно</button></div>
+    </section>
+
+    <section class="screen" id="s-lead">
+      <h2>Бесплатный разбор задачи</h2>
+      <p class="lead">Оформим заявку прямо в чате с ботом — пара коротких вопросов, и пришлём смету за рабочий день. Без обязательств.</p>
+      <div class="card">
+        <div style="font-size:13px;line-height:2"><b style="font-size:13px">Что спросим:</b>
+          <div><i class="ti ti-point" style="color:var(--accent)"></i> что нужно сделать</div>
+          <div><i class="ti ti-point" style="color:var(--accent)"></i> размер сервиса и сроки</div>
+          <div><i class="ti ti-point" style="color:var(--accent)"></i> как с вами связаться</div>
+        </div>
+      </div>
+      <div class="mainbtn"><button class="btn primary" id="l-go"><i class="ti ti-brand-telegram"></i> Перейти к заявке</button></div>
+    </section>
+
+    <section class="screen" id="s-thanks">
+      <div class="thanks">
+        <div class="ic"><i class="ti ti-check"></i></div>
+        <h2>Заявка отправлена</h2>
+        <p class="lead" style="margin-top:8px">Свяжемся в течение рабочего дня и пришлём смету. Спасибо!</p>
+        <button class="btn ghost" data-go="s-hub" style="max-width:240px;margin:0 auto">Вернуться в меню</button>
+        <p class="note" id="thanks-note"></p>
+      </div>
+    </section>
+
+    <section class="screen" id="s-docs">
+      <h2>Документы и реквизиты</h2>
+      <p class="lead">Все договорные документы — прозрачно и заранее.</p>
+      <div class="seg">
+        <div class="tile"><i class="ti ti-file-description"></i><div class="tx"><b>Пользовательское соглашение</b></div><i class="ti ti-external-link chev"></i></div>
+        <div class="tile"><i class="ti ti-shield-lock"></i><div class="tx"><b>Политика конфиденциальности</b></div><i class="ti ti-external-link chev"></i></div>
+        <div class="tile"><i class="ti ti-receipt"></i><div class="tx"><b>Реквизиты (самозанятый)</b><small>чек НПД на каждую оплату</small></div><i class="ti ti-chevron-right chev"></i></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  var tg = window.Telegram && window.Telegram.WebApp;
+  if(tg){ try{ tg.ready(); tg.expand(); }catch(e){} }
+  function alertMsg(m){ if(tg&&tg.showAlert){tg.showAlert(m);}else{alert(m);} }
+
+  var sun='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>';
+  var moon='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>';
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme',t);
+    document.getElementById('themebtn').innerHTML = t==='dark'?sun:moon;
+  }
+  var initTheme = (tg && tg.colorScheme) ? tg.colorScheme : ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');
+  applyTheme(initTheme);
+  document.getElementById('themebtn').addEventListener('click',function(){
+    applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
+  });
+
+  var stack=['s-hero'], role=null;
+  var back=document.getElementById('back');
+
+  function applyRoleFilter(){
+    var r=role||'look';
+    document.querySelectorAll('#s-hub [data-roles]').forEach(function(t){
+      t.style.display = t.dataset.roles.split(' ').indexOf(r)>-1 ? 'flex' : 'none';
+    });
+  }
+  function show(id){
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('active',s.id===id);});
+    if(id==='s-hub') applyRoleFilter();
+    back.style.display = id==='s-hero' ? 'none':'flex';
+    document.querySelector('main').scrollTop=0;
+    if(tg && tg.BackButton){ id==='s-hero'?tg.BackButton.hide():tg.BackButton.show(); }
+  }
+  function go(id){ if(id!==stack[stack.length-1]){stack.push(id);} show(id); }
+  function goBack(){ if(stack.length>1){stack.pop(); show(stack[stack.length-1]);} }
+  back.addEventListener('click',goBack);
+  if(tg && tg.BackButton){ tg.BackButton.onClick(goBack); }
+
+  document.querySelectorAll('[data-go]').forEach(function(el){
+    el.addEventListener('click',function(){ if(el.dataset.role){role=el.dataset.role;} go(el.dataset.go); });
+  });
+  var hl=document.getElementById('hub-lead');
+  document.querySelectorAll('[data-role]').forEach(function(el){el.addEventListener('click',function(){
+    if(role==='owner') hl.textContent='Для владельца: финрезультат, мотивация и контроль сети — на цифрах, без ручных табличек.';
+    else if(role==='manager') hl.textContent='Для управляющего: планирование цеха, загрузка механиков и статусы нарядов.';
+    else hl.textContent='Инструменты для грузового СТО. Каждый можно потрогать в демо и посмотреть видео.';
+  });});
+
+  function openExt(u){ if(tg&&tg.openLink){tg.openLink(u);}else{window.open(u,'_blank');} }
+  document.querySelectorAll('[data-open]').forEach(function(el){el.addEventListener('click',function(){openExt(el.dataset.open);});});
+
+  var BOT_URL='https://t.me/vebverf_bot';
+  document.querySelectorAll('[data-lead]').forEach(function(el){
+    el.addEventListener('click',function(){ go('s-lead'); });
+  });
+  var lastEstimate='';
+  function openBrief(){
+    var url=BOT_URL+'?start=lead';
+    if(tg && tg.openTelegramLink){ tg.openTelegramLink(url); }
+    else if(tg && tg.openLink){ tg.openLink(url); }
+    else { window.open(url,'_blank'); }
+  }
+  document.getElementById('l-go').addEventListener('click',openBrief);
+
+  function videoTpl(name){
+    return '<video controls playsinline preload="none" poster="'+name+'_poster.jpg"><source src="'+name+'.mp4" type="video/mp4"></video>'+
+      '<p class="swipehint" style="justify-content:center;margin-top:6px">Играет внутри приложения — без выхода в браузер</p>';
+  }
+  document.querySelectorAll('.vid').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var name=btn.dataset.vid;
+      var pl=document.querySelector('.player[data-player="'+name+'"]');
+      if(pl.style.display==='none'||!pl.style.display){
+        if(!pl.innerHTML) pl.innerHTML=videoTpl(name);
+        pl.style.display='block';
+        var v=pl.querySelector('video'); if(v){ try{ v.play(); }catch(e){} }
+        btn.innerHTML='<i class="ti ti-chevron-up"></i> Свернуть видео';
+      } else {
+        var v2=pl.querySelector('video'); if(v2){ try{ v2.pause(); }catch(e){} }
+        pl.style.display='none';
+        btn.innerHTML='<i class="ti ti-player-play"></i> Видео-презентация';
+      }
+    });
+  });
+
+  var znd=document.getElementById('zn-detail');
+  document.querySelectorAll('.zn').forEach(function(b){b.addEventListener('click',function(){
+    var p=b.dataset.zn.split('|');
+    znd.innerHTML='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><b style="font-size:15px">'+p[0]+'</b><span class="badge">'+p[5]+'</span></div>'+
+      '<div style="font-size:13px;line-height:1.9"><div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">ТС</span><span>'+p[1]+'</span></div>'+
+      '<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Работа</span><span>'+p[2]+'</span></div>'+
+      '<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Трудоёмкость</span><span>'+p[3]+'</span></div>'+
+      '<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Сумма</span><b>'+p[4]+'</b></div></div>';
+  });});
+
+  var fmt=function(n){return Math.round(n).toLocaleString('ru-RU')+' ₽';};
+  function fcalc(){
+    var R=+document.getElementById('f-rev').value, p=+document.getElementById('f-parts').value/100, f=+document.getElementById('f-fot').value/100, o=0.12;
+    var gm1=R*(1-p), gm2=gm1-R*f, net=gm2-R*o;
+    document.getElementById('f-rev-o').textContent=Math.round(R/1000)+'к';
+    document.getElementById('f-parts-o').textContent=document.getElementById('f-parts').value+'%';
+    document.getElementById('f-fot-o').textContent=document.getElementById('f-fot').value+'%';
+    document.getElementById('f-gm1').textContent=fmt(gm1);
+    document.getElementById('f-gm2').textContent=fmt(gm2);
+    document.getElementById('f-net').textContent=fmt(net);
+    var cl=function(x){return Math.max(0,Math.min(100,x/R*100))+'%';};
+    document.getElementById('f-b1').style.width=cl(gm1);
+    document.getElementById('f-b2').style.width=cl(gm2);
+    document.getElementById('f-b3').style.width=cl(net);
+  }
+  ['f-rev','f-parts','f-fot'].forEach(function(id){document.getElementById(id).addEventListener('input',fcalc);});
+  fcalc();
+
+  var ddata={all:{rev:4180000,margin:34,check:11200,months:[3.2,3.6,3.4,3.9,4.0,4.18]},
+    s1:{rev:2640000,margin:37,check:12800,months:[2.0,2.3,2.2,2.5,2.55,2.64]},
+    s2:{rev:1540000,margin:29,check:8900,months:[1.2,1.3,1.2,1.4,1.45,1.54]}};
+  var labels=['Янв','Фев','Мар','Апр','Май','Июн'], gmax=0;
+  Object.keys(ddata).forEach(function(k){gmax=Math.max(gmax,Math.max.apply(null,ddata[k].months));});
+  function drender(key){
+    var d=ddata[key];
+    document.getElementById('d-rev').textContent=fmt(d.rev);
+    document.getElementById('d-gp').textContent=fmt(d.rev*d.margin/100);
+    document.getElementById('d-margin').textContent=d.margin+'%';
+    document.getElementById('d-check').textContent=fmt(d.check);
+    var c=document.getElementById('chart'); c.innerHTML='';
+    d.months.forEach(function(v,i){
+      var col=document.createElement('div'); col.className='col';
+      col.innerHTML='<div class="bv">'+v.toFixed(1)+'</div><div class="bar" style="height:'+Math.round(v/gmax*80)+'px"></div><div class="bl">'+labels[i]+'</div>';
+      c.appendChild(col);
+    });
+  }
+  document.querySelectorAll('.chip').forEach(function(ch){ch.addEventListener('click',function(){
+    document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('active');});
+    ch.classList.add('active'); drender(ch.dataset.shop);
+  });});
+  drender('all');
+
+  var pick={};
+  function recalc(){
+    if(!(pick.dir&&pick.size&&pick.onec&&pick.urg)){ return; }
+    var base=+pick.dir.base, sizeK=+pick.size.k, add=+pick.onec.add, urgK=+pick.urg.k;
+    var low=Math.round((base*sizeK+add)*urgK/1000)*1000;
+    var high=Math.round(low*1.5/1000)*1000;
+    lastEstimate='от '+low.toLocaleString('ru-RU')+' до '+high.toLocaleString('ru-RU')+' ₽';
+    document.getElementById('calc-val').textContent=lastEstimate;
+  }
+  document.querySelectorAll('#s-calc .q').forEach(function(q){
+    var key=q.dataset.q;
+    q.querySelectorAll('.opt').forEach(function(o){o.addEventListener('click',function(){
+      q.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel');});
+      o.classList.add('sel'); pick[key]=o.dataset; recalc();
+    });});
+  });
+
+  show('s-hero');
+})();
+</script>
+</body>
+</html>
