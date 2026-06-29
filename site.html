@@ -109,6 +109,7 @@ header.nav.scr .brand .nm b{font-size:16px}
 .band.light .cap{color:var(--mut)}
 /* product rows with click-to-expand video (magic open, 2/3 width) */
 .product{border-bottom:1px solid var(--line)}
+.product{scroll-margin-top:84px}
 .product .idxrow{border-bottom:0;cursor:pointer;user-select:none}
 .product .idxrow.nodemo{cursor:default}
 .rmeta{display:flex;flex-direction:column;align-items:flex-end;gap:9px;white-space:nowrap}
@@ -496,6 +497,20 @@ document.querySelectorAll('.product .idxrow[data-src]').forEach(row=>{
     else if(v)v.pause();
   });
 });
+
+/* deep-link из Mini App/бота: открыть раздел с раскрытым демо по якорю (#planner/#finmodel/#dashboard/#turnkey) */
+function openSectionFromHash(){
+  var h=(location.hash||'').slice(1); if(!h)return;
+  var p=document.getElementById(h);
+  if(!p||!p.classList.contains('product'))return;
+  document.querySelectorAll('.product.open').forEach(function(o){if(o!==p){o.classList.remove('open');var ov=o.querySelector('video');if(ov)ov.pause();}});
+  p.classList.add('in','open');
+  var v=p.querySelector('video');
+  if(v){ if(!v.getAttribute('src')&&v.dataset.src)v.setAttribute('src',v.dataset.src); v.play().catch(function(){}); }
+  setTimeout(function(){p.scrollIntoView({behavior:'smooth',block:'start'});},220);
+}
+window.addEventListener('hashchange',openSectionFromHash);
+window.addEventListener('load',function(){setTimeout(openSectionFromHash,260);});
 
 /* fullscreen button on every video */
 document.querySelectorAll('.rdframe, .cslide').forEach(box=>{
