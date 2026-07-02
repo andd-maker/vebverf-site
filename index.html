@@ -127,6 +127,32 @@ a{color:inherit;text-decoration:none}
   display:flex;align-items:center;gap:18px;padding:0 14px;font-size:11px;z-index:9}
 .statusbar .right{margin-left:auto}
 
+/* ===== Летопись версий (компакт, вкладка-файл) ===== */
+.lp2{max-width:780px;margin:26px 0 0}
+.lp2-head{display:flex;align-items:center;gap:16px}
+.lp2-seal{border-radius:50%;background:url('https://webpriemka.dedyn.io/app/logo.png') center/cover no-repeat #fff;flex:0 0 auto}
+.lp2-head .lp2-seal{width:50px;height:50px;box-shadow:0 4px 14px rgba(217,138,52,.3)}
+.lp2-head h1{font-family:Manrope;font-weight:800;font-size:clamp(34px,5.2vw,66px);letter-spacing:-.03em;color:var(--tx);line-height:.95;margin:0}
+.lp2-sub{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;color:var(--punc);max-width:60ch;margin:14px 0 34px}
+.lp2-sub b{color:var(--ac);font-weight:500}
+.lp2-rail{border-left:2px solid var(--bd);margin-left:26px}
+.lp2-step{position:relative;padding:0 0 28px 50px;margin-left:24px}
+.lp2-step::before{content:"";position:absolute;left:-9px;top:5px;width:15px;height:15px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 5px var(--bg),0 0 0 6px var(--bd)}
+.lp2-step.next::before{background:var(--bg);border:2px dashed var(--ln);box-shadow:0 0 0 5px var(--bg)}
+.lp2-step .lp2-seal{position:absolute;left:-30px;top:-4px;width:56px;height:56px;filter:drop-shadow(0 3px 8px rgba(217,138,52,.35))}
+.lp2-step .ver{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;letter-spacing:.02em;color:var(--tx)}
+.lp2-step .flag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ac2);background:rgba(217,138,52,.14);border:1px solid rgba(217,138,52,.3);border-radius:3px;padding:2px 8px;margin-left:9px;vertical-align:2px}
+.lp2-step .flag.soon{color:#8aa0ac;background:rgba(255,255,255,.05);border-color:var(--bd)}
+.lp2-step h3{font-family:Manrope;font-weight:700;font-size:20px;letter-spacing:-.01em;margin:9px 0 5px;color:var(--tx)}
+.lp2-step p{margin:0;color:var(--punc);font-size:13px;line-height:1.7;max-width:58ch}
+.lp2-step.next h3{color:var(--ln)}
+.np2{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.26em;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#191205;background:var(--ac);border-radius:3px;padding:.4em .8em;margin-left:.5em;vertical-align:middle;position:relative;top:-.35em}
+.tabnew{margin-left:8px;font-size:9px;font-weight:700;letter-spacing:.1em;color:#191205;background:var(--ac);border-radius:3px;padding:1px 5px}
+@media(max-width:560px){
+  .lp2-rail{margin-left:18px}.lp2-step{margin-left:18px;padding-left:42px}
+  .lp2-step .lp2-seal{width:48px;height:48px;left:-25px}
+}
+
 @media(max-width:860px){
   .side{display:none}
   .overlay{padding:22px 18px 90px 22px}
@@ -192,6 +218,7 @@ a{color:inherit;text-decoration:none}
 <script>
 const DEMO="finmodel.html";
 const SITE="site.html";
+const YM_ID=110117064; function goal(n){try{if(window.ym)ym(YM_ID,'reachGoal',n);}catch(e){}}
 const BOT={max:'https://max.ru/se13308383_bot',tg:'https://t.me/vebverf_bot'};
 
 /* ---- left code (per-line, syntax-highlighted) ---- */
@@ -275,7 +302,20 @@ const FILES=[
   url:"vebverf.studio/мотивация", type:"video", src:"motivation_long.mp4", poster:"motivation_long_poster.jpg", badge:"28 сек · HD",
   cap:"модуль «Мотивация и ФОТ» в финмодели — штат и бонусы по должностям",
   desc:"Оклад плюс бонус от чёткой базы — маржа, прибыль или нормо-часы. Динамическое штатное расписание по выработке цеха, документы по должностям.",
-  info:{Цена:"в составе финмодели", База:"ВП / ЧП / нормо-час", Документ:"для подписания"}}
+  info:{Цена:"в составе финмодели", База:"ВП / ЧП / нормо-час", Документ:"для подписания"}},
+
+ {tab:"вебприёмка.md", title:"ВебПриёмка", type:"letopis", new:true,
+  sub:"Как за считанные дни продукт вырос от простого бота до приложения на телефоне — и куда движется дальше.",
+  steps:[
+   {ver:"V-1.00", flag:"Боты", h:"Боты в Telegram и MAX",
+    p:"Клиент видит свою технику и статусы ремонта прямо в мессенджере, с уведомлениями и поиском."},
+   {ver:"V-1.10", flag:"Мини-приложения", h:"Мини-приложения внутри мессенджеров",
+    p:"Наглядные карточки техники, фотоотчёты по приёмке и ремонту, отчёты — в пару касаний."},
+   {ver:"V-1.20", flag:"Актуальная", h:"Приложение для телефона",
+    p:"Устанавливается на экран телефона и открывается из браузера."},
+   {ver:"V-1.30", flag:"Скоро", soon:true, h:"Полноценный веб-кабинет",
+    p:"Полноценный веб-кабинет для команды сервиса: сводка, поиск, карточки техники, отчёты на любом экране."}
+  ]}
 ];
 
 function art(kind){
@@ -296,7 +336,7 @@ const overlay=document.getElementById('overlay');
 FILES.forEach((f,i)=>{
   const t=document.createElement('div');
   t.className='mtab'+(i===0?' on':'');
-  t.innerHTML=`<span class="dot"></span>${f.tab}`;
+  t.innerHTML=`<span class="dot"></span>${f.tab}${f.new?'<span class="tabnew">NEW</span>':''}`;
   t.onclick=()=>select(i);
   tabsEl.appendChild(t);
 });
@@ -317,9 +357,25 @@ function stage(f){
   if(f.type==='live')  return `<div class="pvstage"><iframe loading="lazy" src="${f.src}"></iframe></div>`;
   return `<div class="pvstage"><div class="art">${art(f.art)}</div></div>`;
 }
+function letopis(f){
+  const steps=f.steps.map(s=>`
+    <div class="lp2-step${s.soon?' next':''}">
+      ${s.soon?'':'<span class="lp2-seal" aria-hidden="true"></span>'}
+      <span class="ver">${s.ver}</span><span class="flag${s.soon?' soon':''}">${s.flag}</span>
+      <h3>${s.h}</h3><p>${s.p}</p>
+    </div>`).join('');
+  return `
+    <div class="fcmt">// ${f.tab} — новинка · связь с клиентом (бот → приложение)</div>
+    <div class="lp2">
+      <div class="lp2-head"><span class="lp2-seal" role="img" aria-label="ВебПриёмка"></span><h1 class="disp">${f.title} <span class="np2">Новинка</span></h1></div>
+      <p class="lp2-sub">Как за считанные дни продукт вырос от простого бота до <b>приложения на телефоне</b> — и куда движется дальше.</p>
+      <div class="lp2-rail">${steps}</div>
+    </div>`;
+}
 function select(i){
   const f=FILES[i];
   document.querySelectorAll('.mtab').forEach((t,k)=>t.classList.toggle('on',k===i));
+  if(f.type==='letopis'){ overlay.innerHTML=letopis(f); main.scrollTo({top:0,behavior:'smooth'}); return; }
   overlay.innerHTML=`
     <div class="fcmt">// ${f.tab} — открыт файл проекта</div>
     <h1 class="ghosttitle disp">${f.title}<span class="sub">${f.sub}</span></h1>
@@ -339,7 +395,7 @@ function select(i){
       </div>
       <div class="info">${Object.entries(f.info).map(([k,v])=>`<b>${k}</b><p>${v}</p>`).join('')}</div>
     </div>`;
-  overlay.querySelectorAll('[data-bot]').forEach(a=>a.onclick=e=>{e.preventDefault();const u=BOT[a.dataset.bot];if(u)open(u,'_blank','noopener');});
+  overlay.querySelectorAll('[data-bot]').forEach(a=>a.onclick=e=>{e.preventDefault();goal(a.dataset.bot==='max'?'contact_max':'contact_tg');const u=BOT[a.dataset.bot];if(u)open(u,'_blank','noopener');});
   main.scrollTo({top:0,behavior:'smooth'});
 }
 

@@ -204,6 +204,51 @@ footer{padding:70px 0 46px}
 .copyr{display:flex;justify-content:space-between;gap:20px;margin-top:46px;padding-top:22px;border-top:1px solid var(--line2);flex-wrap:wrap}
 .copyr span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--dim)}
 
+/* ===== Летопись версий (ВебПриёмка) ===== */
+.lp-seal{background:url('https://webpriemka.dedyn.io/app/logo.png') center/cover no-repeat #fff;border-radius:50%;flex:0 0 auto}
+.lp-head{display:flex;align-items:center;gap:18px;margin-bottom:14px}
+.lp-head .lp-seal{width:58px;height:58px;box-shadow:0 4px 14px rgba(217,138,52,.28)}
+.lp-head h2{font-size:clamp(30px,5.4vw,60px);letter-spacing:-.03em}
+.lp-sub{font-size:clamp(18px,2.2vw,25px);font-weight:300;line-height:1.42;color:var(--mut);max-width:40ch;margin:0 0 46px}
+.lp-sub em{font-style:normal;color:var(--ac);font-weight:500}
+
+/* highlights strip */
+.lp-strip{background:var(--navy);border-radius:14px;overflow:hidden;margin:0 0 56px;box-shadow:0 30px 70px rgba(34,50,64,.16)}
+.lp-strip .g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08)}
+.lp-strip .cell{background:var(--navy);padding:26px 22px;min-height:132px;display:flex;flex-direction:column;justify-content:center;gap:11px}
+.lp-strip .n{font-family:Manrope,sans-serif;font-weight:800;font-size:clamp(1.7rem,3.4vw,2.3rem);line-height:1;letter-spacing:-.02em;color:var(--ac)}
+.lp-strip .n.steel{color:#8fb0bd}
+.lp-strip .k{font-size:14.5px;line-height:1.4;color:rgba(238,241,244,.72)}
+
+/* rail timeline */
+.lp-rail{border-left:2px solid var(--line);margin-left:28px}
+.lp-step{position:relative;padding:0 0 34px 52px;margin-left:26px}
+.lp-step::before{content:"";position:absolute;left:-9px;top:5px;width:16px;height:16px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 5px var(--bg),0 0 0 6px var(--line)}
+.lp-step.next::before{background:var(--bg);border:2px dashed var(--dim);box-shadow:0 0 0 5px var(--bg)}
+.lp-step .lp-seal{position:absolute;left:-30px;top:-4px;width:58px;height:58px;filter:drop-shadow(0 3px 8px rgba(217,138,52,.3))}
+.lp-step .ver{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;letter-spacing:.02em;color:var(--ink)}
+.lp-step .flag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ac2);background:rgba(217,138,52,.16);border:1px solid rgba(217,138,52,.34);border-radius:3px;padding:2px 9px;margin-left:10px;vertical-align:2px}
+.lp-step .flag.soon{color:#4d6b78;background:rgba(63,94,105,.12);border-color:rgba(63,94,105,.32)}
+.lp-step h3{font-size:clamp(20px,3vw,27px);letter-spacing:-.02em;margin:10px 0 6px}
+.lp-step p{margin:0;color:var(--mut);font-size:16px;max-width:54ch}
+.lp-step.next h3{color:var(--mut)}
+
+/* footer note */
+.lp-note{margin-top:28px;padding-top:22px;border-top:1px solid var(--line2);font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.02em;color:var(--mut)}
+
+/* «Новинка» pill */
+.newpill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.42em;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#1a1206;background:var(--ac);border-radius:3px;padding:.35em .7em;margin-left:.6em;vertical-align:middle;position:relative;top:-.15em}
+.idxrow .newpill{font-size:12px;top:-2px}
+
+@media(max-width:720px){.lp-strip .g{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.lp-strip .g{grid-template-columns:1fr}}
+@media(max-width:600px){
+  .lp-head .lp-seal{width:48px;height:48px}
+  .lp-rail{margin-left:20px}
+  .lp-step{margin-left:20px;padding-left:44px}
+  .lp-step .lp-seal{width:50px;height:50px;left:-26px}
+}
+
 /* reveal */
 .rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 .rv.in{opacity:1;transform:none}
@@ -266,6 +311,7 @@ footer{padding:70px 0 46px}
       <a href="#about">О студии</a>
       <a href="#index">Продукты</a>
       <a href="#process">Процесс</a>
+      <a href="#vebpriemka">ВебПриёмка</a>
       <a class="navcta" href="#contact">Связаться →</a>
     </nav>
     <button class="burger" id="burger" aria-label="Меню">☰</button>
@@ -276,6 +322,7 @@ footer{padding:70px 0 46px}
   <a href="#index">Продукты</a>
   <a href="#process">Процесс</a>
   <a href="#demo">Демо в деле</a>
+  <a href="#vebpriemka">ВебПриёмка</a>
   <a class="navcta" href="#contact">Связаться →</a>
 </nav>
 
@@ -368,6 +415,13 @@ footer{padding:70px 0 46px}
           <div class="rmeta"><span class="pr">от 50 000 ₽</span></div>
         </div>
       </div>
+      <div class="product rv">
+        <div class="idxrow nodemo">
+          <span class="no">06</span>
+          <div class="ti"><h3>ВебПриёмка <span class="newpill">Новинка</span></h3><p>Приёмка техники и связь с клиентом: статусы ремонта и фотоотчёты — в мессенджере и приложении на телефоне. Сервис и клиент на одной волне, без лишних звонков.</p></div>
+          <div class="rmeta"><span class="pr"><a href="#vebpriemka">развитие продукта →</a></span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -412,6 +466,55 @@ footer{padding:70px 0 46px}
       </div>
       <div class="cdots" id="cdots"></div>
     </div>
+  </div>
+</section>
+
+<!-- ЛЕТОПИСЬ ВЕРСИЙ (ВебПриёмка) -->
+<section class="section" id="vebpriemka" style="padding-top:0">
+  <div class="wrap">
+    <div class="kicker rv"><span class="lbl">Новая разработка · связь с клиентом</span><span class="ln"></span></div>
+    <div class="lp-head rv">
+      <span class="lp-seal" role="img" aria-label="ВебПриёмка"></span>
+      <h2 class="h2">ВебПриёмка <span class="newpill">Новинка</span></h2>
+    </div>
+    <p class="lp-sub rv">Как за считанные дни продукт вырос от простого бота до <em>приложения на телефоне</em> — и куда движется дальше.</p>
+
+    <div class="lp-strip rv">
+      <div class="g">
+        <div class="cell"><span class="n">4 дня</span><span class="k">от идеи до первого релиза</span></div>
+        <div class="cell"><span class="n steel">2</span><span class="k">площадки — Telegram и MAX</span></div>
+        <div class="cell"><span class="n">PWA</span><span class="k">приложение на телефоне без установки из магазина</span></div>
+        <div class="cell"><span class="n steel">→</span><span class="k">от бота до полноценного кабинета</span></div>
+      </div>
+    </div>
+
+    <div class="lp-rail">
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver">V-1.00</span><span class="flag">Боты</span>
+        <h3>Боты в Telegram и MAX</h3>
+        <p>Клиент видит свою технику и статусы ремонта прямо в мессенджере, с уведомлениями и поиском.</p>
+      </div>
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver">V-1.10</span><span class="flag">Мини-приложения</span>
+        <h3>Мини-приложения внутри мессенджеров</h3>
+        <p>Наглядные карточки техники, фотоотчёты по приёмке и ремонту, отчёты — в пару касаний.</p>
+      </div>
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver">V-1.20</span><span class="flag">Актуальная</span>
+        <h3>Приложение для телефона</h3>
+        <p>Устанавливается на экран телефона и открывается из браузера.</p>
+      </div>
+      <div class="lp-step next rv">
+        <span class="ver">V-1.30</span><span class="flag soon">Скоро</span>
+        <h3>Полноценный веб-кабинет</h3>
+        <p>Полноценный веб-кабинет для команды сервиса: сводка, поиск, карточки техники, отчёты на любом экране.</p>
+      </div>
+    </div>
+
+    <p class="lp-note rv">// Продукт развивается непрерывно — новые версии выходят регулярно.</p>
   </div>
 </section>
 
