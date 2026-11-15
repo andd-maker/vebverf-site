@@ -26,11 +26,11 @@ echo "== изменятся файлы ($(echo "$CHANGED" | wc -l | tr -d ' ')):
 [ "$DRY" = "--dry" ] && { echo "(сухой прогон, ничего не залито)"; exit 0; }
 
 TS=$(date +%Y%m%d_%H%M%S)
-BK="$DIR/_backup_$TS"
+BK="/var/backups/verf/_backup_$TS"   # вне веб-корня: старые версии не должны открываться по URL
 echo "== бэкап изменяемых файлов → $BK"
 echo "$CHANGED" | while read -r f; do
   [ -n "$f" ] || continue
-  ssh "$HOST" "if [ -f '$DIR/$f' ]; then mkdir -p '$BK/$(dirname "$f")' && cp -p '$DIR/$f' '$BK/$f'; fi"
+  ssh "$HOST" "mkdir -p '$BK' && if [ -f '$DIR/$f' ]; then mkdir -p '$BK/$(dirname "$f")' && cp -p '$DIR/$f' '$BK/$f'; fi"
 done
 
 echo "== заливка → $HOST:$DIR"
