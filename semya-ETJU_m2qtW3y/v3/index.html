@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EDE9E2" id="themeColor">
+<meta name="robots" content="noindex, nofollow">
+<title>Наша семья</title>
+<script>
+(function(){var t=null;try{t=localStorage.getItem('v3theme')}catch(e){}
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.dataset.theme=t;document.getElementById('themeColor').content=t==='dark'?'#1C1B19':'#EDE9E2';})();
+</script>
+<link rel="preload" href="fonts/cormorant-garamond-cyrillic-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/golos-text-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="logo" href="#/">Наша семья</a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#/" data-r="home"><span class="l">Главный зал</span><span class="s">Зал</span></a>
+      <a href="#/wall" data-r="wall"><span class="l">Портретная стена</span><span class="s">Портреты</span></a>
+      <a href="#/archive" data-r="archive"><span class="l">Хранилище</span><span class="s">Архив</span></a>
+    </nav>
+    <button class="theme" id="theme" type="button" aria-label="Тёмная тема">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</header>
+<main id="app" tabindex="-1"></main>
+<footer class="foot">
+  <a class="logo" href="#/">Наша семья</a>
+  <div class="legend" id="footLegend"></div>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Просмотр фотографии">
+  <div class="lb-bar">
+    <span class="cnt" id="lbCnt"></span>
+    <button class="faces-b" id="lbFaces" type="button" aria-pressed="false" hidden>Кто на фото</button>
+    <button class="x" id="lbX" type="button" aria-label="Закрыть"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <div class="lb-frame" id="lbFrame"><img id="lbImg" alt=""><div class="lb-faces" id="lbFacesBox" hidden></div></div>
+    <button class="nav-b prev" id="lbPrev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4l-6 6 6 6" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+    <button class="nav-b next" id="lbNext" type="button" aria-label="Следующее фото"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4l6 6-6 6" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+  </div>
+  <div class="lb-cap"><div class="in" id="lbCap"></div></div>
+</div>
+
+<script src="../data.js"></script>
+<script src="../people.js"></script>
+<script src="dims.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

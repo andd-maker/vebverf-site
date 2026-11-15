@@ -1,0 +1,77 @@
+<!doctype html>
+<html><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>x-dc{display:none!important}</style>
+<link rel="stylesheet" href="_ds/tor/fonts/fonts.css"><link rel="stylesheet" href="_ds/tor/_ds_bundle.css"><link rel="stylesheet" href="_ds/tor/styles.css"><link rel="stylesheet" href="_ds/tor/fonts/fonts.css"><link rel="stylesheet" href="_ds/tor/_ds_bundle.css"><link rel="stylesheet" href="_ds/tor/styles.css"></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="ScrForm"><div data-dc-tpl="2" style="width: 390px; height: 844px; overflow: hidden;"><div class="sc-host-x" data-dc-tpl="3" style="display: contents;"><div class="tor-root t-dark"><div data-dc-tpl="4" style="height: 844px; display: flex; flex-direction: column;"><div data-dc-tpl="5" style="display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 var(--pad); border-bottom: 1px solid var(--line); flex: 0 0 auto;"><div data-dc-tpl="6" style="display: flex; cursor: pointer; color: var(--text);"><div class="sc-host-x" data-dc-tpl="7" style="display: contents;"><svg class="tor-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></div></div><div data-dc-tpl="8" style="font: 600 15px/1 var(--f-disp); text-transform: uppercase; letter-spacing: 0.1em; flex: 1 1 0%; min-width: 0px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Вызов эвакуатора</div><div data-dc-tpl="9" style="font: 600 14px/1 var(--f-disp); letter-spacing: 0.06em; color: var(--mute);"><span class="sc-interp">4</span> / 5</div></div><div data-dc-tpl="10" style="flex: 1 1 0%; min-height: 0px; overflow-y: auto; padding: 20px var(--pad) 0; display: flex; flex-direction: column; gap: 22px;"><div data-dc-tpl="11" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;"><div data-dc-tpl="14" style="height: 4px; border-radius: 2px; background: var(--acc);"></div><div data-dc-tpl="14" style="height: 4px; border-radius: 2px; background: var(--acc);"></div><div data-dc-tpl="14" style="height: 4px; border-radius: 2px; background: var(--acc);"></div><div data-dc-tpl="14" style="height: 4px; border-radius: 2px; background: var(--acc);"></div><div data-dc-tpl="16" style="height: 4px; border-radius: 2px; background: var(--line);"></div></div><div data-dc-tpl="17" style="display: grid; gap: 10px;"><h1 data-dc-tpl="18" style="margin: 0px; font: 700 var(--h1)/1.02 var(--f-disp); text-transform: uppercase; letter-spacing: 0.02em;"><span class="sc-interp">Двигатель и воздух</span></h1></div><div data-dc-tpl="25" style="display: grid; gap: 10px;"><div data-dc-tpl="26" style="font: 600 15px/1.3 var(--f-text); color: var(--text);"><span class="sc-interp">Двигатель</span></div><div data-dc-tpl="37" style="display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 12px 16px; border-radius: var(--r-card); border: 1px solid var(--line); background: var(--surf); cursor: pointer;"><div data-dc-tpl="38" style="width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--line); flex: 0 0 auto;"></div><div data-dc-tpl="39" style="display: grid; gap: 2px;"><div data-dc-tpl="40" style="font-weight: 500;"><span class="sc-interp">Заводится</span></div></div></div><div data-dc-tpl="29" style="display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 12px 16px; border-radius: var(--r-card); border: 1px solid var(--text); background: var(--surf); cursor: pointer;"><div data-dc-tpl="30" style="width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--text); display: flex; align-items: center; justify-content: center; flex: 0 0 auto;"><div data-dc-tpl="31" style="width: 10px; height: 10px; border-radius: 50%; background: var(--text);"></div></div><div data-dc-tpl="32" style="display: grid; gap: 2px;"><div data-dc-tpl="33" style="font-weight: 500;"><span class="sc-interp">Не заводится</span></div></div></div></div><div data-dc-tpl="25" style="display: grid; gap: 10px;"><div data-dc-tpl="26" style="font: 600 15px/1.3 var(--f-text); color: var(--text);"><span class="sc-interp">Воздух в тормозной системе</span></div><div data-dc-tpl="37" style="display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 12px 16px; border-radius: var(--r-card); border: 1px solid var(--line); background: var(--surf); cursor: pointer;"><div data-dc-tpl="38" style="width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--line); flex: 0 0 auto;"></div><div data-dc-tpl="39" style="display: grid; gap: 2px;"><div data-dc-tpl="40" style="font-weight: 500;"><span class="sc-interp">Есть воздух</span></div></div></div><div data-dc-tpl="29" style="display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 12px 16px; border-radius: var(--r-card); border: 1px solid var(--text); background: var(--surf); cursor: pointer;"><div data-dc-tpl="30" style="width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--text); display: flex; align-items: center; justify-content: center; flex: 0 0 auto;"><div data-dc-tpl="31" style="width: 10px; height: 10px; border-radius: 50%; background: var(--text);"></div></div><div data-dc-tpl="32" style="display: grid; gap: 2px;"><div data-dc-tpl="33" style="font-weight: 500;"><span class="sc-interp">Нет воздуха</span></div><div data-dc-tpl="35" style="font-size: var(--small); color: var(--mute);"><span class="sc-interp">понадобится расторможка</span></div></div></div><div data-dc-tpl="37" style="display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 12px 16px; border-radius: var(--r-card); border: 1px solid var(--line); background: var(--surf); cursor: pointer;"><div data-dc-tpl="38" style="width: 20px; height: 20px; border-radius: 50%; border: 1.6px solid var(--line); flex: 0 0 auto;"></div><div data-dc-tpl="39" style="display: grid; gap: 2px;"><div data-dc-tpl="40" style="font-weight: 500;"><span class="sc-interp">Не знаю</span></div></div></div></div><div data-dc-tpl="44" style="display: flex; gap: 12px; padding: 14px 16px; border-radius: var(--r-card); background: var(--surf2); color: var(--mute); font-size: var(--small); line-height: 1.5;"><div data-dc-tpl="45" style="color: var(--acc-text); display: flex;"><div class="sc-host-x" data-dc-tpl="46" style="display: contents;"><svg class="tor-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 8h.01"></path></svg></div></div><div data-dc-tpl="47">Без воздуха понадобится расторможка, при неисправной трансмиссии — снятие кардана. Водитель согласует цену до начала работ.</div></div><div data-dc-tpl="66" style="margin-top: auto; padding: 16px 0px 12px; text-align: center; font-size: 11px; color: var(--mute);">Разработано студией ВебВерфь</div></div><div data-dc-tpl="67" style="flex: 0 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: 10px; padding: 12px var(--pad) 22px; border-top: 1px solid var(--line); background: var(--bg);"><div class="sc-host-x" data-dc-tpl="68" style="display: contents;"><button type="button" class="tor-btn tor-btn--secondary tor-btn--block">Назад</button></div><div class="sc-host-x" data-dc-tpl="69" style="display: contents;"><button type="button" class="tor-btn tor-btn--primary tor-btn--block"><span class="sc-interp">Далее</span></button></div></div></div></div></div></div></div></div>
+
+
+
+<script>
+(function () {
+  var NAV = {"Главная": "ScrHome", "Заявки": "ScrOrders", "Расчёт": "ScrCalc", "Связь": "ScrContacts", "Вызвать эвакуатор": "ScrForm", "Рассчитать стоимость": "ScrForm", "Далее": "ScrCalc", "Назад": "ScrHome", "Заказать": "ScrOrder", "Отследить": "ScrOrder", "Повторить": "ScrForm", "Новая заявка": "ScrForm", "Поломка": "ScrForm", "ДТП": "ScrForm", "Кювет": "ScrForm", "Опрокидывание": "ScrForm"}, light = /\.light\.html$/.test(location.pathname);
+  function target(el) {
+    for (var n = el; n && n !== document.body; n = n.parentElement) {
+      var t = (n.textContent || "").trim().replace(/\s+/g, " ").toLowerCase();
+      if (!t || t.length > 40) continue;
+      for (var k in NAV) { var kk = k.toLowerCase(); if (t === kk || t.indexOf(kk) === 0) return NAV[k]; }
+    }
+    return undefined;
+  }
+  document.addEventListener("click", function (e) {
+    var s = target(e.target);
+    if (!s) return;
+    e.preventDefault();
+    try { parent.postMessage({ torScreen: s }, "*"); } catch (_) {}
+    location.href = s + (light ? ".light" : "") + ".html";
+  });
+  document.documentElement.style.cursor = "default";
+})();
+</script></body></html>

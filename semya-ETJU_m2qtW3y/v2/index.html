@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#12161c">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex,nofollow">
+<title>Наша семья</title>
+<script>try{var t=localStorage.getItem('v2-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="preload" href="fonts/cormorant-garamond-cyrillic-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/literata-cyrillic-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css?v=20261113d">
+</head>
+<body>
+<div class="app">
+  <header class="hdr">
+    <div class="brand"><b>Наша семья</b><span>две линии · одно дерево</span></div>
+    <nav class="tabs" aria-label="Разделы">
+      <button class="tab" data-tab="tree"><svg viewBox="0 0 24 24"><circle cx="6" cy="4.5" r="2"/><circle cx="18" cy="4.5" r="2"/><circle cx="12" cy="19.5" r="2.4"/><path d="M6 6.5c0 6 6 5.5 6 10.6M18 6.5c0 6-6 5.5-6 10.6"/></svg><span>Дерево</span></button>
+      <button class="tab" data-tab="people"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19.5c.6-3.4 3-5.3 6-5.3s5.4 1.9 6 5.3"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14.3c2.6.1 4.4 1.8 5 4.6"/></svg><span>Люди</span></button>
+      <button class="tab" data-tab="stories"><svg viewBox="0 0 24 24"><path d="M12 6.5C10 5 7 4.6 3.5 5v13.5c3.5-.4 6.5 0 8.5 1.5 2-1.5 5-1.9 8.5-1.5V5C17 4.6 14 5 12 6.5zM12 6.5V20"/></svg><span>Истории</span></button>
+      <button class="tab" data-tab="archive"><svg viewBox="0 0 24 24"><rect x="3.5" y="6.5" width="17" height="13" rx="2"/><path d="M6 4h12M3.5 16l4.5-4.5 4 4 2.5-2.5 6 5"/><circle cx="15.5" cy="10" r="1.3"/></svg><span>Архив</span></button>
+    </nav>
+    <button class="theme" id="theme" aria-label="Сменить тему"><svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+  </header>
+
+  <main class="main">
+    <section class="view" id="v-tree" aria-label="Дерево">
+      <div class="tv" id="tv"><div class="world" id="world"></div></div>
+      <div class="thead"><h1>Две реки</h1><p id="tree-lead"></p></div>
+      <div class="seg" role="group" aria-label="Какую линию показать">
+        <button data-mode="father" aria-pressed="false"><i style="background:var(--rf)"></i>Папа</button>
+        <button data-mode="both" aria-pressed="true">Обе</button>
+        <button data-mode="mother" aria-pressed="false"><i style="background:var(--rm)"></i>Мама</button>
+      </div>
+      <button class="lg-btn" id="lg-btn" aria-label="Что означают кольца и пунктир" aria-expanded="false" aria-controls="legend">?</button>
+      <div class="legend" id="legend" aria-label="Обозначения">
+        <span class="stmark"><i class="s-doc"></i>документы</span>
+        <span class="stmark"><i class="s-fam"></i>со слов семьи</span>
+        <span class="dash"><svg viewBox="0 0 22 6"><path d="M1 3h20" stroke="var(--ink3)" stroke-width="1.6" stroke-dasharray="3 4"/></svg>предположение</span>
+      </div>
+      <div class="ctl">
+        <div class="mini" id="mini" hidden aria-hidden="true"></div>
+        <div class="zb">
+          <button id="zin" aria-label="Приблизить"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+          <button id="zout" aria-label="Отдалить"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+          <button id="zfit" aria-label="Показать всё дерево"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+        </div>
+      </div>
+      <div class="hint" id="hint">Нажмите на портрет — откроется рассказ о человеке</div>
+    </section>
+    <section class="view" id="v-people" hidden aria-label="Люди"></section>
+    <section class="view" id="v-stories" hidden aria-label="Истории"></section>
+    <section class="view" id="v-archive" hidden aria-label="Архив"></section>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="sheet" id="sheet" tabindex="-1" role="dialog" aria-modal="false" aria-labelledby="sh-name">
+  <div class="grab" id="grab" role="button" aria-label="Потяните вверх, чтобы развернуть"><i></i></div>
+  <button class="exp" id="sh-exp" aria-label="Развернуть карточку"><svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></svg></button>
+  <button class="x" id="sh-x" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div class="sh-body" id="sh-body"></div>
+</aside>
+
+<div class="vw" id="vw" tabindex="-1" role="dialog" aria-modal="true" aria-label="Просмотр фотографий">
+  <div class="vw-top">
+    <div class="vw-ttl" id="vw-ttl"></div>
+    <button class="vw-b" id="vw-faces" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><circle cx="12" cy="10" r="2.6"/><path d="M7.5 17c.8-2.2 2.4-3.3 4.5-3.3s3.7 1.1 4.5 3.3"/></svg><span>Кто на фото</span></button>
+    <button class="vw-b" id="vw-pin-btn" hidden><span>Правка</span></button>
+    <button class="vw-b" id="vw-ok" hidden><span>Одобрить</span></button>
+    <button class="vw-b" id="vw-x" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="vw-stage" id="vw-stage">
+    <div class="vw-fit" id="vw-fit"><img id="vw-img" alt=""><video id="vw-video" controls playsinline hidden></video><div class="fc" id="vw-fc"></div></div>
+    <button class="vw-nav p" id="vw-p" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="vw-nav n" id="vw-n" aria-label="Следующее фото"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+  <div class="vw-cap" id="vw-cap" aria-live="polite"></div>
+  <div class="vw-pin" id="vw-pin" hidden><input id="vw-pin-in" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN"><button id="vw-pin-go">Войти</button></div>
+  <div class="vw-strip" id="vw-strip"></div>
+</div>
+
+<script src="../data.js"></script>
+<script src="../people.js"></script>
+<script src="app.js?v=20261113d"></script>
+</body>
+</html>

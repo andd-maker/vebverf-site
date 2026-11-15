@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="data:,">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#F5F0E6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1D1B18" media="(prefers-color-scheme: dark)">
+<title>Наша семья — летопись</title>
+<link rel="preload" href="fonts/cormorant-garamond-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/literata-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>try{var t=localStorage.getItem("v1-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero" id="top">
+  <div class="hero-top">
+    <span class="kicker">Родословная</span>
+    <button class="theme" type="button" data-theme-toggle aria-label="Сменить тему"></button>
+  </div>
+  <div class="hero-body">
+    <div>
+      <h1>Наша<br><em>семья</em></h1>
+      <p class="hero-lead">Две линии — папина и мамина — от самых старших поколений, о&nbsp;которых известно, к&nbsp;нам. У&nbsp;каждого отмечено, на&nbsp;чём основан рассказ.</p>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="conv" id="conv" aria-label="Схема: пять фамилий сходятся в две линии, папину и мамину, а они — к Виктории и Денису" role="img"></div>
+  </div>
+  <div class="hero-foot">
+    <a class="begin" href="#ch-1" id="begin">Читать с первой главы
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5"/></svg></a>
+    <div class="legend" id="legend"></div>
+  </div>
+</header>
+
+<div class="book">
+  <aside class="toc" aria-label="Оглавление"><nav class="tree-nav" id="toc"></nav></aside>
+  <main id="book"></main>
+</div>
+
+<button class="tocbtn" id="tocbtn" type="button" aria-haspopup="dialog">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
+  Оглавление <small id="tocnow"></small></button>
+
+<dialog class="sheet toc-sheet" id="tocsheet" aria-label="Оглавление">
+  <div class="sheet-in">
+    <div class="sheet-bar"><i class="grab"></i><span class="kicker">Оглавление</span>
+      <button class="x" type="button" data-close aria-label="Закрыть"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 10 10M14 4 4 14"/></svg></button></div>
+    <nav class="tree-nav" id="toc2"></nav>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+  <div class="sheet-in" id="sheet-in">
+    <div class="sheet-bar" id="sheet-bar"><i class="grab"></i><span class="kicker" id="sheet-kicker"></span>
+      <button class="x" type="button" data-close aria-label="Закрыть"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 10 10M14 4 4 14"/></svg></button></div>
+    <div id="sheet-body"></div>
+  </div>
+</dialog>
+
+<dialog class="viewer" id="viewer" aria-label="Просмотр фотографии">
+  <div class="v-wrap">
+    <div class="v-top">
+      <div class="t" id="v-t"></div>
+      <button class="vbtn" id="v-faces" type="button" aria-pressed="false">Кто на фото</button>
+      <button class="x" type="button" data-close aria-label="Закрыть просмотр"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 10 10M14 4 4 14"/></svg></button>
+    </div>
+    <div class="v-stage" id="v-stage">
+      <div class="v-box" id="v-box"></div>
+      <button class="v-nav v-prev" id="v-prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12.5 4 6.5 10l6 6"/></svg></button>
+      <button class="v-nav v-next" id="v-next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m7.5 4 6 6-6 6"/></svg></button>
+    </div>
+    <div class="v-cap" id="v-cap" aria-live="polite"></div>
+    <div class="v-strip" id="v-strip"></div>
+  </div>
+</dialog>
+
+<script src="../data.js"></script>
+<script src="../people.js"></script>
+<script src="dims.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ТОР-Эвакуатор — проект ВебВерфи</title>
+<meta name="description" content="Вызов грузового эвакуатора в MAX и Telegram: цена по маршруту за минуту, статус заявки как в такси, панель хозяина службы. Проект ВебВерфи.">
+<meta property="og:title" content="ТОР-Эвакуатор — бот и мини-приложение · ВебВерфь">
+<meta property="og:description" content="Вызов грузового эвакуатора в мессенджере: цена до заказа, статус на каждом шаге, панель хозяина.">
+<meta property="og:image" content="https://xn--90abbkc0e2a8d.xn--p1ai/cases/tor/app_home_dark.jpg">
+<meta name="theme-color" content="#111214"><meta name="color-scheme" content="dark light">
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="/fonts/fonts.css?v=20260904">
+<script>(function(){try{if(localStorage.getItem("vv.theme")==="light")document.documentElement.dataset.theme="light";}catch(e){}})();</script>
+<style>
+:root{--bg:#111214;--pa:#1a1b1f;--ink:#ece7dc;--mut:#a39d90;--line:#2c2d33;--ac:#c8a04a;--acs:#3a3122;--on:#141518;--maxw:1240px;color-scheme:dark}
+html[data-theme="light"]{--bg:#f2eee5;--pa:#fbf9f4;--ink:#16171a;--mut:#5e5a51;--line:#d9d2c2;--ac:#a9822f;--acs:#e9dcb9;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}p{margin:0}[hidden]{display:none!important}
+h1,h2,h3{font-family:Manrope,sans-serif;font-weight:800;margin:0;line-height:1.05;letter-spacing:-.02em;text-wrap:balance}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+.lbl{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ac)}
+.mut{color:var(--mut)}
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:10px;font-family:Manrope;font-weight:800;font-size:18px}
+.brand svg{height:24px}
+.nav{display:flex;gap:18px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:13px}
+.nav a:last-child{color:var(--ac)}
+.thb{font:inherit;cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;width:32px;height:32px}
+@media(max-width:640px){.nav .hide-m{display:none}}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:13px;padding:14px 22px;border-radius:4px;border:1px solid var(--line);cursor:pointer;background:none;color:var(--ink)}
+.btn.solid{background:var(--ac);border-color:var(--ac);color:var(--on)}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.hero{padding-block:clamp(36px,6vw,80px)}
+.hgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(24px,4vw,56px);align-items:center}
+.hero h1{font-size:clamp(44px,7vw,92px);letter-spacing:-.04em;margin-block:14px}
+.hero .s{font-size:clamp(17px,1.5vw,20px);max-width:58ch;margin-bottom:24px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);border-radius:3px;padding:4px 9px}
+.hshots{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.scr{width:100%;aspect-ratio:1/2;object-fit:contain;background:#0b0b0d;border-radius:22px;border:2px solid #2a2b30}
+@media(max-width:860px){.hgrid{grid-template-columns:1fr}}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding-block:8px 40px}
+.facts div{border-top:2px solid var(--ac);padding-top:10px;display:grid;gap:2px}
+.facts b{font:800 clamp(26px,3vw,38px)/1 Manrope,sans-serif;color:var(--ac);font-variant-numeric:tabular-nums}
+.facts span{font-size:14px;color:var(--mut)}
+@media(max-width:640px){.facts{grid-template-columns:1fr 1fr}}
+.sec{padding-block:clamp(40px,6vw,80px);display:grid;gap:22px}
+.sec h2{font-size:clamp(30px,4vw,52px)}
+.proto{background:var(--pa);border:1px solid var(--line);border-radius:20px;padding:clamp(16px,3vw,32px)}
+.stage{display:grid;grid-template-columns:330px minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.phonecol{position:sticky;top:76px;display:grid;gap:12px;justify-items:center}
+@media(max-width:880px){.stage{grid-template-columns:1fr}.phonecol{position:static}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;background:var(--bg)}
+.seg button{font:500 14px Inter,sans-serif;border:0;background:none;color:var(--mut);padding:8px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ac);color:var(--on)}
+.phone{width:min(300px,78vw);aspect-ratio:1/2;border-radius:40px;padding:10px;background:#0b0b0d;box-shadow:0 30px 60px -30px rgba(0,0,0,.6),inset 0 0 0 2px #2a2b30}
+.screen{position:relative;width:100%;height:100%;border-radius:31px;overflow:hidden;background:#141518}
+.screen>*{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .35s}
+.screen .hide{opacity:0}
+.mock{padding:22px 16px;display:grid;align-content:start;gap:12px;font-size:13px;color:#ece7dc;background:#141518}
+.mock.light{background:#f2eee5;color:#16171a}
+.mock .bar{font:800 15px Manrope,sans-serif;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid rgba(128,128,128,.25)}
+.bub{background:#23252b;border-radius:14px;padding:12px;display:grid;gap:6px}.mock.light .bub{background:#fff}
+.bub .sum{font:800 22px Manrope,sans-serif}
+.mb{display:flex;gap:6px;flex-wrap:wrap}.mb span{padding:7px 10px;border-radius:8px;border:1px solid rgba(128,128,128,.35);font-weight:700;font-size:11px;text-transform:uppercase}
+.mb span.p{background:#c8a04a;color:#141518;border-color:#c8a04a}
+.chk{display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:center}.chk i{width:18px;height:18px;border-radius:50%;background:#c8a04a}.chk i.o{background:none;border:2px solid rgba(128,128,128,.5)}
+.pics{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.pics i{aspect-ratio:1;border-radius:6px;background:linear-gradient(135deg,#5b5340,#2a2b30)}
+.scrs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.scrs button{font:13px Inter,sans-serif;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer}
+.scrs button[aria-pressed="true"]{border-color:var(--ac);color:var(--ac)}
+.who{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mut);text-align:center;min-height:1.4em}
+.steps{display:grid;gap:10px}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;text-align:left;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font:inherit;cursor:pointer;transition:border-color .2s,background .2s}
+.step .n{font:800 30px/1 Manrope,sans-serif;color:var(--mut)}
+.step h3{font-size:19px}.step p{font-size:14.5px;color:var(--mut);margin-top:4px}
+.step .role{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-top:8px;display:block}
+.step[aria-current="true"]{border-color:var(--ac);background:var(--acs)}
+.step[aria-current="true"] .n,.step[aria-current="true"] .role{color:var(--ac)}
+.prog{height:3px;background:var(--line);border-radius:3px;overflow:hidden}.prog i{display:block;height:100%;width:0;background:var(--ac);transition:width .4s}
+.lanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.lane{border-top:3px solid var(--line);padding-top:10px;display:grid;gap:4px;transition:border-color .2s}.lane.on{border-color:var(--ac)}
+.lane b{font:800 16px Manrope,sans-serif}.lane span{font-size:14px;color:var(--mut)}
+@media(max-width:640px){.lanes{grid-template-columns:1fr}}
+.maps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.maps figure{margin:0;display:grid;gap:8px}.maps img{width:100%;border-radius:12px;border:1px solid var(--line)}
+.maps figcaption{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mut)}
+@media(max-width:700px){.maps{grid-template-columns:1fr}}
+.cta{background:var(--pa);border-top:1px solid var(--line);padding-block:clamp(40px,6vw,80px)}
+.cta .wrap{display:grid;gap:16px}
+footer{border-top:1px solid var(--line);padding-block:24px;font-size:13px;color:var(--mut)}
+footer .f{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+<style>.auto{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}.auto>div{background:var(--pa);padding:22px}.auto h4{margin:0 0 8px;font-size:18px;color:var(--ink)}.auto p{margin:0;color:var(--mut);font-size:14.5px;line-height:1.5}</style><link rel="canonical" href="https://xn--90abbkc0e2a8d.xn--p1ai/proekt-tor.html">
+</head>
+<body>
+<header class="top"><div class="wrap in">
+  <a class="brand" href="site.html" aria-label="ВебВерфь — на сайт студии"><svg viewBox="-12 -12 144 97" fill="none" aria-hidden="true"><polygon points="10.8,0 109.2,0 120,47 0,47" fill="currentColor"/><rect x="0" y="56" width="120" height="5" rx="2.5" fill="#d98a34"/></svg>ВебВерфь</a>
+  <nav class="nav"><a href="site.html#boty">← Все проекты</a><a class="hide-m" href="max.html">Бизнес в MAX</a><button class="thb" type="button" id="thb" aria-label="Светлая тема">☀</button><a href="https://max.ru/se13308383_bot?start=max" target="_blank" rel="noopener">Разобрать задачу →</a></nav>
+</div></header>
+
+<section class="hero"><div class="wrap hgrid">
+  <div>
+    <div class="chips"><span class="chip">Telegram</span><span class="chip">MAX — запуск</span><span class="chip">сайт</span><span class="chip" style="border-color:var(--ac);color:var(--ac)">новое</span></div>
+    <h1>ТОР-Эвакуатор</h1>
+    <p class="s">Вызов грузового эвакуатора прямо в мессенджере. Клиент отмечает, где машина и куда везти, и сразу видит цену. Хозяин принимает заявку одной кнопкой, клиент следит за статусом, как за такси.</p>
+    <p class="mut" style="margin-bottom:22px">Грузовая эвакуация · Наро-Фоминск, Москва и область</p>
+    <div class="btns"><a class="btn solid" href="https://xn--n1aee.xn--90abbkc0e2a8d.xn--p1ai/" target="_blank" rel="noopener">Сайт службы ↗</a><a class="btn" href="https://t.me/tor_evakuator_bot" target="_blank" rel="noopener">Бот в Telegram</a><a class="btn" href="https://max.ru/se13308383_bot?start=max" target="_blank" rel="noopener">Хочу такой же</a></div>
+  </div>
+  <div class="hshots"><img class="scr" src="cases/tor/app_home_dark.webp" alt="ТОР-Эвакуатор — главный экран"><img class="scr" src="cases/tor/demo_order.webp" alt="ТОР-Эвакуатор — заявка в пути"></div>
+</div></section>
+
+<main class="wrap">
+  <div class="facts">
+    <div><b>24/7</b><span>заявки прямо в мессенджере</span></div>
+    <div><b>1 мин</b><span>до цены по маршруту</span></div>
+    <div><b>6</b><span>статусов заявки у клиента</span></div>
+    <div><b>×1,2–2</b><span>цена с учётом мороза и снегопада</span></div>
+  </div>
+
+  <section class="sec proto" aria-labelledby="h-how">
+    <span class="lbl">Как это происходит</span>
+    <h2 id="h-how">От звонка «встал на трассе» до приёмки</h2>
+    <div class="stage">
+      <div class="phonecol">
+        <div class="seg" role="group" aria-label="Тема приложения"><button type="button" id="th-dark" aria-pressed="true">Тёмная</button><button type="button" id="th-light" aria-pressed="false">Светлая</button></div>
+        <div class="phone"><div class="screen" id="screen"></div></div>
+        <div class="scrs" id="scr" role="group" aria-label="Экраны"></div>
+        <div class="who" id="who"></div>
+      </div>
+      <div style="display:grid;gap:16px;min-width:0">
+        <div class="btns"><button class="btn solid" type="button" id="play">▶ Показать по шагам</button><button class="btn" type="button" id="next">Следующий шаг →</button></div>
+        <div class="prog" aria-hidden="true"><i id="bar"></i></div>
+        <div class="steps" id="steps"></div>
+        <div class="lanes" id="lanes"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-map">
+    <span class="lbl">Маршрут и подача</span>
+    <h2 id="h-map">Цена считается по грузовым дорогам</h2>
+    <div class="maps">
+      <figure><img id="map1" src="cases/tor/map_calc_dark.webp" alt="Карта расчёта: подача к точке А и путь до Б" loading="lazy"><figcaption>Расчёт: подача от текущего места эвакуатора, путь А → Б</figcaption></figure>
+      <figure><img id="map2" src="cases/tor/map_order_dark.webp" alt="Карта заявки: эвакуатор едет к клиенту" loading="lazy"><figcaption>Заявка: эвакуатор едет к клиенту, время подачи обновляется</figcaption></figure>
+    </div>
+  </section>
+  <!-- AVTO-20261024 --><section class="sec" aria-labelledby="h-auto"><span class="lbl">Автоматика</span><h2 id="h-auto">Что делается само</h2><div class="auto"><div><h4>Цена с учётом погоды</h4><p>Хозяин включает коэффициент ×1,2–2, и клиент видит причину: «сильный мороз», «сильный снегопад» или «высокий спрос».</p></div><div><h4>Заявка из звонка</h4><p>Диспетчер вводит адреса, пока клиент на линии, — цена по маршруту появляется сразу, заявка создаётся одной кнопкой.</p></div><div><h4>Доп. работы — на согласование</h4><p>Бот подсказывает, нужны ли расторможка или снятие кардана, и отправляет доп. работу клиенту на согласование.</p></div></div></section>
+<div class="next" style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:28px 0 8px;border-top:1px solid var(--line);margin-top:24px"><a href="site.html#boty" style="color:var(--mut)">← Все проекты</a><a href="proekt-nightled.html" style="color:var(--ac)">Следующий проект: NIGHT LED →</a></div>
+</main>
+
+<section class="cta"><div class="wrap">
+  <span class="lbl">Нужен такой же — под ваше дело?</span>
+  <h2 style="font-size:clamp(28px,4vw,48px)">Разберём задачу бесплатно, смета за день</h2>
+  <p class="mut">Служба эвакуации, сервис, мастерская: бот и мини-приложение в MAX и Telegram, на вашем сервере и под вашим именем.</p>
+  <div class="btns"><a class="btn solid" href="https://max.ru/se13308383_bot?start=max" target="_blank" rel="noopener">Обсудить в MAX →</a><a class="btn" href="https://t.me/vebverf_bot?start=max" target="_blank" rel="noopener">Telegram</a></div>
+</div></section>
+
+<footer><div class="wrap f">
+  <span>© 2026 ВебВерфь · Андрухов Денис Евгеньевич, самозанятый (НПД), Москва</span>
+  <span><a href="legal.html#privacy">Политика конфиденциальности</a> · <a href="legal.html#terms">Пользовательское соглашение</a></span>
+</div></footer>
+
+<script>
+(function(){
+  var root=document.documentElement,thb=document.getElementById('thb');
+  function paintT(){var l=root.dataset.theme==='light';thb.textContent=l?'☾':'☀';thb.setAttribute('aria-label',l?'Тёмная тема':'Светлая тема')}
+  thb.onclick=function(){if(root.dataset.theme==='light'){delete root.dataset.theme;try{localStorage.setItem('vv.theme','dark')}catch(e){}}else{root.dataset.theme='light';try{localStorage.setItem('vv.theme','light')}catch(e){}}paintT();setTheme(root.dataset.theme==='light'?'light':'dark')};
+  var theme=root.dataset.theme==='light'?'light':'dark',cur=0,timer=null,shown=null,B='cases/tor/';
+  var SCR=[{id:'home',n:'Главная',who:'Клиент · главный экран'},{id:'form',n:'Вызов',who:'Клиент · что случилось'},{id:'calc',n:'Расчёт',who:'Клиент · цена по маршруту'},{id:'owner',n:'Хозяин',who:'Хозяин службы · новая заявка'},{id:'order',n:'Статус',who:'Клиент · заявка в пути'},{id:'accept',n:'Приёмка',who:'Водитель и клиент · приёмка'},{id:'about',n:'Связь',who:'Клиент · контакты службы'}];
+  var STEPS=[
+    {s:'home',h:'Открывает бота в MAX',p:'Ссылка из поиска, с сайта или визитки. Первый экран: эвакуатор свободен, кнопки «Вызвать» и «Позвонить».',r:'client'},
+    {s:'form',h:'Отвечает «что случилось»',p:'Поломка, ДТП, кювет, опрокидывание. От ответа зависит, какое оборудование возьмёт водитель.',r:'client'},
+    {s:'calc',h:'Видит цену за минуту',p:'Точки А и Б на карте, маршрут по грузовым дорогам, подача от текущего места эвакуатора. Сумма и время подачи — до заказа.',r:'client'},
+    {s:'owner',h:'Хозяин принимает одной кнопкой',p:'Заявка приходит хозяину в мессенджер и в панель: «Беру», «Беру +1 ч» или «Отказ». Цена проверена автоматически.',r:'owner'},
+    {s:'order',h:'Клиент следит за статусом',p:'Принял → выехал → на месте → погружено → доставлено. Уведомление на каждом шаге, как в такси.',r:'client'},
+    {s:'accept',h:'Осмотр, приёмка, оплата',p:'Водитель снимает машину до погрузки, клиент подтверждает приёмку. Оплата по СБП или счётом для юрлица.',r:'driver'}];
+  var LANES=[{k:'client',b:'Клиент',t:'вызывает и следит в MAX или Telegram'},{k:'owner',b:'Хозяин службы',t:'принимает заявки, видит спрос и выручку'},{k:'driver',b:'Водитель',t:'едет, снимает осмотр, закрывает заявку'}];
+  var $=function(i){return document.getElementById(i)},screen=$('screen'),scrEl=$('scr'),stepsEl=$('steps'),lanesEl=$('lanes');
+  function mock(id){var d=document.createElement('div');d.className='mock'+(theme==='light'?' light':'');
+    d.innerHTML=id==='owner'?'<div class="bar">◆ ТОР · панель хозяина</div><div class="bub"><span style="font-size:11px;opacity:.7">НОВАЯ ЗАЯВКА · 22:51</span><span class="sum">25 000 ₽</span><span>Седельный тягач · не заводится</span><span style="opacity:.75">А: Троицк, Москва<br>Б: Подольск · подача ≈ 1 ч 25 мин</span><span style="color:#6fb283">● цена проверена</span><div class="mb"><span class="p">Беру</span><span>Беру +1 ч</span><span>Отказ</span></div></div><div class="bub" style="opacity:.6"><span style="font-size:11px">СЕГОДНЯ</span><span>3 заявки · 2 в работе · спрос обычный</span></div>'
+    :'<div class="bar">‹ Приёмка заявки</div><span style="opacity:.75">Осмотр до погрузки</span><div class="pics"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="chk"><i></i><span>Фото до погрузки — 6</span></div><div class="chk"><i></i><span>Доставлено в Подольск</span></div><div class="chk"><i class="o"></i><span>Клиент подтвердил приёмку</span></div><div class="bub"><span>Оплата по СБП</span><span class="sum">25 000 ₽</span><div class="mb"><span class="p">Оплатить в банке</span></div></div>';
+    return d}
+  function src(id){return id==='calc'?B+'demo_calc.jpg':id==='order'?B+'demo_order.jpg':B+'app_'+id+'_'+theme+'.jpg'}
+  function show(id){var s=SCR.filter(function(x){return x.id===id})[0];var el;
+    if(id==='owner'||id==='accept')el=mock(id);else{el=new Image();el.src=src(id);el.alt='Экран «'+s.n+'»';}
+    el.classList.add('hide');screen.appendChild(el);requestAnimationFrame(function(){requestAnimationFrame(function(){el.classList.remove('hide')})});
+    for(var i=screen.children.length-2;i>=0;i--){(function(o){o.classList.add('hide');setTimeout(function(){o.remove()},380)})(screen.children[i])}
+    shown=id;$('who').textContent=s.who+((id==='calc'||id==='order')&&theme==='light'?' · снимок тёмной темы':'');
+    [].forEach.call(scrEl.children,function(b){b.setAttribute('aria-pressed',b.dataset.id===id?'true':'false')})}
+  SCR.forEach(function(s){var b=document.createElement('button');b.type='button';b.textContent=s.n;b.dataset.id=s.id;b.onclick=function(){stop();show(s.id);var k=-1;STEPS.forEach(function(x,i){if(x.s===s.id)k=i});if(k>=0)mark(k)};scrEl.appendChild(b)});
+  STEPS.forEach(function(st,i){var b=document.createElement('button');b.type='button';b.className='step';
+    b.innerHTML='<span class="n">'+(i+1)+'</span><span><h3>'+st.h+'</h3><p>'+st.p+'</p><span class="role">'+LANES.filter(function(l){return l.k===st.r})[0].b+'</span></span>';
+    b.onclick=function(){stop();go(i)};stepsEl.appendChild(b)});
+  LANES.forEach(function(l){var d=document.createElement('div');d.className='lane';d.dataset.k=l.k;d.innerHTML='<b>'+l.b+'</b><span>'+l.t+'</span>';lanesEl.appendChild(d)});
+  function mark(i){cur=i;[].forEach.call(stepsEl.children,function(b,k){b.setAttribute('aria-current',k===i?'true':'false')});
+    [].forEach.call(lanesEl.children,function(l){l.classList.toggle('on',l.dataset.k===STEPS[i].r)});$('bar').style.width=((i+1)/STEPS.length*100)+'%'}
+  function go(i){mark(i);show(STEPS[i].s)}
+  function stop(){if(timer){clearInterval(timer);timer=null;$('play').textContent='▶ Показать по шагам'}}
+  $('next').onclick=function(){stop();go((cur+1)%STEPS.length)};
+  $('play').onclick=function(){if(timer){stop();return}this.textContent='❚❚ Пауза';go(0);timer=setInterval(function(){if(cur>=STEPS.length-1){stop();return}go(cur+1)},2800)};
+  function setTheme(t){theme=t;$('th-dark').setAttribute('aria-pressed',t==='dark');$('th-light').setAttribute('aria-pressed',t==='light');$('map1').src=B+'map_calc_'+t+'.jpg';$('map2').src=B+'map_order_'+t+'.jpg';show(shown||'home')}
+  $('th-dark').onclick=function(){setTheme('dark')};$('th-light').onclick=function(){setTheme('light')};
+  paintT();go(0);setTheme(theme);
+})();
+</script>
+</body></html>

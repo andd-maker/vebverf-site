@@ -1,0 +1,6 @@
+blog/
+*.bak_*
+_backup_*/
+.DS_Store
+.well-known/
+*.log

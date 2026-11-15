@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#1c1915">
+<title>Наша семья</title>
+<style>
+:root{--bg:#f3ece0;--paper:#fffdf8;--ink:#2b241c;--muted:#7a6d5e;--line:#cdbda4;--accent:#8a5a2b;--accent-ink:#fff;--err:#b23b2a;
+  --shadow:0 2px 6px rgba(60,40,20,.08),0 24px 60px rgba(60,40,20,.16)}
+@media (prefers-color-scheme:dark){:root{--bg:#171410;--paper:#231f1a;--ink:#efe6d8;--muted:#a8998a;--line:#4a4136;--accent:#d8a46c;--accent-ink:#1c1915;--err:#e58a7a;
+  --shadow:0 2px 6px rgba(0,0,0,.3),0 24px 60px rgba(0,0,0,.5)}}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink)}
+body{font:17px/1.5 Georgia,"PT Serif","Times New Roman",serif;min-height:100vh;display:grid;place-items:center;padding:24px 16px;
+  background-image:radial-gradient(ellipse at 50% 0%,rgba(138,90,43,.10),transparent 60%),radial-gradient(ellipse at 50% 100%,rgba(138,90,43,.08),transparent 55%)}
+main{width:min(420px,100%);text-align:center}
+.tree{width:120px;height:120px;margin:0 auto 6px;color:var(--accent);opacity:.9}
+h1{font-size:clamp(34px,8vw,44px);line-height:1.1;margin:0 0 6px;letter-spacing:.01em}
+.surn{color:var(--muted);font-style:italic;font-size:15px;margin:0 0 26px}
+form{background:var(--paper);border-radius:22px;padding:28px 24px 22px;box-shadow:var(--shadow);border:1px solid color-mix(in srgb,var(--line) 45%,transparent)}
+label.l{display:block;font-size:15px;color:var(--muted);margin-bottom:10px}
+.field{position:relative}
+input[type=password],input[type=text]{width:100%;font:inherit;font-size:24px;letter-spacing:.18em;text-align:center;padding:14px 52px;
+  border:1.5px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+.eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:40px;height:40px;border:0;background:none;color:var(--muted);cursor:pointer;border-radius:10px}
+.eye:focus-visible{outline:2px solid var(--accent)}
+.rem{display:flex;gap:10px;align-items:center;justify-content:center;margin:16px 0 18px;color:var(--muted);font-size:15px;cursor:pointer}
+.rem input{width:20px;height:20px;accent-color:var(--accent)}
+button.go{width:100%;font:inherit;font-size:19px;padding:15px;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);cursor:pointer;transition:filter .15s,transform .05s}
+button.go:hover{filter:brightness(1.06)} button.go:active{transform:translateY(1px)} button.go:disabled{opacity:.6;cursor:wait}
+.msg{min-height:24px;margin-top:12px;font-size:15px;color:var(--err)}
+.shake{animation:sh .35s} @keyframes sh{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.foot{margin-top:18px;color:var(--muted);font-size:13px}
+@media (prefers-reduced-motion:reduce){.shake{animation:none}}
+</style>
+</head>
+<body>
+<main>
+  <svg class="tree" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+    <path d="M60 112V64"/><path d="M60 80c-8-6-18-8-28-6M60 72c9-7 20-9 30-6M60 92c-6-3-13-4-20-2M60 88c6-4 13-5 21-3"/>
+    <circle cx="60" cy="42" r="26" fill="currentColor" opacity=".12" stroke="none"/>
+    <circle cx="36" cy="54" r="15" fill="currentColor" opacity=".10" stroke="none"/><circle cx="85" cy="54" r="15" fill="currentColor" opacity=".10" stroke="none"/>
+    <circle cx="60" cy="26" r="5"/><circle cx="42" cy="40" r="5"/><circle cx="78" cy="40" r="5"/><circle cx="32" cy="58" r="5"/><circle cx="88" cy="58" r="5"/><circle cx="60" cy="48" r="5"/>
+    <path d="M38 112h44"/>
+  </svg>
+  <h1>Наша семья</h1>
+  <p class="surn">Андруховы · Суховы · Мукосеевы · Куликовы · Вальковские</p>
+  <form id="f" autocomplete="on">
+    <label class="l" for="pw">Страница для своих. Введите пароль</label>
+    <div class="field">
+      <input type="password" id="pw" name="password" autocomplete="current-password" inputmode="numeric" autofocus required>
+      <button class="eye" type="button" id="eye" aria-label="Показать пароль">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <label class="rem"><input type="checkbox" id="rem" checked> запомнить на этом устройстве</label>
+    <button class="go" type="submit" id="go">Открыть</button>
+    <div class="msg" id="msg" role="alert"></div>
+  </form>
+  <p class="foot">Если забыли пароль — спросите у Дениса.</p>
+</main>
+<script>
+const TARGET = "/semya-ETJU_m2qtW3y/";
+const f = document.getElementById("f"), pw = document.getElementById("pw"), go = document.getElementById("go"), msg = document.getElementById("msg");
+document.getElementById("eye").onclick = () => { pw.type = pw.type === "password" ? "text" : "password"; pw.focus(); };
+async function sha(s){ const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s.trim())); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2,"0")).join("").slice(0, 32); }
+f.onsubmit = async e => {
+  e.preventDefault(); msg.textContent = ""; go.disabled = true; go.textContent = "Проверяю…";
+  try {
+    const r = await fetch(`/semya-vhod/go${document.getElementById("rem").checked ? "1" : "0"}?h=${await sha(pw.value)}`, {credentials: "include", cache: "no-store", redirect: "manual"});
+    if (r.status === 204) { go.textContent = "Открываю…"; location.replace(TARGET + location.hash); return; }
+    msg.textContent = r.status === 429 || r.status === 503 ? "Слишком много попыток. Подождите минуту и попробуйте снова." : "Неверный пароль";
+  } catch (x) { msg.textContent = "Нет связи с сайтом. Проверьте интернет."; }
+  f.classList.remove("shake"); void f.offsetWidth; f.classList.add("shake");
+  go.disabled = false; go.textContent = "Открыть"; pw.select();
+};
+</script>
+</body>
+</html>

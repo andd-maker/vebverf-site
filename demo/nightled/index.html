@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="ru" data-pal="b">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>NIGHT LED — автооптика в Наро-Фоминске</title>
+<meta name="description" content="Ремонт, восстановление и тюнинг фар в Наро-Фоминске: Bi-LED, линзы, полировка, бронеплёнка, переклейка стекла, регулировка по ГОСТу.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NIGHT LED">
+<meta property="og:title" content="NIGHT LED — автооптика в Наро-Фоминске">
+<meta property="og:description" content="Ремонт, восстановление и тюнинг фар: Bi-LED, линзы, полировка, бронеплёнка, переклейка стекла, регулировка по ГОСТу.">
+<meta property="og:url" content="https://xn--90abbkc0e2a8d.xn--p1ai/demo/nightled/">
+<meta property="og:image" content="https://xn--90abbkc0e2a8d.xn--p1ai/demo/nightled/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0C1817">
+<link rel="icon" href="img/nl/nl_favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/tektur-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/golostext-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Tektur'; font-style: normal; font-weight: 400 900; font-stretch: 100%; font-display: swap; src: url(fonts/tektur-cyrillic-ext.woff2) format('woff2'); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+@font-face { font-family: 'Tektur'; font-style: normal; font-weight: 400 900; font-stretch: 100%; font-display: swap; src: url(fonts/tektur-cyrillic.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Tektur'; font-style: normal; font-weight: 400 900; font-stretch: 100%; font-display: swap; src: url(fonts/tektur-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Tektur'; font-style: normal; font-weight: 400 900; font-stretch: 100%; font-display: swap; src: url(fonts/tektur-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Golos Text'; font-style: normal; font-weight: 400 900; font-display: swap; src: url(fonts/golostext-cyrillic-ext.woff2) format('woff2'); unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+@font-face { font-family: 'Golos Text'; font-style: normal; font-weight: 400 900; font-display: swap; src: url(fonts/golostext-cyrillic.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: 'Golos Text'; font-style: normal; font-weight: 400 900; font-display: swap; src: url(fonts/golostext-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Golos Text'; font-style: normal; font-weight: 400 900; font-display: swap; src: url(fonts/golostext-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+/* Палитры — брендбук v2 «Галоген» (03.10.2026): Ночь и День */
+:root,[data-pal="b"],[data-pal="a"],[data-pal="c"]{ /* Ночь · мокрый асфальт, 4300K */
+  --bg:#0C1817;--bg2:#142422;--ink:#E7EEEA;--mute:#8FA39D;--line:#24393A;
+  --beam:#F2E6CF;--on-beam:#0C1817;--signal:#E07A3C;--photo-fade:#0C1817;
+}
+[data-pal="d"]{ /* День · светлая тема «Галогена» */
+  --bg:#EDF1EE;--bg2:#FFFFFF;--ink:#0F1B1A;--mute:#55665F;--line:#D3DDD8;
+  --beam:#1F4A44;--on-beam:#FFFFFF;--signal:#C8551F;--photo-fade:#0C1817;
+}
+:root{
+  --pad:clamp(16px,4.2vw,72px);
+  --gap:clamp(16px,2.4vw,40px);
+  --radius:4px;
+  --display:"Tektur","Arial",sans-serif;
+  --text:"Golos Text",system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 clamp(16px,1.05vw,18px)/1.55 var(--text);overflow-x:hidden;transition:background-color .4s,color .4s}
+img,video,svg{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:600;margin:0;line-height:1.02;letter-spacing:-.015em}
+p{margin:0}
+:focus-visible{outline:2px solid var(--beam);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Кнопки */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:var(--radius);
+  font:700 17px/1 var(--text);text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:background-color .2s,color .2s,border-color .2s}
+.btn-main{background:var(--beam);color:var(--on-beam)}
+.btn-main:hover{background:var(--ink);color:var(--bg)}
+.btn-line{border-color:currentColor;color:var(--ink)}
+.btn-line:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn svg{width:20px;height:20px;flex:none}
+
+/* Шапка */
+.top{position:fixed;inset:0 0 auto;z-index:20;display:flex;align-items:center;gap:var(--gap);padding:14px var(--pad);color:#fff;transition:background-color .35s,color .35s,box-shadow .35s}
+.top .logo{width:118px;color:inherit;opacity:0;transition:opacity .6s}
+.top.on .logo,.revealed .top .logo{opacity:1}
+.top nav{display:flex;gap:clamp(14px,2vw,32px);margin-left:auto;font-weight:500}
+.top nav a{text-decoration:none;opacity:.85}
+.top nav a:hover{opacity:1;text-decoration:underline;text-underline-offset:5px}
+.top .btn{min-height:42px;padding:0 18px;font-size:15px}
+.top.on{background:var(--bg);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.top.on .btn-main{background:var(--beam);color:var(--on-beam)}
+.top .btn-main{background:#fff;color:#0C1817}
+@media (max-width:860px){.top nav{display:none}.top .btn{margin-left:auto}}
+@media (max-width:370px){.top .logo{width:96px}.top img.logo{height:26px;width:auto}.top .btn{padding:0 12px;font-size:14px}.pal{gap:2px;padding:6px}.pal button{padding:0 3px}}
+
+/* Первый экран: интро */
+.hero{position:relative;height:100vh;height:100svh;min-height:520px;background:#05080d;overflow:hidden;color:#fff}
+.hero video,.hero .poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:filter 1.6s ease,transform 6s ease}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,8,13,.55) 0,rgba(5,8,13,0) 22%,rgba(5,8,13,0) 62%,rgba(5,8,13,.85) 100%);pointer-events:none}
+.hero .endframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;filter:brightness(.42) saturate(.85);transition:opacity 1.8s ease;z-index:1}
+.ended .hero .endframe{opacity:1}
+.hero .shade{z-index:1}.hero-end{z-index:2}
+.revealed .hero video,.revealed .hero .poster{filter:brightness(.42) saturate(.85);transform:scale(1.04)}
+@media (orientation:portrait){.hero video{transition:filter 1.6s ease,transform 6s ease,opacity 1s ease}.revealed .hero video{opacity:.18}}
+.hero-end{position:absolute;inset:auto 0 0;padding:0 var(--pad) max(96px,9vh);display:grid;gap:clamp(18px,3vh,30px)}
+.hero-end .wm{width:min(100%,clamp(300px,74vw,1240px));color:#fff}
+.hero-end .wm .n path{opacity:0;transform:translateY(14px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.hero-end .wm .l path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s cubic-bezier(.6,.1,.2,1)}
+.revealed .hero-end .wm .n path{opacity:1;transform:none}
+.revealed .hero-end .wm .n path:nth-child(2){transition-delay:.08s}.revealed .hero-end .wm .n path:nth-child(3){transition-delay:.16s}
+.revealed .hero-end .wm .n path:nth-child(4){transition-delay:.24s}.revealed .hero-end .wm .n path:nth-child(5){transition-delay:.32s}
+.revealed .hero-end .wm .l path{stroke-dashoffset:0;transition-delay:.7s}
+.revealed .hero-end .wm .l path:nth-child(2){transition-delay:.95s}.revealed .hero-end .wm .l path:nth-child(3){transition-delay:1.1s}.revealed .hero-end .wm .l path:nth-child(4){transition-delay:1.3s}
+.wm .halo{opacity:0;transition:opacity 1.2s ease 1.5s}
+.revealed .hero-end .wm .halo{opacity:.45}
+.hero-end .wm{overflow:visible}
+.hero-sub{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px 40px;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .8s 1.6s,transform .8s 1.6s,visibility 0s 1.6s}
+.revealed .hero-sub{opacity:1;visibility:visible;transform:none}
+
+
+/* Логотип NL (03.10.2026): знак-круг в шапке, «Ход лучей» в финале интро */
+.top img.logo{width:auto;height:36px;max-width:none}
+.lg-l{display:none}
+[data-pal="d"] .top.on .lg-d,[data-pal="d"] footer .lg-d{display:none}
+[data-pal="d"] .top.on .lg-l,[data-pal="d"] footer .lg-l{display:inline-block}
+footer img.logo{height:40px;width:auto}
+.hero-end .wm-open{display:none;height:auto;opacity:0;transform:translateY(10px);transition:opacity 1s ease .2s,transform 1s ease .2s}
+@media (orientation:landscape){.revealed .hero video,.revealed .hero .poster{filter:none;transform:none}.hero .endframe{filter:none}}
+@media (orientation:portrait){.revealed .hero video{opacity:.08}.ended .hero .endframe{opacity:.08}.hero-end .wm-open{display:block;width:min(100%,520px)}.revealed .hero-end .wm-open{opacity:1;transform:none}}
+/* Подписи к сценам интро: строка + плашка, синхронно с видео */
+.caps{position:absolute;left:0;right:0;bottom:clamp(118px,25vh,280px);z-index:3;display:grid;padding:0 var(--pad);pointer-events:none;transition:opacity .5s}
+.revealed .caps{opacity:0}
+.caps::before{content:"";position:absolute;left:50%;top:50%;width:min(1100px,120vw);height:calc(100% + 160px);transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(5,8,13,.55),rgba(5,8,13,.28) 55%,rgba(5,8,13,0));z-index:-1}
+.cap{grid-area:1/1;display:flex;flex-direction:column;align-items:center;gap:clamp(18px,2.8vh,30px);text-align:center;opacity:0;visibility:hidden;will-change:opacity,transform}
+.cap p{--ls:.34em;font:400 clamp(17px,1.9vw,34px)/1.4 var(--text);letter-spacing:var(--ls);text-indent:var(--ls);text-transform:uppercase;color:#fff;max-width:30em;text-wrap:balance;
+  text-shadow:0 0 2px rgba(0,0,0,.35),0 2px 24px rgba(0,0,0,.85)}
+.cap a{display:inline-flex;align-items:center;min-height:44px;padding:0 22px;background:#fff;color:#0C1817;border-radius:2px;text-decoration:none;
+  font:700 13px/1 var(--text);letter-spacing:.18em;text-transform:uppercase;box-shadow:0 6px 28px rgba(0,0,0,.35);transition:background-color .2s,color .2s}
+.cap a:hover{background:var(--signal);color:#0C1817}
+.cap.live a{pointer-events:auto}
+@media (max-width:600px){.cap p{font-weight:400;letter-spacing:.22em;text-indent:.22em}.cap a{font-size:12px;letter-spacing:.14em;padding:0 18px}}
+
+/* Полоски сцен */
+.scenes{position:absolute;left:50%;bottom:max(18px,env(safe-area-inset-bottom));z-index:4;transform:translateX(-50%);display:flex;gap:6px;width:min(calc(100% - 2*var(--pad)),860px);margin:0;padding:0;list-style:none}
+.scenes li{flex:1 1 0;min-width:0}
+.scenes button{display:block;width:100%;height:30px;padding:14px 0;border:0;background:none;cursor:pointer}
+.scenes i{display:block;position:relative;height:2px;background:rgba(255,255,255,.26);overflow:hidden;transition:height .2s}
+.scenes i::after{content:"";position:absolute;inset:0;background:var(--fill,#fff);transform:scaleX(var(--p,0));transform-origin:left}
+.scenes button:hover i,.scenes button:focus-visible i{height:4px;margin-top:-1px}
+.scenes .done i{--p:1;--fill:rgba(255,255,255,.8)}
+.scenes .now i{--fill:var(--signal)}
+.revealed .scenes .now i{--fill:rgba(255,255,255,.8)}
+.hero-sub p{font-size:clamp(18px,1.6vw,24px);max-width:34ch;color:rgba(255,255,255,.88)}
+.hero-sub .acts{display:flex;flex-wrap:wrap;gap:12px}
+.hero .btn-main{background:#fff;color:#0C1817}
+.hero .btn-line{color:#fff}
+.hero .btn-line:hover{background:#fff;color:#0C1817;border-color:#fff}
+
+/* Секции */
+section{padding:clamp(72px,11vw,160px) var(--pad)}
+.h2{font-size:clamp(38px,5.6vw,96px);max-width:16ch}
+.lead{font-size:clamp(19px,1.6vw,24px);line-height:1.45;max-width:46ch;color:var(--ink)}
+.note{color:var(--mute);font-size:15px;max-width:62ch}
+
+/* О мастерской + доверие */
+.about{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,96px);align-items:end}
+.facts{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));row-gap:28px;border-top:1px solid var(--line);margin-top:clamp(16px,3vw,40px)}
+.fact{container-type:inline-size;min-width:0;padding:22px 24px 0 0;border-right:1px solid var(--line);margin-right:24px}
+.fact:last-child{border-right:0}
+.fact b{display:block;font:800 clamp(40px,6.4vw,104px)/.9 var(--display);color:var(--ink)}
+.fact span{display:block;margin-top:10px;color:var(--mute);max-width:24ch}
+.fact b{display:flex;align-items:flex-start;gap:.08em;font-size:min(clamp(36px,5vw,88px),16cqi);white-space:nowrap}.fact .star{width:.32em;height:.32em;color:var(--signal);margin-top:.06em}
+@media (max-width:520px){.fact{border-right:0;margin-right:0;padding-right:12px}}
+
+/* Услуги: список + закреплённое фото */
+.svc{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(32px,5vw,96px);padding-top:0}
+.svc-head{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px}
+.svc-photo{margin:0;position:sticky;top:88px;height:calc(100vh - 120px);max-height:820px;border-radius:var(--radius);overflow:hidden;background:#05080d}
+.svc-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease}
+.svc-photo img.on{opacity:1}
+.svc-photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:60px 24px 22px;background:linear-gradient(transparent,rgba(5,8,13,.85));color:#fff;font:700 clamp(22px,2vw,30px)/1.05 var(--display);text-transform:uppercase}
+.grp{margin-top:clamp(28px,4vw,56px)}
+.grp h3{font-size:clamp(22px,1.8vw,28px);font-weight:700;color:var(--mute);padding-bottom:12px;border-bottom:1px solid var(--line)}
+.grp ul{list-style:none;margin:0;padding:0}
+.row{scroll-margin-top:110px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 24px;padding:20px 0 20px 18px;border-bottom:1px solid var(--line);cursor:default;position:relative;outline:none}
+.row::before{content:"";position:absolute;left:0;top:20px;bottom:20px;width:3px;background:var(--beam);transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
+.row.on::before,.row:focus-visible::before{transform:scaleY(1)}
+.row h4{margin:0;font:600 clamp(26px,2.4vw,40px)/1 var(--display)}
+.row p{grid-column:1;color:var(--mute);max-width:52ch}
+.row .price{grid-column:2;grid-row:1/3;align-self:start;text-align:right;font:700 clamp(20px,1.6vw,26px)/1.05 var(--display);white-space:nowrap}
+.row .price small{display:block;font:500 13px/1.3 var(--text);color:var(--mute);margin-top:6px;white-space:normal;max-width:16ch;margin-left:auto}
+@media (max-width:900px){
+  .svc{grid-template-columns:1fr}
+  .svc-photo{position:sticky;top:70px;z-index:2;height:clamp(190px,50vw,420px);order:-1;grid-row:2;box-shadow:0 18px 30px -10px var(--bg)}
+  .svc-photo figcaption{padding:40px 16px 14px;font-size:20px}
+  .svc-head{grid-row:1}
+}
+@media (max-width:520px){.row{grid-template-columns:1fr;padding-left:14px}.row .price{grid-column:1;grid-row:auto;text-align:left}.row .price small{margin-left:0;max-width:none}}
+
+/* Пример расчёта */
+.calc{background:var(--bg2);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(28px,5vw,80px);align-items:start}
+.calc table{width:100%;border-collapse:collapse;font-size:clamp(16px,1.2vw,19px)}
+.calc td{padding:16px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.calc td:last-child{text-align:right;font-weight:700;white-space:nowrap;padding-left:16px}
+.calc tr:last-child td{border-bottom:0;padding-top:22px;font:600 clamp(28px,2.6vw,40px)/1 var(--display)}
+
+/* Как проходит запись */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:40px 0;margin-top:clamp(40px,6vw,88px);counter-reset:s;list-style:none;padding:0}
+.steps li{position:relative;padding:44px 28px 0 0}
+.steps li::before{content:"";position:absolute;left:0;right:0;top:12px;height:2px;background:var(--line)}
+.steps li::after{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;display:grid;place-items:center;background:var(--bg);color:var(--beam);border:2px solid var(--beam);border-radius:2px;font:800 15px/1 var(--display)}
+.steps h3{font-size:clamp(26px,2.3vw,36px);margin-bottom:12px}
+.steps p{color:var(--mute);max-width:32ch}
+.steps li:first-child h3::after{content:" обязательно";display:block;margin-top:6px;font:600 14px/1.2 var(--text);text-transform:none;color:var(--signal)}
+
+/* Рефералка и розыгрыши */
+.share{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(28px,4vw,64px);align-items:stretch}
+.soon{display:inline-block;margin-bottom:18px;padding:6px 10px;border:1px solid var(--signal);color:var(--signal);border-radius:2px;font-weight:600;font-size:14px}
+.ticket{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:1.5px solid var(--beam);border-radius:var(--radius);min-height:280px}
+.ticket>div{container-type:inline-size;min-width:0;padding:clamp(22px,2.6vw,36px);display:flex;flex-direction:column;justify-content:space-between;gap:20px}
+.ticket>div+div{border-left:1.5px dashed var(--beam)}
+.ticket b{font:800 clamp(64px,8vw,132px)/.85 var(--display);font-size:min(132px,40cqi);white-space:nowrap;color:var(--beam)}
+.ticket span{color:var(--mute)}
+.ticket strong{display:block;color:var(--ink);font-size:18px;margin-bottom:4px}
+@media (max-width:520px){.ticket{min-height:200px}}
+@media (min-width:900px){.share{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.raffle{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:24px 64px;padding-top:clamp(28px,4vw,48px);border-top:1px solid var(--line);margin-top:clamp(12px,2vw,24px)}
+.raffle h3{font-size:clamp(34px,3.6vw,60px)}
+
+/* География */
+.geo{position:relative;min-height:min(92vh,880px);display:flex;flex-direction:column;justify-content:flex-end;color:#fff;overflow:hidden;background:#05080d}
+.geo>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;opacity:.8}
+.geo::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--photo-fade) 0,rgba(5,8,13,0) 30%,rgba(5,8,13,.15) 55%,rgba(5,8,13,.9) 100%);z-index:1}
+.geo>*:not(video){position:relative;z-index:2}
+.towns{list-style:none;margin:26px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px clamp(18px,2.6vw,44px);font:600 clamp(30px,4.6vw,84px)/.95 var(--display);text-transform:uppercase}
+.towns li:first-child{color:#fff}
+.towns li{color:rgba(255,255,255,.55)}
+.geo p{margin-top:24px;max-width:52ch;color:rgba(255,255,255,.85);font-size:clamp(17px,1.3vw,20px)}
+
+/* Контакты */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,96px);align-items:center}
+.contact figure{margin:0;border-radius:var(--radius);overflow:hidden;aspect-ratio:16/10;background:#05080d}
+.contact figure img{width:100%;height:100%;object-fit:cover}
+.addr{font:600 clamp(30px,3.4vw,56px)/1.02 var(--display);margin:22px 0 14px}
+.contact .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.contact .acts .btn{flex:1 1 220px;max-width:300px}
+.contact dl{display:grid;grid-template-columns:auto 1fr;gap:8px 22px;margin:26px 0 0}
+.contact dt{color:var(--mute)}
+.contact dd{margin:0}
+.contact dd a{text-underline-offset:4px;text-decoration-color:var(--line)}
+.contact dd a:hover{text-decoration-color:currentColor}
+
+footer{padding:40px var(--pad) 110px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:16px 40px;align-items:center;justify-content:space-between;color:var(--mute);font-size:15px}
+footer .logo{width:150px;color:var(--ink)}
+footer a{color:var(--ink);text-underline-offset:4px;text-decoration-color:var(--line)}
+footer a:hover{text-decoration-color:currentColor}
+.reviews{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(32px,4vw,64px)}
+.reviews>.btn{justify-self:start}
+.rv-head{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px clamp(32px,5vw,96px);align-items:end;width:100%}
+.rv-score{display:flex;align-items:flex-end;gap:16px;margin:0}
+.rv-score b{font:800 clamp(64px,8vw,128px)/.85 var(--display);color:var(--ink)}
+.rv-score span{color:var(--mute);padding-bottom:.4em}
+.rv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:0;width:100%;border-top:1px solid var(--line)}
+.rv{margin:0;padding:28px 28px 28px 0;border-bottom:1px solid var(--line);display:grid;gap:18px;align-content:space-between;min-width:0}
+.rv blockquote{margin:0;font:600 clamp(24px,2.2vw,34px)/1.08 var(--display);color:var(--ink);text-wrap:balance}
+.rv figcaption{display:grid;gap:2px;font-size:15px}
+.rv figcaption b{font-weight:600;color:var(--ink)}
+.rv figcaption span{color:var(--mute)}
+section[id]{scroll-margin-top:40px}
+.zapis-note{margin-top:clamp(36px,4vw,56px);padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
+.zapis-note p{color:var(--mute);max-width:62ch}
+
+/* Сообщение-заглушка для кнопок бота */
+.toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));z-index:40;transform:translate(-50%,16px);width:min(calc(100% - 32px),520px);padding:18px 20px;background:var(--ink);color:var(--bg);border-radius:6px;box-shadow:0 12px 40px rgba(0,0,0,.4);opacity:0;visibility:hidden;transition:opacity .25s,transform .25s,visibility 0s .25s;font-size:16px;line-height:1.45}
+.toast.on{opacity:1;visibility:visible;transform:translate(-50%,0);transition:opacity .25s,transform .25s}
+.toast a{color:inherit;font-weight:700}
+
+/* Переключатель палитр (демо для заказчика) */
+.pal{transition:opacity .3s,visibility 0s}
+.in-hero .pal{opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+.pal{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:30;display:flex;align-items:center;gap:6px;padding:8px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;box-shadow:0 8px 30px rgba(0,0,0,.35);font-size:14px}
+.pal>span{padding:0 6px 0 4px;color:var(--mute)}
+.pal button{display:flex;align-items:center;gap:8px;height:36px;padding:0 10px 0 6px;border:1px solid transparent;border-radius:4px;background:none;color:inherit;font:600 14px/1 var(--text);cursor:pointer}
+.pal button i{width:22px;height:22px;border-radius:3px;background:linear-gradient(135deg,var(--sw1) 50%,var(--sw2) 50%);box-shadow:inset 0 0 0 1px rgba(127,127,127,.4)}
+.pal button[aria-pressed="true"]{border-color:var(--beam)}
+@media (max-width:700px){.pal>span,.pal button em{display:none}.pal button{padding:0 6px}.hero-sub .acts{width:100%}.hero-sub .acts .btn{flex:1 1 140px;padding:0 14px}}
+.pal button em{font-style:normal}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;transition-delay:0s!important;animation:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <a href="#" aria-label="NIGHT LED — в начало"><img class="logo lg-d" src="img/nl/nl_horizontal_dark_nobg.svg" alt="" aria-hidden="true"><img class="logo lg-l" src="img/nl/nl_horizontal_light_nobg.svg" alt="" aria-hidden="true"></a>
+  <nav aria-label="Разделы">
+    <a href="#uslugi">Услуги</a><a href="#zapis">Запись</a><a href="#skidka">Скидки</a><a href="#kontakty">Контакты</a>
+  </nav>
+  <a class="btn btn-main js-max" href="#zapis">Как записаться</a>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="wm" viewBox="0 0 446 100">
+    <g fill="currentColor">
+      <path d="M0 100V0H20L32 40V0H52V100H32L20 60V100Z"/><path d="M62 0H82V100H62Z"/>
+      <path d="M104 0H144V20H112V80H124V64H118V46H144V100H104L92 88V12Z"/>
+      <path d="M154 0H174V40H186V0H206V100H186V60H174V100H154Z"/><path d="M216 0H268V20H252V100H232V20H216Z"/>
+    </g>
+    <g fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="miter">
+      <path d="M294 0V96H336"/><path d="M388 4H350V96H388"/><path d="M350 50H380"/><path d="M402 4H426L442 20V80L426 96H402Z"/>
+    </g>
+  </symbol>
+</svg>
+
+<main>
+<section class="hero" aria-label="Интро" style="padding:0">
+  <img class="endframe" src="img/reveal_luchi.jpg" alt="" aria-hidden="true">
+  <video id="intro" src="intro.mp4?v=8" poster="intro_poster.jpg?v=7" autoplay muted playsinline preload="auto" aria-hidden="true"></video>
+  <div class="shade"></div>
+  <!-- Подписи к сценам: data-in / data-out — секунды ролика; уходят до засвета фар -->
+  <div class="caps">
+    <div class="cap" data-in="0.22" data-out="2.24"><p>Свет начинается с&nbsp;линзы</p><a href="#s-lens">Линзы и&nbsp;замена</a></div>
+    <div class="cap" data-in="2.76" data-out="3.74"><p>Свет для российских дорог</p><a href="#uslugi">Все услуги</a></div>
+    <div class="cap" data-in="4.26" data-out="7.17"><p>Включается с&nbsp;первого раза</p><a href="#s-lamps">Замена ламп</a></div>
+    <div class="cap" data-in="7.69" data-out="8.9"><p>Крепления держат при&nbsp;любой тряске</p><a href="#s-krep">Ремонт креплений</a></div>
+    <div class="cap" data-in="9.42" data-out="12.3"><p>Премиум-класс видно по&nbsp;фарам</p><a href="#s-glass">Прозрачность стекла</a></div>
+    <div class="cap" data-in="12.82" data-out="15.57"><p>Чёткая граница света на&nbsp;каждом повороте</p><a href="#s-biled">Bi-LED модули</a></div>
+    <div class="cap" data-in="16.09" data-out="18.6"><p>Удар песка принимает плёнка</p><a href="#s-polish">Полировка и&nbsp;защита</a></div>
+    <div class="cap" data-in="19.12" data-out="21.57"><p>Вода и&nbsp;грязь остаются снаружи</p><a href="#s-germ">Герметичность</a></div>
+    <div class="cap" data-in="22.09" data-out="24.6"><p>Ходовые огни горят целиком</p><a href="#s-dho">Секции ДХО</a></div>
+    <div class="cap" data-in="25.12" data-out="27.66"><p>Ровный свет без ослепления встречных</p><a href="#s-gost">Регулировка по&nbsp;ГОСТу</a></div>
+    <div class="cap" data-in="28.18" data-out="30.33"><p>Фара под ваш замысел</p><a href="#s-tuning">Авторский тюнинг</a></div>
+  </div>
+  <ol class="scenes" aria-label="Сцены интро">
+    <li><button type="button" data-t="0" aria-label="Сцена 1: линзы"><i></i></button></li>
+    <li><button type="button" data-t="2.54" aria-label="Сцена 2: флаг на хребте"><i></i></button></li>
+    <li><button type="button" data-t="4.04" aria-label="Сцена 3: тумблеры света"><i></i></button></li>
+    <li><button type="button" data-t="7.47" aria-label="Сцена 4: КАМАЗ на перевале"><i></i></button></li>
+    <li><button type="button" data-t="9.2" aria-label="Сцена 5: Mercedes у Кремля"><i></i></button></li>
+    <li><button type="button" data-t="12.6" aria-label="Сцена 6: серпантин"><i></i></button></li>
+    <li><button type="button" data-t="15.87" aria-label="Сцена 7: Гранта в пыли"><i></i></button></li>
+    <li><button type="button" data-t="18.9" aria-label="Сцена 8: КАМАЗ в грязи"><i></i></button></li>
+    <li><button type="button" data-t="21.87" aria-label="Сцена 9: Tiguan у Кремля"><i></i></button></li>
+    <li><button type="button" data-t="24.9" aria-label="Сцена 10: дорога через лес"><i></i></button></li>
+    <li><button type="button" data-t="27.96" aria-label="Сцена 11: снятие чехла"><i></i></button></li>
+    <li><button type="button" data-t="30.63" aria-label="Сцена 12: NIGHT LED"><i></i></button></li>
+  </ol>
+  <div class="hero-end">
+    <h1><span class="sr">NIGHT LED — автооптика в Наро-Фоминске</span>
+      <img class="wm wm-open" src="img/nl/nl_open_dark_nobg.svg" alt="" aria-hidden="true">
+    </h1>
+    <div class="hero-sub">
+      <p>Ремонт, восстановление и тюнинг фар. Мастерская в Наро-Фоминске, ул.&nbsp;Шибанкова,&nbsp;71.</p>
+      <div class="acts">
+        <a class="btn btn-main js-max" href="#zapis">Как записаться</a>
+        <a class="btn btn-line" href="#uslugi">Услуги и цены</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" aria-labelledby="about-h">
+  <h2 class="h2" id="about-h">Фары, которые снова светят как надо</h2>
+  <p class="lead">Ставим линзы и Bi-LED, возвращаем прозрачность стеклу, лечим запотевание, сломанные крепления и погасшие ходовые огни. Каждую фару сначала смотрим по фото или вживую, потом называем цену.</p>
+  <div class="facts">
+    <div class="fact"><b>5,0<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg></b><span>рейтинг на Авито</span></div>
+    <div class="fact"><b>120</b><span>отзывов клиентов на Авито</span></div>
+    <div class="fact"><b>2020</b><span>работаем с июня 2020 года</span></div>
+    <div class="fact"><b>Гарантия</b><span>на каждую работу мастерской</span></div>
+  </div>
+</section>
+
+<section class="svc" id="uslugi" aria-labelledby="svc-h">
+  <div class="svc-head">
+    <h2 class="h2" id="svc-h">Услуги и цены</h2>
+    <p class="note">Цены ориентировочные: по объявлениям мастерской на Авито и примерам мастера. Точную сумму называем после фото или осмотра: она зависит от фары и от того, нужно ли снимать бампер.</p>
+  </div>
+
+  <div class="svc-list">
+    <div class="grp">
+      <h3>Свет</h3>
+      <ul>
+        <li class="row on" id="s-biled" tabindex="0" data-img="0"><h4>Установка Bi-LED модулей</h4><p>Ставим Bi-LED линзы вместо штатной оптики: ровный пучок и чёткая граница света.</p><span class="price">по модели<small>BMW X5 — 55 000 ₽, по Авито</small></span></li>
+        <li class="row" id="s-lens" tabindex="0" data-img="1"><h4>Установка и замена линз</h4><p>Меняем помутневшие и слабые линзы, подбираем под корпус фары.</p><span class="price">по осмотру</span></li>
+        <li class="row" id="s-lamps" tabindex="0" data-img="2"><h4>Замена ламп</h4><p>Подбираем и меняем лампы ближнего и дальнего света, габариты.</p><span class="price">по осмотру</span></li>
+        <li class="row" id="s-gost" tabindex="0" data-img="3"><h4>Регулировка света по ГОСТу</h4><p>Выставляем фары по ГОСТу: свет ложится на дорогу и не слепит встречных.</p><span class="price">по осмотру</span></li>
+      </ul>
+    </div>
+    <div class="grp">
+      <h3>Стекло</h3>
+      <ul>
+        <li class="row" id="s-glass" tabindex="0" data-img="4"><h4>Восстановление прозрачности</h4><p>Убираем желтизну и мутность со стекла, свет снова проходит без рассеивания.</p><span class="price">по осмотру</span></li>
+        <li class="row" id="s-polish" tabindex="0" data-img="5"><h4>Полировка и защита стёкол</h4><p>Полируем стекло и закрываем бронеплёнкой от сколов, песка и реагентов.</p><span class="price">от 5 500 ₽<small>бронеплёнка, по Авито</small></span></li>
+        <li class="row" id="s-reglue" tabindex="0" data-img="6"><h4>Переклейка стекла фары</h4><p>Снимаем фару, ставим новое стекло на герметик.</p><span class="price">6 000 ₽<small>за фару Hyundai Solaris, пример мастера; бампер отдельно</small></span></li>
+      </ul>
+    </div>
+    <div class="grp">
+      <h3>Корпус и электрика</h3>
+      <ul>
+        <li class="row" id="s-germ" tabindex="0" data-img="7"><h4>Восстановление герметичности</h4><p>Убираем запотевание и воду внутри фары, заново герметизируем корпус.</p><span class="price">по осмотру</span></li>
+        <li class="row" id="s-krep" tabindex="0" data-img="8"><h4>Ремонт креплений</h4><p>Восстанавливаем сломанные ушки и крепления, не меняя фару целиком.</p><span class="price">по осмотру</span></li>
+        <li class="row" id="s-dho" tabindex="0" data-img="9"><h4>Восстановление секций ДХО</h4><p>Возвращаем ходовые огни, которые погасли или мерцают по сегментам.</p><span class="price">по осмотру</span></li>
+      </ul>
+    </div>
+    <div class="grp">
+      <h3>Тюнинг</h3>
+      <ul>
+        <li class="row" id="s-antichrome" tabindex="0" data-img="10"><h4>Антихром фар</h4><p>Перекрашиваем хромированные детали внутри фары в чёрный или в цвет кузова.</p><span class="price">по осмотру</span></li>
+        <li class="row" id="s-tuning" tabindex="0" data-img="11"><h4>Авторский тюнинг фар</h4><p>Фара под ваш замысел: маски, рисунок ходовых огней, подсветка. Обсуждаем по эскизу.</p><span class="price">по договорённости</span></li>
+        <li class="row" id="s-ready" tabindex="0" data-img="12"><h4>Готовые доработанные фары</h4><p>Фары, которые мастерская уже перебрала и доработала. Что есть в наличии — на Авито.</p><span class="price">по наличию<small>Toyota Camry 70 LED — 20 900 ₽, по Авито</small></span></li>
+      </ul>
+    </div>
+    <div class="grp">
+      <h3>Кроме фар</h3>
+      <ul>
+        <li class="row" id="s-body" tabindex="0" data-img="13"><h4>Полировка кузова</h4><p>Снимаем мелкие царапины и матовость лака, возвращаем блеск.</p><span class="price">от 20 000 ₽<small>по Авито</small></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <figure class="svc-photo" aria-hidden="true">
+    <img class="on" src="img/s_biled.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/lens.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_lamps.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_gost.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_glass.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_film.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_reglue.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_germ.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_krep.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_dho.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_antichrome.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_tuning.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_ready.jpg" alt="" loading="lazy" decoding="async">
+    <img src="img/s_bodypolish.jpg" alt="" loading="lazy" decoding="async">
+    <figcaption id="svc-cap">Установка Bi-LED модулей</figcaption>
+  </figure>
+</section>
+
+<section class="calc" aria-labelledby="calc-h">
+  <div>
+    <h2 class="h2" id="calc-h">Из чего складывается цена</h2>
+    <p class="lead" style="margin-top:24px">Пример: переклейка стёкол на Hyundai Solaris. Работа по каждой фаре плюс то, что нужно, чтобы до неё добраться.</p>
+    <p class="note" style="margin-top:16px">Ориентировочно. В боте NIGHT LED в MAX калькулятор будет считать по вашей модели и услуге.</p>
+  </div>
+  <table>
+    <tr><td>Переклейка стекла, левая фара</td><td>6 000 ₽</td></tr>
+    <tr><td>Переклейка стекла, правая фара</td><td>6 000 ₽</td></tr>
+    <tr><td>Снятие и установка бампера</td><td>по модели</td></tr>
+    <tr><td>Арматурные работы</td><td>по модели</td></tr>
+    <tr><td>Итого</td><td>от 12 000 ₽</td></tr>
+  </table>
+</section>
+
+<section id="zapis" aria-labelledby="zapis-h">
+  <h2 class="h2" id="zapis-h">Как записаться</h2>
+  <ol class="steps">
+    <li><h3>Фото или осмотр</h3><p>Пришлите в MAX фото или видео фары и дефекта. Или приезжайте, посмотрим вживую.</p></li>
+    <li><h3>Окно в графике</h3><p>Выбираете свободный день и время. Бот присылает подтверждение и напоминает накануне.</p></li>
+    <li><h3>Предоплата</h3><p>Материал заказываем у поставщика под вашу машину, поэтому берём предоплату. Оплата по СБП.</p></li>
+    <li><h3>Работа</h3><p>Оставляете машину в мастерской на Шибанкова, 71. Срок называем заранее.</p></li>
+    <li><h3>Гарантия</h3><p>На каждую работу даём гарантию. В боте она будет храниться по госномеру: талон не потеряется.</p></li>
+  </ol>
+  <div class="zapis-note">
+    <p>Так запись будет устроена в боте NIGHT LED в MAX: фото, окно, предоплата, напоминание и гарантия в одном месте. Пока бот готовится к запуску, пишите мастеру на Авито.</p>
+    <a class="btn btn-line" href="https://www.avito.ru/brands/41b527508649228e7fb41e89e7626c7a/all/predlozheniya_uslug?sellerId=0c3373cdeb535adb878eb5a501187a57" target="_blank" rel="noopener">Написать на Авито</a>
+  </div>
+</section>
+
+<section class="share" id="skidka" aria-labelledby="share-h" style="padding-top:0">
+  <div>
+    <span class="soon">Запускаем вместе с ботом в MAX</span>
+    <h2 class="h2" id="share-h">Поделись скидкой</h2>
+    <p class="lead" style="margin-top:24px">У каждого клиента в боте будет своя ссылка. Отправили другу: он получает скидку на первую услугу, вы — на следующую.</p>
+  </div>
+  <div class="ticket" role="img" aria-label="Пример: другу скидка 10 процентов, вам 20 процентов">
+    <div><span><strong>Другу</strong>на первую услугу</span><b>−10%</b></div>
+    <div><span><strong>Вам</strong>на следующую услугу</span><b>−20%</b></div>
+  </div>
+  <div class="raffle">
+    <h3>Розыгрыши раз в 1–3 месяца</h3>
+    <p class="lead">Разыгрываем услугу из прайса, например полировку всех фар. Участвовать смогут подписчики канала NIGHT LED в MAX. Проценты скидок выше — пример: точные условия объявим при запуске.</p>
+  </div>
+</section>
+
+<section class="reviews" id="otzyvy" aria-labelledby="rv-h">
+  <div class="rv-head">
+    <h2 class="h2" id="rv-h">Что пишут после первой ночи</h2>
+    <p class="rv-score"><b>4,9</b><span>21 отзыв на Яндекс Картах<br>и 120 на Авито</span></p>
+  </div>
+  <div class="rv-grid"><figure class="rv"><blockquote>«Теперь я понимаю, как должны светить фары.»</blockquote><figcaption><b>Владислав Ф.</b><span>линзы и новое стекло фары</span></figcaption></figure><figure class="rv"><blockquote>«Я просто прозрел, свет на порядок выше.»</blockquote><figcaption><b>ЦЕС</b><span>Honda Civic, Bi-LED модули</span></figcaption></figure><figure class="rv"><blockquote>«Результат — просто огонь! Свет теперь супер.»</blockquote><figcaption><b>Леонид Л.</b><span>Freelander 2, линзы и стёкла</span></figcaption></figure><figure class="rv"><blockquote>«После установки свет стал идеальным, ночью ехать одно удовольствие.»</blockquote><figcaption><b>Максим Я.</b><span>линзы, полировка туманок</span></figcaption></figure><figure class="rv"><blockquote>«Поставил новый свет — небо и земля! Дорога теперь как на ладони.»</blockquote><figcaption><b>Максим М.</b><span>новый свет</span></figcaption></figure></div>
+  <a class="btn btn-line" href="https://yandex.ru/maps/org/night_led/234625774003/reviews/" target="_blank" rel="noopener">Все отзывы на Яндекс Картах</a>
+</section>
+
+<section class="geo" aria-labelledby="geo-h">
+  <video class="loop" src="geo_loop.mp4?v=6" poster="img/s_forest.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
+  <h2 class="h2" id="geo-h">К нам едут</h2>
+  <ul class="towns">
+    <li>Наро-Фоминск</li><li>Балабаново</li><li>Обнинск</li><li>Селятино</li><li>Рассудово</li><li>Апрелевка</li><li>Москва</li>
+  </ul>
+  <p>Мастерская в Наро-Фоминске, на ул. Шибанкова, 71. Если неудобно ехать на осмотр, начните с фото или видео фары: часто этого хватает, чтобы назвать цену.</p>
+</section>
+
+<section class="contact" id="kontakty" aria-labelledby="contact-h">
+  <div>
+    <h2 class="h2" id="contact-h">Контакты</h2>
+    <p class="addr">Наро-Фоминск, ул.&nbsp;Шибанкова,&nbsp;71</p>
+    <dl>
+      <dt>Адрес</dt><dd><a href="https://yandex.ru/maps/?text=%D0%9D%D0%B0%D1%80%D0%BE-%D0%A4%D0%BE%D0%BC%D0%B8%D0%BD%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A8%D0%B8%D0%B1%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D0%B0%2C%2071" target="_blank" rel="noopener">Маршрут в&nbsp;Яндекс Картах</a></dd>
+      <dt>Запись</dt><dd>через бота в MAX (запускаем) или на Авито</dd>
+      <dt>Ответ</dt><dd>в течение нескольких часов</dd>
+      <dt>Авито</dt><dd>«Автосвет Night LED», 5,0 по 120 отзывам</dd>
+      <dt>Яндекс Карты</dt><dd><a href="https://yandex.ru/maps/org/night_led/234625774003/reviews/" target="_blank" rel="noopener">«Night Led», 4,9 по 21 отзыву</a></dd>
+    </dl>
+    <div class="acts">
+      <a class="btn btn-main js-max" href="#zapis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>Как записаться</a>
+      <a class="btn btn-line" href="https://www.avito.ru/brands/41b527508649228e7fb41e89e7626c7a/all/predlozheniya_uslug?sellerId=0c3373cdeb535adb878eb5a501187a57" target="_blank" rel="noopener">Написать на Авито</a>
+    </div>
+  </div>
+  <figure><img src="img/macro.jpg" alt="Фара с матричным светом и ходовыми огнями" loading="lazy" decoding="async"></figure>
+</section>
+</main>
+
+<footer>
+  <img class="logo lg-d" src="img/nl/nl_horizontal_dark_nobg.svg" alt="NIGHT LED"><img class="logo lg-l" src="img/nl/nl_horizontal_light_nobg.svg" alt="NIGHT LED">
+  <span>Автооптика в Наро-Фоминске. Ремонт, восстановление и тюнинг фар.</span>
+  <span>© 2026 «Автосвет Night LED». Фото на сайте — иллюстрации, работы мастерской добавим после съёмки.</span>
+  <span>Разработано студией <a href="https://вебверфь.рф/max.html" target="_blank" rel="noopener">ВебВерфь</a></span>
+</footer>
+
+<div class="pal" role="group" aria-label="Тема сайта (демо)">
+  <span>Тема</span>
+  <button type="button" data-p="b" aria-pressed="true" style="--sw1:#0C1817;--sw2:#E07A3C"><i></i><em>Ночь</em></button>
+  <button type="button" data-p="d" aria-pressed="false" style="--sw1:#EDF1EE;--sw2:#1F4A44"><i></i><em>День</em></button>
+</div>
+
+<script>
+(function(){
+  var doc=document.documentElement, body=document.body;
+  /* Палитры */
+  var btns=document.querySelectorAll('.pal button');
+  function setPal(p){doc.setAttribute('data-pal',p);btns.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.p===p?'true':'false')});try{localStorage.setItem('nl-pal',p)}catch(e){}}
+  btns.forEach(function(b){b.addEventListener('click',function(){setPal(b.dataset.p)})});
+  try{var s=localStorage.getItem('nl-pal');if(s&&/^[bd]$/.test(s))setPal(s)}catch(e){}
+
+  /* Интро: в конце ролика проявляется вордмарк */
+  var v=document.getElementById('intro'), done=false;
+  function reveal(){if(done)return;done=true;body.classList.add('revealed');paint()}
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Подписи и полоски сцен — от video.currentTime, без таймеров: перемотка и пауза не сбивают синхрон */
+  var caps=[].slice.call(document.querySelectorAll('.cap')).map(function(el){return{el:el,a:+el.dataset.in,b:+el.dataset.out}});
+  var segs=[].slice.call(document.querySelectorAll('.scenes button')), starts=segs.map(function(b){return +b.dataset.t});
+  var FI=reduce?.05:.3, FO=reduce?.05:.24;
+  function clamp(x){return x<0?0:x>1?1:x}
+  function ease(x){return 1-Math.pow(1-x,3)}
+  function paint(){
+    var t=v.currentTime||0, D=v.duration||36.9;
+    caps.forEach(function(c){
+      var i=ease(clamp((t-c.a)/FI)), o=clamp((c.b-t)/FO), k=done?0:Math.min(i,o);
+      var s=c.el.style;
+      s.opacity=k.toFixed(3);
+      s.visibility=k>0.01?'visible':'hidden';
+      s.transform='translateY('+((1-i)*10).toFixed(1)+'px)';
+      c.el.firstChild.style.setProperty('--ls',(innerWidth>600?.34+.18*(1-i):.22+.1*(1-i)).toFixed(3)+'em');
+      c.el.classList.toggle('live',k>.6);
+    });
+    var cur=0; for(var j=0;j<starts.length;j++){if(t>=starts[j]-0.01)cur=j}
+    segs.forEach(function(b,j){
+      var end=j<starts.length-1?starts[j+1]:D;
+      b.classList.toggle('done',j<cur);b.classList.toggle('now',j===cur);
+      b.firstChild.style.setProperty('--p',j===cur?clamp((t-starts[j])/(end-starts[j])).toFixed(4):'');
+      if(j===cur)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');
+    });
+  }
+  var raf=0;
+  function loop(){paint();raf=v.paused||v.ended?0:requestAnimationFrame(loop)}
+  v.addEventListener('play',function(){if(!raf)raf=requestAnimationFrame(loop)});
+  ['seeked','timeupdate','loadedmetadata','pause'].forEach(function(e){v.addEventListener(e,paint)});
+  segs.forEach(function(b){b.addEventListener('click',function(){
+    done=false;body.classList.remove('revealed','ended');
+    try{v.currentTime=+b.dataset.t+0.02}catch(e){}
+    var p=v.play&&v.play();if(p&&p.catch)p.catch(function(){});paint();
+  })});
+
+  if(reduce){v.removeAttribute('autoplay');v.pause();reveal();body.classList.add('ended')}
+  else{
+    /* Вертикальный экран режет неоновый логотип в кадре — вордмарк сразу с началом финальной сцены */
+    v.addEventListener('timeupdate',function(){if(v.duration&&v.currentTime>(innerWidth<innerHeight?31.02:v.duration-0.9))reveal()});
+    v.addEventListener('ended',function(){reveal();body.classList.add('ended')});
+    v.addEventListener('error',function(){reveal();body.classList.add('ended')});
+    var pr=v.play&&v.play(); if(pr&&pr.catch)pr.catch(function(){reveal()});
+    var started=false; v.addEventListener('playing',function(){started=true});
+    /* Видео не стартовало (экономия трафика, старый браузер) — сразу вордмарк */
+    setTimeout(function(){if(!started&&v.currentTime<0.1)reveal()},4000);
+  }
+  paint();
+  /* Ушли с первого экрана — показать вордмарк сразу */
+  window.addEventListener('scroll',function(){if(scrollY>innerHeight*.4)reveal()},{passive:true});
+
+  /* Шапка становится сплошной после интро; переключатель палитр — только ниже первого экрана */
+  var top=document.getElementById('top'), hero=document.querySelector('.hero');
+  body.classList.add('in-hero');
+  if('IntersectionObserver'in window){
+    new IntersectionObserver(function(e){top.classList.toggle('on',!e[0].isIntersecting)},{rootMargin:'-70px 0px 0px 0px'}).observe(hero);
+    new IntersectionObserver(function(e){body.classList.toggle('in-hero',e[0].intersectionRatio>.35)},{threshold:[0,.35,1]}).observe(hero);
+  } else body.classList.remove('in-hero');
+
+  /* Фон «К нам едут»: петля играет, только пока блок на экране */
+  var gv=document.querySelector('.geo video');
+  if(gv&&!reduce&&'IntersectionObserver'in window){
+    new IntersectionObserver(function(e){if(e[0].isIntersecting){gv.preload='auto';var q=gv.play();if(q&&q.catch)q.catch(function(){})}else gv.pause()},{rootMargin:'200px 0px'}).observe(gv);
+  }
+
+  /* Услуги: фото меняется по наведению или фокусу */
+  var imgs=document.querySelectorAll('.svc-photo img'), cap=document.getElementById('svc-cap'), rows=document.querySelectorAll('.row');
+  function pick(r){rows.forEach(function(x){x.classList.toggle('on',x===r)});var i=+r.dataset.img;imgs.forEach(function(im,k){im.classList.toggle('on',k===i)});cap.textContent=r.querySelector('h4').textContent}
+  rows.forEach(function(r){r.addEventListener('mouseenter',function(){pick(r)});r.addEventListener('focus',function(){pick(r)});r.addEventListener('click',function(){pick(r)})});
+  /* Телефон: наведения нет — фото следует за строкой, которая под липкой картинкой */
+  if(window.matchMedia&&matchMedia('(hover:none)').matches&&'IntersectionObserver'in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)pick(e.target)})},{rootMargin:'-55% 0px -40% 0px'});
+    rows.forEach(function(r){io.observe(r)});
+  }
+  /* Переход из подписи интро к услуге — подсветить строку */
+  function fromHash(){var r=location.hash&&document.getElementById(location.hash.slice(1));if(r&&r.classList.contains('row'))pick(r)}
+  window.addEventListener('hashchange',fromHash);fromHash();
+
+  /* Бот в MAX ещё не запущен — честная заглушка вместо пустой ссылки */
+  var toast=document.createElement('div');toast.className='toast';toast.setAttribute('role','status');
+  toast.innerHTML='Бот NIGHT LED в MAX запускаем. Пока запись — через <a href="'+document.querySelector('a[href*="avito.ru"]').href+'" target="_blank" rel="noopener">Авито</a>, мастер отвечает в течение нескольких часов.';
+  body.appendChild(toast);var tt=0;
+  document.querySelectorAll('.js-max').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},6000)})});
+})();
+</script>
+</body>
+</html>

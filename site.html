@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e1217">
+<meta name="color-scheme" content="dark light">
 <title>ВебВерфь — цифровая верфь грузового сервиса</title>
-<meta name="description" content="ВебВерфь — студия цифровых инструментов для грузовых СТО. Планировщик, финмодель, дашборд, мотивация. Инструменты, выросшие из реальной работы сервиса.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="description" content="ВебВерфь — цифровые инструменты для грузового сервиса: ВебПриёмка (приёмка и ремонт грузовиков в мессенджере), Грузовая Сводка (новости рынка к 7:00) и боты с мини-приложениями в MAX и Telegram для малого бизнеса.">
+<link rel="stylesheet" href="/fonts/fonts.css?v=20260904">
 <style>
 :root{
   --bg:#f3f1ea; --pa:#ffffff; --ink:#1d2a36; --navy:#223240;
@@ -31,11 +31,11 @@ h1,h2,h3,h4{font-family:Manrope,sans-serif;font-weight:800;margin:0;line-height:
 /* nav */
 header.nav{position:fixed;inset:0 0 auto 0;z-index:60;mix-blend-mode:normal;
   transition:background .35s,border-color .35s,backdrop-filter .35s;border-bottom:1px solid transparent}
-header.nav.scr{background:rgba(243,241,234,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--line2)}
+header.nav.scr{background:var(--hdr);backdrop-filter:blur(12px);border-bottom:1px solid var(--line2)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;max-width:var(--maxw);margin:0 auto;padding:20px 40px;transition:padding .3s cubic-bezier(.2,.7,.2,1)}
 .brand{display:flex;align-items:center;gap:13px}
 .brand svg{height:30px;width:auto;display:block;transition:height .3s cubic-bezier(.2,.7,.2,1)}
-.brand .nm b{font-family:Manrope;font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--navy);transition:font-size .3s cubic-bezier(.2,.7,.2,1)}
+.brand .nm b{font-family:Manrope;font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--ink);transition:font-size .3s cubic-bezier(.2,.7,.2,1)}
 header.nav.scr .nav-in{padding:9px 40px}
 header.nav.scr .brand svg{height:23px}
 header.nav.scr .brand .nm b{font-size:16px}
@@ -44,7 +44,7 @@ header.nav.scr .brand .nm b{font-size:16px}
 .menu a:hover{color:var(--ink)}
 .menu a.navcta{color:var(--ac)}
 .burger{display:none;font-family:'IBM Plex Mono',monospace;font-size:22px;line-height:1;color:var(--ink);cursor:pointer;background:none;border:0;padding:6px 4px}
-.mobmenu{position:fixed;inset:0 0 auto 0;z-index:55;background:rgba(243,241,234,.98);backdrop-filter:blur(14px);
+.mobmenu{position:fixed;inset:0 0 auto 0;z-index:55;background:var(--hdr);backdrop-filter:blur(14px);
   padding:84px 28px 30px;display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);
   transform:translateY(-101%);visibility:hidden;transition:transform .42s cubic-bezier(.2,.8,.2,1),visibility .42s}
 .mobmenu.open{transform:none;visibility:visible}
@@ -205,7 +205,7 @@ footer{padding:70px 0 46px}
 .copyr span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--dim)}
 
 /* ===== Летопись версий (ВебПриёмка) ===== */
-.lp-seal{background:url('https://webpriemka.dedyn.io/app/logo.png') center/cover no-repeat #fff;border-radius:50%;flex:0 0 auto}
+.lp-seal{background:url('logo.png?v=20260929') center/cover no-repeat #fff;border-radius:50%;flex:0 0 auto}
 .lp-head{display:flex;align-items:center;gap:18px;margin-bottom:14px}
 .lp-head .lp-seal{width:58px;height:58px;box-shadow:0 4px 14px rgba(217,138,52,.28)}
 .lp-head h2{font-size:clamp(30px,5.4vw,60px);letter-spacing:-.03em}
@@ -234,6 +234,8 @@ footer{padding:70px 0 46px}
 .lp-step.next h3{color:var(--mut)}
 
 /* footer note */
+.lp-note a{color:var(--ac);border-bottom:1px solid rgba(217,138,52,.42);padding-bottom:1px;transition:color .2s,border-color .2s}
+.lp-note a:hover{color:var(--ac2);border-color:var(--ac2)}
 .lp-note{margin-top:28px;padding-top:22px;border-top:1px solid var(--line2);font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.02em;color:var(--mut)}
 
 /* «Новинка» pill */
@@ -281,18 +283,267 @@ footer{padding:70px 0 46px}
   .cta h2{font-size:clamp(29px,9vw,46px)}.btns{flex-direction:column}.cta .btn{width:100%;justify-content:center;padding:16px}
   .fsbtn{top:10px;right:10px}
 }
+
+/* cookie-баннер (152-ФЗ, 2026-09-04) */
+.vvck{position:fixed;left:12px;right:12px;bottom:var(--vvck-b,12px);z-index:99;display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+  background:#223240;color:#e9e5db;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:12px 16px;
+  font-family:Inter,'JetBrains Mono',system-ui,sans-serif;font-size:13.5px;line-height:1.45;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.vvck p{margin:0;flex:1 1 320px}
+.vvck a{color:#eaa44f;text-decoration:underline}
+.vvck .b{display:flex;gap:8px;flex:0 0 auto}
+.vvck button{font:inherit;cursor:pointer;border-radius:4px;padding:8px 14px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#e9e5db}
+.vvck button.ok{background:#d98a34;border-color:#d98a34;color:#1a1206;font-weight:600}
+.vvck[hidden]{display:none}
+@media(max-width:560px){.vvck{left:8px;right:8px;padding:12px}.vvck .b{width:100%}.vvck button{flex:1}}
+
+/* ── Летопись верфи (28.09.2026): Сводка и боты под заказ ── */
+.yard-nav{display:flex;flex-wrap:wrap;gap:10px;margin:-14px 0 54px}
+.yard-nav a{font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);color:var(--ink);background:var(--pa);transition:.2s}
+.yard-nav a:hover{border-color:var(--ac);color:var(--ac2)}
+.yard-nav a b{color:var(--ac2);font-weight:500;margin-left:6px}
+.yard-part{margin-top:110px;scroll-margin-top:90px}
+.btn.ln{color:var(--ink);border-color:var(--line)}
+.btn.ln:hover{color:var(--ac2);border-color:var(--ac)}
+.btn-note{flex-basis:100%;font-size:13px;color:var(--mut);margin-top:-4px}
+.lp-rail + .btns{margin-top:10px}
+/* Сводка — суббренд: графит, оранж, заголовок капсом */
+.sv{background:#18212b;color:#eef1f4;border-radius:14px;overflow:hidden;box-shadow:inset 0 -6px 0 var(--ac),0 30px 70px rgba(34,50,64,.18);
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(22px,4vw,56px);padding:clamp(24px,4vw,52px)}
+.sv .lbl{color:#e8a04e}
+.sv h3{font-family:Manrope,sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(34px,5.4vw,66px);letter-spacing:.005em;line-height:.98;margin:14px 0 18px}
+.sv h3 em{font-style:normal;color:#e8a04e}
+.sv p.lead{font-size:clamp(16px,1.6vw,19px);font-weight:300;line-height:1.55;color:rgba(238,241,244,.78);max-width:52ch;margin:0 0 26px}
+.sv p.lead b{color:#fff;font-weight:500}
+.sv .btn-note{color:rgba(238,241,244,.55)}
+.sv figure{margin:0;align-self:center;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.sv figure img{display:block;width:100%;height:auto}
+.sv figcaption{font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(238,241,244,.5);padding:9px 12px;background:#141b23}
+.grid4{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));margin-top:22px}
+.grid4>div{background:var(--pa);padding:20px 22px}
+.grid4 h4{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ac2);margin:0 0 8px}
+.grid4 p{margin:0;color:var(--mut);font-size:14.5px;line-height:1.5}
+.dates{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.dates li{background:var(--pa);display:grid;grid-template-columns:130px 1fr;gap:16px;padding:14px 22px}
+.dates b{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);font-weight:500;padding-top:2px}
+.dates span{color:var(--mut);font-size:15px;line-height:1.5}
+.dates strong{color:var(--ink);font-weight:600}
+/* боты под заказ */
+.bcase{margin-top:30px;border:1px solid var(--line);border-radius:14px;background:var(--pa);overflow:hidden;scroll-margin-top:90px}
+.bcase-top{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;padding:26px clamp(18px,3vw,34px) 0}
+.bcase-top img{width:62px;height:62px;border-radius:16px;object-fit:cover;box-shadow:0 6px 18px rgba(34,50,64,.18)}
+.bcase-top h3{font-size:clamp(26px,3.4vw,40px);letter-spacing:-.03em}
+.bcase-top .who{margin:6px 0 0;color:var(--mut);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;border-radius:3px;padding:4px 9px;color:#fff}
+.chip.max{background:linear-gradient(90deg,#3c6cf6,#8a3cf6)}.chip.tg{background:#2aa3e0}.chip.live{background:var(--ac);color:#1a1206}
+.chip.soon{color:var(--mut);border:1px solid var(--line)}
+.bcase-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(20px,3vw,48px);padding:20px clamp(18px,3vw,34px) 30px}
+.bcase-body .story{margin:0 0 18px;font-size:16px;line-height:1.65;max-width:60ch}
+.feat{list-style:none;padding:0;margin:0 0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:9px 22px}
+.feat li{font-size:14px;line-height:1.5;padding-left:17px;position:relative}
+.feat li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:2px;background:var(--ac)}
+.feat li small{display:block;color:var(--mut);font-size:13px}
+.bcase .dates{margin:0 0 22px}
+.bcase .dates li{grid-template-columns:104px 1fr;padding:11px 16px}
+.bcase .dates span{font-size:14px}
+.phones{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:thin}
+.ph{flex:0 0 clamp(150px,13vw,196px);scroll-snap-align:start;margin:0}
+.ph .fr{border-radius:24px;padding:6px;background:#0b0c0f;box-shadow:0 14px 30px rgba(34,50,64,.28)}
+.ph img{display:block;width:100%;aspect-ratio:1/2;object-fit:cover;object-position:top;border-radius:19px}
+.ph figcaption{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mut);text-align:center;margin-top:8px}
+.order{margin-top:30px;background:var(--navy);color:#eef1f4;border-radius:14px;padding:clamp(24px,4vw,44px);
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px 48px;align-items:center}
+.order h3{font-size:clamp(26px,3.6vw,44px);letter-spacing:-.03em}
+.order p{margin:14px 0 26px;color:rgba(238,241,244,.72);font-size:17px;line-height:1.55;font-weight:300;max-width:46ch}
+.order ol{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:o}
+.order li{counter-increment:o;display:grid;grid-template-columns:34px 1fr;gap:10px;color:#dfe6ec;font-size:15px;line-height:1.5}
+.order li::before{content:counter(o,decimal-leading-zero);font-family:'IBM Plex Mono',monospace;color:var(--ac);font-size:13px;padding-top:2px}
+@media(max-width:900px){
+  .sv,.bcase-body,.order{grid-template-columns:1fr}
+  .sv figure{max-width:420px}
+  .ph{flex-basis:44vw}
+  .chips{margin-left:0;flex-basis:100%}
+  .yard-part{margin-top:80px}
+}
+@media(max-width:600px){.dates li,.bcase .dates li{grid-template-columns:1fr;gap:3px}}
+/* телефон: строка каталога продуктов раздвигала страницу до 523 px (было на проде до 28.09) */
+@media(max-width:900px){.idxrow>*{min-width:0}.rmeta{white-space:normal;flex-wrap:wrap}.idxrow .pr{white-space:normal}.idxrow::before{inset:0 -12px}}
+.menu a.navnew,.mobmenu a.navnew{color:var(--ink);display:inline-flex;align-items:center;gap:12px}
+.navnew .nb{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ac2);border:1px solid rgba(217,138,52,.45);border-radius:3px;padding:3px 6px 2px 14px;line-height:1;position:relative}
+.navnew .nb::before{content:"";position:absolute;left:5px;top:50%;width:4px;height:4px;margin-top:-2px;border-radius:50%;background:var(--ac);animation:nbDot 2s ease-in-out infinite}
+@keyframes nbDot{0%,100%{opacity:1}50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.navnew .nb::before{animation:none}}
+.mobmenu a.navnew{display:flex}
+#max .lp-strip{box-shadow:inset 0 3px 0 var(--ac),0 30px 70px rgba(34,50,64,.16)}
+.nw{white-space:nowrap}
 </style>
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();
-   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-   ym(110117064, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true});
+<!-- Yandex.Metrika: грузится ТОЛЬКО после «Принять» в cookie-баннере (152-ФЗ, 2026-09-04). webvisor выключен. -->
+<script>
+window.YM_ID=110117064;
+function vvLoadMetrika(){
+  if(window._ymLoaded)return; window._ymLoaded=true;
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  ym(window.YM_ID, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:false});
+}
+function vvConsent(){
+  try{var c=JSON.parse(localStorage.getItem('vv_consent')||'null');
+    if(c&&c.v&&c.ts&&(Date.now()-c.ts)<365*864e5)return c.v;}catch(e){}
+  return null;
+}
+/* внутри iframe (превью site.html на главной) не считаем и баннер не показываем — считает родитель */
+window.vvTop=(window.self===window.top);
+if(window.vvTop&&vvConsent()==='yes')vvLoadMetrika();
 </script>
-<noscript><div><img src="https://mc.yandex.ru/watch/110117064" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+<!-- sv-why-29.09 --><style>.sv-why{margin-top:22px;background:var(--pa);border:1px solid var(--line);border-left:3px solid var(--ac);border-radius:10px;padding:clamp(18px,2.4vw,28px) clamp(18px,2.8vw,34px)}.sv-why h4{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ac2);margin:0 0 10px}.sv-why .cols{display:grid;gap:clamp(10px,2vw,32px);grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))}.sv-why p{margin:0;color:var(--ink);font-size:clamp(15px,1.15vw,17px);line-height:1.55}.sv-why p+p{color:var(--mut)}</style>
+<style id="tri-dveri">
+/* «Три двери» 24.10.2026 — тёмная тема по умолчанию, светлая по кнопке (прежняя палитра) */
+:root{--bg:#0e1217;--pa:#161c23;--ink:#e8edf1;--navy:#1a2531;--mut:#9aa7b2;--dim:#6f7c87;
+  --line:rgba(232,237,241,.14);--line2:rgba(232,237,241,.07);--hdr:rgba(14,18,23,.96);--amber:#f0b13f;--teal:#34b3a0;color-scheme:dark}
+html[data-theme="light"]{--bg:#f3f1ea;--pa:#ffffff;--ink:#1d2a36;--navy:#223240;--mut:#5d6b76;--dim:#8a949c;
+  --line:rgba(34,50,64,.16);--line2:rgba(34,50,64,.08);--hdr:rgba(243,241,234,.97);color-scheme:light}
+[hidden]{display:none!important}
+.lp-seal{box-shadow:0 0 0 1px var(--line)}
+.thbtn{font:inherit;cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;width:34px;height:34px;line-height:1}
+.thbtn.wide{width:auto;height:auto;padding:12px 0;border:0;text-align:left;font-family:'IBM Plex Mono',monospace;color:var(--mut)}
+.menu .navdir{color:var(--ac)}
+.mobmenu .navdir{color:var(--ac);font-weight:600}
+
+/* три двери */
+#napravleniya{scroll-margin-top:80px}
+.doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:26px}
+.door{display:grid;grid-template-columns:132px minmax(0,1fr);gap:18px;align-items:center;background:var(--pa);border:1px solid var(--line);border-radius:16px;padding:16px;transition:border-color .25s,transform .25s}
+.door:hover{border-color:var(--ac);transform:translateY(-3px)}
+.door img{width:132px;aspect-ratio:1/2;object-fit:contain;border-radius:14px;background:#0b0e12;border:2px solid #26303b}
+.door .dt{display:grid;gap:8px;min-width:0}
+.door .dk{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ac)}
+.door b{font-family:Manrope,sans-serif;font-weight:800;font-size:clamp(22px,2vw,28px);letter-spacing:-.02em;line-height:1.05}
+.door .dd{color:var(--mut);font-size:15px;line-height:1.5}
+.door .go{color:var(--ac);font-weight:600}
+@media(max-width:1100px){.doors{grid-template-columns:1fr}.door{grid-template-columns:110px minmax(0,1fr)}.door img{width:110px}}
+@media(max-width:600px){.heroimg{height:150px;min-height:0}.heroimg .hull{width:110px}.heroimg .cap{display:none}}
+#vebpriemka,#svodka,#boty{scroll-margin-top:80px}
+#napravleniya .yard-part,#napravleniya #vebpriemka{margin-top:clamp(56px,8vw,110px)}
+
+/* ВебПриёмка: экраны в амбере */
+.wp-shots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:26px 0}
+.wp-shots figure{margin:0;display:grid;gap:8px}
+.wp-shots img{width:100%;aspect-ratio:1/2;object-fit:contain;border-radius:16px;background:#0b0e12;border:2px solid #2c2618}
+.wp-shots figcaption{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--mut);text-align:center}
+@media(max-width:900px){.wp-shots{grid-template-columns:repeat(5,62%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.wp-shots figure{scroll-snap-align:start}}
+
+/* Диспетчерская — всегда тёмная амбер, как в продукте */
+.disp{background:#14120e;border:1px solid #2c2618;border-radius:16px;padding:clamp(16px,2.4vw,28px);color:#ede6d6;display:grid;gap:18px;margin-bottom:26px;color-scheme:dark}
+.disp-h{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.disp-h b{font-family:Manrope,sans-serif;font-size:clamp(18px,1.8vw,24px);font-weight:800}
+.disp-h span{color:#9b927f;font-size:13.5px}
+.disp-kp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.disp-kp div{background:#1d1a14;border:1px solid #2c2618;border-radius:12px;padding:12px 14px;font-size:11px;letter-spacing:.06em;color:#9b927f;text-transform:uppercase}
+.disp-kp b{display:block;font:800 26px/1.1 Manrope,sans-serif;color:#ede6d6;letter-spacing:0}
+@media(max-width:600px){.disp-kp{grid-template-columns:1fr 1fr}}
+.disp-bars{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:6px;background:#1a1712;border-radius:12px;padding:12px 10px}
+.disp-bars .d{display:grid;grid-template-rows:auto 170px auto;align-content:start;gap:8px;justify-items:center;border-radius:10px;padding:6px 0}
+.disp-bars .d.wkend{background:#161410}.disp-bars .d.today{background:#241f15}
+.disp-bars small{display:flex;gap:6px;font-size:10.5px;color:#cfc6b2;font-variant-numeric:tabular-nums;min-height:14px}
+.disp-bars small b{font-weight:600;min-width:2.4em;text-align:center}
+.disp-bars .col{display:flex;gap:6px;align-items:flex-end;justify-content:center;height:170px;width:100%}
+.disp-bars .bw{position:relative;width:34%;max-width:24px;height:100%}
+.disp-bars .bw i{position:absolute;left:0;right:0;bottom:0;display:block;border-radius:3px}
+.disp-bars .bw .cap{border:1.5px dashed;background:none}
+.disp-bars .s .cap{border-color:rgba(240,177,63,.75)}.disp-bars .e .cap{border-color:rgba(52,179,160,.75)}
+.disp-bars .s .fill{background:var(--amber)}.disp-bars .e .fill{background:var(--teal)}
+.disp-bars em{font-style:normal;font-weight:700;font-size:12px;text-align:center;line-height:1.25}
+.disp-bars u{text-decoration:none;font-weight:400;color:#9b927f}
+.disp-bars .td{font-size:10.5px;color:var(--amber)}
+@media(max-width:600px){.disp-bars{grid-template-columns:repeat(11,84px);overflow-x:auto}.disp-bars small{font-size:10px;gap:4px}}
+.disp-wrap{overflow-x:auto}
+.disp-grid{display:grid;grid-template-columns:150px repeat(14,minmax(46px,1fr));row-gap:8px;column-gap:0;align-items:center;min-width:820px;font-size:12px}
+.disp-grid .hd{color:#9b927f;border-left:1px solid #2c2618;padding-left:4px}
+.disp-grid .hd:first-child{border:0;padding:0}
+.disp-grid .sec{grid-column:1/-1;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-top:1px solid #2c2618;padding-top:8px}
+.disp-grid .sec.s{color:var(--amber)}.disp-grid .sec.e{color:var(--teal)}
+.disp-grid .nm{grid-column:1;color:#ede6d6;font-size:13px}
+.disp-grid .bk{background:var(--amber);color:#14120e;border-radius:5px;padding:5px 8px;font-weight:700;margin:0 2px;white-space:nowrap;overflow:hidden}
+.disp-grid .bk.e{background:var(--teal)}
+.disp-leg{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:#9b927f}
+.disp-leg span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.disp-leg .s::before{background:var(--amber)}.disp-leg .e::before{background:var(--teal)}.disp-leg .c::before{border:1.5px dashed var(--amber)}
+
+/* боты: титульный проект + переключатель */
+.pj-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.pj-tabs button{font:500 14px Inter,system-ui,sans-serif;cursor:pointer;background:var(--pa);color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:9px 16px}
+.pj-tabs button[aria-selected="true"]{border-color:var(--ac);color:var(--ac);font-weight:600}
+.pj{margin-top:18px;display:grid;grid-template-columns:minmax(0,480px) minmax(0,1fr);gap:clamp(20px,3vw,44px);background:var(--pa);border:1px solid var(--line);border-radius:18px;padding:clamp(16px,2.4vw,32px)}
+.pj-shots{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-self:start}
+.pj-shots img{width:100%;aspect-ratio:1/2;object-fit:contain;border-radius:18px;background:#0b0e12;border:2px solid #26303b}
+.pj-info{display:grid;gap:14px;align-content:start;min-width:0}
+.pj-info h3{font-family:Manrope,sans-serif;font-weight:800;font-size:clamp(30px,3.4vw,46px);letter-spacing:-.03em;line-height:1}
+.pj-info .who{color:var(--mut);margin:0}
+.pj-info p{margin:0}
+.pj-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.pj-facts div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--mut)}
+.pj-facts b{display:block;font:800 22px/1.15 Manrope,sans-serif;color:var(--ac)}
+.pj-info ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.pj-ext{margin:0;display:grid;gap:6px}
+.pj-ext img{width:100%;border-radius:12px;border:1px solid var(--line)}
+.pj-ext figcaption{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--mut)}
+.pj-more{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:18px}
+.pj-more button{font:inherit;color:inherit;text-align:left;cursor:pointer;background:var(--pa);border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;gap:4px;transition:border-color .25s,transform .25s}
+.pj-more button:hover{border-color:var(--ac);transform:translateY(-3px)}
+.pj-more img{width:100%;aspect-ratio:1/2;object-fit:contain;border-radius:12px;background:#0b0e12;margin-bottom:6px}
+.pj-more b{font-family:Manrope,sans-serif;font-size:16px}
+.pj-more span{font-size:13px;color:var(--mut)}
+@media(max-width:900px){.pj{grid-template-columns:1fr}.pj-more{grid-template-columns:repeat(4,46%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.pj-more button{scroll-snap-align:start}}
+.order ol li{min-width:0;overflow-wrap:anywhere}
+.menu a.navdir,.menu a.navdir.navnew{color:var(--ac)}
+/* кнопка возврата, вариант «Капсула по центру» (Денис 24.10): после перехода — капсула «К разделам» / «Назад»,
+   иначе — кружок «наверх» справа; прячется при прокрутке вниз, появляется при прокрутке вверх */
+.backbtn{position:fixed;z-index:58;border:0;cursor:pointer;display:flex;align-items:center;gap:8px;
+  bottom:calc(var(--bb-lift,0px) + 20px + env(safe-area-inset-bottom,0px));
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+.backbtn svg{width:20px;height:20px;flex:0 0 auto}
+.backbtn.up{right:max(16px,env(safe-area-inset-right,0px));width:44px;height:44px;border-radius:50%;justify-content:center;
+  background:var(--ac);color:#141518;box-shadow:0 8px 22px -6px rgba(0,0,0,.55);transform:translateY(14px)}
+.backbtn.cap{left:50%;height:42px;border-radius:999px;padding:0 18px 0 13px;font:600 14px Inter,system-ui,sans-serif;white-space:nowrap;
+  background:var(--ink);color:var(--bg);box-shadow:0 8px 24px -6px rgba(0,0,0,.6);transform:translate(-50%,14px)}
+.backbtn.on{opacity:1;pointer-events:auto}
+.backbtn.up.on{transform:none}.backbtn.cap.on{transform:translate(-50%,0)}
+@media(hover:hover){.backbtn.up:hover{filter:brightness(1.08)}.backbtn.cap:hover{filter:brightness(.92)}}
+@media(prefers-reduced-motion:reduce){.backbtn{transition:none}}
+/* значки платформ, вариант 1 «только значки» (Денис 24.10) */
+.pl{display:flex;align-items:center;gap:9px;color:var(--dim)}
+.pl-i{display:inline-flex}.pl-i svg{width:15px;height:15px;display:block}
+.pl-dot{width:3px;height:3px;border-radius:50%;background:var(--line);display:block}
+.pl-cap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;color:var(--mut);font-size:14.5px;margin-top:22px}
+.pl-cap+.wp-shots{margin-top:12px}.pl-cap+.disp{margin-top:0}
+.wp-shots figure,.pj-s{position:relative;display:block}
+.disp{position:relative}
+.pl-tag{position:absolute;top:8px;right:8px;z-index:2;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(11,14,18,.72);color:#aab5bf;border:1px solid rgba(232,237,241,.16);backdrop-filter:blur(6px)}
+.pl-tag svg{width:12px;height:12px;display:block}
+.disp .pl-tag{top:14px;right:14px}
+.sv .pl{margin:6px 0 4px;color:#7d8a96}
+.wp-shots figcaption{display:flex;align-items:center;justify-content:center;gap:6px}
+.wp-shots figcaption .pl-tag{position:static;width:18px;height:18px;background:none;border-color:var(--line);color:var(--dim);backdrop-filter:none}
+.wp-shots figcaption .pl-tag svg{width:11px;height:11px}
+.wp-cta{margin-bottom:10px}
+.hero-dirs a{color:var(--ac);border-bottom:1px solid transparent;transition:border-color .2s}.hero-dirs a:hover{border-color:var(--ac)}
+@media(min-width:601px){.heroimg{height:clamp(140px,20vh,220px);min-height:0}}
+.sv-day{display:grid;gap:4px;margin:14px 0 6px;padding:14px 16px;border:1px solid rgba(240,160,75,.35);border-radius:12px;background:rgba(240,160,75,.06);color:#eef1f4;max-width:520px}
+.sv-day-l{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#f0a04b}
+.sv-day b{font:800 clamp(34px,4vw,48px)/1 Manrope,sans-serif;color:#f0a04b;letter-spacing:-.02em}
+.sv-day span{font-size:15px;line-height:1.45}.sv-day .sv-day-s{font-size:12.5px;color:#9aa7b2}
+</style>
+<script>/* тема до отрисовки: по умолчанию тёмная */(function(){try{var t=localStorage.getItem("vv.theme");if(t==="light")document.documentElement.dataset.theme="light";}catch(e){}})();</script>
+<style>.avto-h{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ac2);margin:28px 0 0}.grid4.avto3{grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));margin-bottom:26px}</style><style>.cta-alt{margin-top:18px;color:var(--mut);font-size:15px}.cta-alt a{color:inherit;text-decoration:underline;text-underline-offset:3px}.rmeta .exp{font-size:13px!important;color:var(--ink)!important}.lede,.lp-sub{margin-top:16px}</style><link rel="canonical" href="https://xn--90abbkc0e2a8d.xn--p1ai/site.html">
+<meta property="og:image" content="https://xn--90abbkc0e2a8d.xn--p1ai/cases/og_vebverf.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 </head>
 <body>
 
@@ -308,21 +559,26 @@ footer{padding:70px 0 46px}
       <span class="nm"><b>ВебВерфь</b></span>
     </a>
     <nav class="menu">
-      <a href="#about">О студии</a>
-      <a href="#index">Продукты</a>
-      <a href="#process">Процесс</a>
-      <a href="#vebpriemka">ВебПриёмка</a>
+      <a class="navdir" href="#vebpriemka">ВебПриёмка</a>
+      <a class="navdir" href="#svodka">Сводка</a>
+      <a class="navdir" href="#boty">Боты MAX&nbsp;/&nbsp;TG</a>
+      <a href="#index">Инструменты</a>
+      <a href="letopis.html">Летопись</a>
+      <a href="/blog/">Блог</a>
+      <button class="thbtn" type="button" data-theme-toggle aria-label="Светлая тема">☀</button>
       <a class="navcta" href="#contact">Связаться →</a>
     </nav>
     <button class="burger" id="burger" aria-label="Меню">☰</button>
   </div>
 </header>
 <nav class="mobmenu" id="mobmenu">
+  <a class="navdir" href="#vebpriemka">ВебПриёмка</a>
+  <a class="navdir" href="#svodka">Грузовая Сводка</a>
+  <a class="navdir" href="#boty">Боты в MAX и Telegram</a>
+  <a href="#index">Инструменты для СТО</a>
   <a href="#about">О студии</a>
-  <a href="#index">Продукты</a>
-  <a href="#process">Процесс</a>
-  <a href="#demo">Демо в деле</a>
-  <a href="#vebpriemka">ВебПриёмка</a>
+  <a href="letopis.html">Летопись</a>
+  <button class="thbtn wide" type="button" data-theme-toggle>Светлая тема</button>
   <a class="navcta" href="#contact">Связаться →</a>
 </nav>
 
@@ -332,8 +588,9 @@ footer{padding:70px 0 46px}
     <span class="kickline rv">Цифровая верфь грузового сервиса · EST. 2026 · Москва</span>
     <h1 class="rv">ВебВерфь</h1>
     <div class="sub rv">
-      <p>Строим цифровые инструменты для грузовых СТО — <em>на языке нормо-часа, наряда и маржи.</em></p>
-      <span class="idx">(01 — Студия) · Планировщик · Финмодель · Дашборд · Мотивация</span>
+      <p>Строим цифровые инструменты для грузовых СТО — <em>на языке <span class="nw">нормо-часа</span>, <span class="nw">заказ-наряда</span> и загрузки постов.</em> А&nbsp;для малого бизнеса&nbsp;— ботов с&nbsp;мини-приложениями в&nbsp;MAX и&nbsp;Telegram.</p>
+      <span class="idx hero-dirs"><a href="#vebpriemka">ВебПриёмка</a> · <a href="#svodka">Грузовая Сводка</a> · <a href="#boty">Боты в MAX и Telegram</a></span>
+      <div class="btns hero-cta" style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn solid" href="https://max.ru/se13308383_bot?start=site" target="_blank" rel="noopener" data-goal="hero_max">Разобрать мою задачу →</a><a class="btn" href="#vebpriemka">Смотреть ВебПриёмку</a></div>
     </div>
   </div>
   <div class="heroimg rv">
@@ -348,6 +605,198 @@ footer{padding:70px 0 46px}
   </div>
 </section>
 
+<!-- ЛЕТОПИСЬ ВЕРФИ (28.09.2026): ВебПриёмка · Грузовая Сводка · боты под заказ -->
+<section class="section" id="napravleniya">
+  <div class="wrap">
+    <div class="kicker rv"><span class="lbl">Три направления верфи</span><span class="ln"></span></div>
+    <div class="doors">
+      <a class="door rv" href="#vebpriemka">
+        <img src="cases/wp_amber_dark_home.webp" alt="ВебПриёмка — главный экран приложения" loading="lazy">
+        <span class="dt"><span class="dk">Продукт · грузовое СТО</span><b>ВебПриёмка</b><span class="dd">Учёт грузовиков в ремонте: статусы для клиента, загрузка постов, Диспетчерская по всем цехам.</span><span class="pl" aria-label="Работает: iPhone, Android, Компьютер, MAX, Telegram"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><span class="pl-i" title="Компьютер" aria-label="Компьютер" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span><span class="pl-i" title="Telegram" aria-label="Telegram" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1 .4-1 1 0 1.3l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.2-.4-1.7-1.1-1.4zM9.6 14.2l8.6-7.6-6.9 8.6-.3 3.1z"/></svg></span></span><span class="go">Открыть &rarr;</span></span>
+      </a>
+      <a class="door rv" href="#svodka">
+        <img src="cases/svodka_m.webp" alt="Грузовая Сводка — выпуск" loading="lazy">
+        <span class="dt"><span class="dk">Издание · каждое утро</span><b>Грузовая Сводка</b><span class="dd">К 7:00 — рынок грузовой техники за пять минут: цифра, источник и что это значит для цеха.</span><span class="pl" aria-label="Работает: iPhone, Android, Компьютер, MAX, Telegram"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><span class="pl-i" title="Компьютер" aria-label="Компьютер" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span><span class="pl-i" title="Telegram" aria-label="Telegram" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1 .4-1 1 0 1.3l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.2-.4-1.7-1.1-1.4zM9.6 14.2l8.6-7.6-6.9 8.6-.3 3.1z"/></svg></span></span><span class="go">Открыть &rarr;</span></span>
+      </a>
+      <a class="door rv" href="#boty">
+        <img src="cases/nl_dark_home.webp" alt="NIGHT LED — мини-приложение в MAX" loading="lazy">
+        <span class="dt"><span class="dk">Под заказ · малый бизнес</span><b>Боты в MAX и Telegram</b><span class="dd">Автооптика, эвакуатор, тренер, мастерские: заявки, запись и оплата прямо в мессенджере.</span><span class="pl" aria-label="Работает: iPhone, Android, MAX, Telegram"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span><span class="pl-i" title="Telegram" aria-label="Telegram" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1 .4-1 1 0 1.3l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.2-.4-1.7-1.1-1.4zM9.6 14.2l8.6-7.6-6.9 8.6-.3 3.1z"/></svg></span></span><span class="go">Открыть &rarr;</span></span>
+      </a>
+    </div>
+
+
+    <!-- ВебПриёмка: полная летопись -->
+    <div id="vebpriemka" style="scroll-margin-top:90px">
+    <div class="lp-head rv">
+      <span class="lp-seal" role="img" aria-label="ВебПриёмка"></span>
+      <h2 class="h2">ВебПриёмка <span class="newpill">Продукт</span></h2>
+    </div>
+    <p class="lp-sub rv">Как за три месяца продукт вырос от простого бота до <em>платформы грузового сервиса</em> — и куда движется дальше.</p>
+    <div class="pl-cap rv"><span>Приложение для клиента и цеха — на телефоне</span><span class="pl" aria-label="Работает: iPhone, Android, MAX, Telegram"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span><span class="pl-i" title="Telegram" aria-label="Telegram" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1 .4-1 1 0 1.3l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.2-.4-1.7-1.1-1.4zM9.6 14.2l8.6-7.6-6.9 8.6-.3 3.1z"/></svg></span></span></div>
+    <div class="wp-shots rv" aria-label="Экраны ВебПриёмки">
+      <figure><img src="cases/wp_amber_dark_home.webp" alt="Главная" loading="lazy"><figcaption><span class="pl-tag" title="Телефон" aria-label="Телефон" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span>Главная</figcaption></figure>
+      <figure><img src="cases/wp_amber_dark_vehicle.webp" alt="Карточка машины" loading="lazy"><figcaption><span class="pl-tag" title="Телефон" aria-label="Телефон" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span>Карточка машины</figcaption></figure>
+      <figure><img src="cases/wp_amber_dark_load.webp" alt="Загрузка персонала" loading="lazy"><figcaption><span class="pl-tag" title="Телефон" aria-label="Телефон" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span>Загрузка персонала</figcaption></figure>
+      <figure><img src="cases/wp_amber_dark_monitor.webp" alt="Монитор постов" loading="lazy"><figcaption><span class="pl-tag" title="Телефон" aria-label="Телефон" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span>Монитор постов</figcaption></figure>
+      <figure><img src="cases/wp_amber_dark_chat.webp" alt="Обсуждения по машине" loading="lazy"><figcaption><span class="pl-tag" title="Телефон" aria-label="Телефон" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg></span>Обсуждения</figcaption></figure>
+    </div>
+    <div class="pl-cap rv"><span>Диспетчерская для руководителя — на компьютере</span><span class="pl" aria-label="Работает: Компьютер"><span class="pl-i" title="Компьютер" aria-label="Компьютер" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></svg></span></span></div>
+    <div class="disp rv" aria-label="Диспетчерская ВебПриёмки — демо-данные">
+      <span class="pl-tag" title="Компьютер" aria-label="Компьютер" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></svg></span><div class="disp-h"><b>Диспетчерская · загрузка персонала по дням</b><span>Цех 1 · 24.10–03.11 · демо-данные</span></div>
+      <div class="disp-kp">
+        <div><b>12</b>слесарей в графике</div><div><b>4</b>автоэлектрика</div><div><b>122%</b>слесари сегодня</div><div><b>100%</b>электрика сегодня</div>
+      </div>
+      <div class="disp-bars" id="dispBars"></div>
+      <div class="disp-h"><b>Планировщик дня</b><span>сб, 24 октября · 8:00–22:00 · только те, кто в смене</span></div>
+      <div class="disp-wrap"><div class="disp-grid" id="dispGrid"></div></div>
+      <div class="disp-leg"><span class="s">Слесари по ремонту</span><span class="e">Автоэлектрики</span><span class="c">пунктир — доступные часы по графику</span></div>
+    </div>
+    <div class="btns rv wp-cta"><a class="btn solid" href="https://max.ru/se13308383_bot?start=priemka" target="_blank" rel="noopener" data-goal="priemka_max">Показ ВебПриёмки в MAX <span>&rarr;</span></a><a class="btn ln" href="https://t.me/vebverf_bot?start=priemka" target="_blank" rel="noopener" data-goal="priemka_tg">Telegram</a></div>
+
+
+    <div class="lp-strip rv">
+      <div class="g">
+        <div class="cell"><span class="n">3 месяца</span><span class="k">от первого бота до платформы</span></div>
+        <div class="cell"><span class="n steel">200+</span><span class="k">выкаток на прод — каждая со своей версией</span></div>
+        <div class="cell"><span class="n">12</span><span class="k">вех в летописи</span></div>
+        <div class="cell"><span class="n steel">2</span><span class="k">площадки — Telegram и MAX, плюс приложение на телефоне</span></div>
+      </div>
+    </div>
+    <div class="lp-rail">
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver"><span class="nw">V-1.00</span></span><span class="flag">Боты</span>
+        <h3>Боты в Telegram и MAX</h3>
+        <p>Клиент видит свою технику и статусы ремонта прямо в мессенджере, с уведомлениями и поиском.</p>
+      </div>
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver"><span class="nw">V-1.20</span></span><span class="flag">Телефон</span>
+        <h3>Приложение на телефоне</h3>
+        <p>Устанавливается на экран телефона и открывается из браузера — без магазина приложений и ожидания модерации.</p>
+      </div>
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver"><span class="nw">V-2.00</span></span><span class="flag">Переписка</span>
+        <h3>Обсуждения по машине</h3>
+        <p>Переписка по конкретной машине с разделением внутреннего и клиентского контура; уведомление открывает нужное обсуждение.</p>
+      </div>
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver"><span class="nw">V-3.07</span></span><span class="flag">Диспетчерская</span>
+        <h3>Диспетчерская и выход к заказчику</h3>
+        <p>Рабочее место сервиса на десктопе, аналитика по всем цехам и бот в рабочей группе клиента: сводка по парку, карточка машины, уведомление о выезде.</p>
+      </div>
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver"><span class="nw">V-3.44</span></span><span class="flag">Загрузка</span>
+        <h3>Загрузка цеха по часам</h3>
+        <p>План дня по механикам отдельными полосами на ближайшие дни — видно, кто и когда свободен, ещё до того, как записывать новую машину.</p>
+      </div>
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver"><span class="nw">V-3.68</span></span><span class="flag">Заказчику</span>
+        <h3>Обоснование цены запчастей</h3>
+        <p>Для заказчика, которому нужно подтвердить цену, система собирает сравнение предложений нескольких поставщиков со снимками карточек товара.</p>
+      </div>
+      <div class="lp-step rv">
+        <span class="lp-seal" aria-hidden="true"></span>
+        <span class="ver"><span class="nw">V-3.78</span></span><span class="flag">Контроль</span>
+        <h3>Контроль перед выдачей машины</h3>
+        <p>Перед выдачей сотрудник на смене по графику осматривает машину по заявленным причинам обращения и отчитывается фото через мессенджер; мастер смены видит сводку.</p>
+      </div>
+    </div>
+    <!-- AVTO-20261024 --><p class="avto-h rv">Что система делает сама</p><div class="grid4 avto3 rv"><div><h4>Склад считает, что заказать</h4><p>Каждую ночь по расходу из 1С — сколько держать и сколько докупить по каждой запчасти; срочное, излишки и неликвид отмечены. Утром закупщику — Excel по его марке.</p></div><div><h4>Доли заказчиков из картинки 1С</h4><p>1С отдаёт диаграмму только картинкой — система сама снимает с неё проценты и строит свои графики.</p></div><div><h4>Обоснование цены за минуты</h4><p>Из заказ-наряда — дорогие позиции, по три предложения из интернет-магазинов в пределах допустимой наценки, скриншоты со временем и Excel по форме.</p></div><div><h4>Контроль выезда с начислениями</h4><p>Фото недоработки — бот находит, кто делал машину, мастер разбирает; премии, удержания и месячная ведомость считаются сами.</p></div><div><h4>ТО по VIN</h4><p>Регламент производителя по VIN, пробег — сам из 1С, пропущенное ТО видно в карточке ТС.</p></div><div><h4>Голос → заключение</h4><p>Механик наговаривает — получается заключение в стиле мастерской с опорой на реальные заключения из 1С; запись не уходит с сервера.</p></div></div>
+    <div class="btns rv"><a class="btn solid" href="proekt-priemka.html">Экраны и описание проекта <span>&rarr;</span></a><a class="btn" href="letopis.html">Летопись — 12 вех <span>&rarr;</span></a></div>
+    <p class="lp-note rv">// Продукт развивается непрерывно: больше 200 выкаток на прод, новые версии выходят регулярно.</p>
+    </div>
+
+    <!-- Грузовая Сводка: тематический проект, подписка -->
+    <div class="yard-part" id="svodka">
+      <div class="sv rv">
+        <div>
+          <span class="lbl">Тематический проект · издание ВебВерфи · с 24.09.2026</span>
+          <h3>Грузовая <em>Сводка</em></h3><span class="pl" aria-label="Работает: iPhone, Android, Компьютер, MAX, Telegram"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><span class="pl-i" title="Компьютер" aria-label="Компьютер" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span><span class="pl-i" title="Telegram" aria-label="Telegram" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1 .4-1 1 0 1.3l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.2-.4-1.7-1.1-1.4zM9.6 14.2l8.6-7.6-6.9 8.6-.3 3.1z"/></svg></span></span><a class="sv-day" id="svDay" href="https://xn--90a0am.xn--90abbkc0e2a8d.xn--p1ai/svodka/v/" target="_blank" rel="noopener" hidden><span class="sv-day-l">Цифра дня · свежий выпуск</span><b id="svFig"></b><span id="svCap"></span><span class="sv-day-s" id="svSrc"></span></a>
+          <p class="lead">Каждое утро к&nbsp;7:00 — новости рынка грузовой техники: продажи новых и&nbsp;б/у машин,
+            сервис и&nbsp;запчасти, лизинг, утильсбор, ставки на&nbsp;перевозки. <b>У&nbsp;каждой — цифра, источник
+            и&nbsp;дата</b>, а&nbsp;под цифрой строка «что это значит» для вашего цеха. Читается за&nbsp;пять минут.</p>
+          <div class="btns">
+            <a class="btn solid" href="https://max.ru/channel_gruzsvodka" target="_blank" rel="noopener" data-goal="svodka_max">Подписаться в MAX <span>&rarr;</span></a>
+            <a class="btn" href="https://t.me/gruzsvodka" target="_blank" rel="noopener" data-goal="svodka_tg">Подписаться в Telegram</a>
+            <span class="btn-note">Бесплатно. Выходит в канале; отписаться — как от любого канала.</span>
+          </div>
+        </div>
+        <figure><img loading="lazy" src="cases/svodka_vypusk.webp" alt="Обложка выпуска № 2 Грузовой Сводки, 25.09.2026">
+          <figcaption>Выпуск № 2 · 25.09.2026 — обложка поста в канале</figcaption></figure>
+      </div>
+      <div class="sv-why"><h4>Почему появилась Сводка</h4><div class="cols"><p>У руководителя сервиса нет часа на ленты. Утро — приёмка, днём — посты и запчасти, вечером — аналитика. А новости, от которых зависят цены и загрузка, выходят весь день в разных каналах.</p><p>Сводку собрали для себя, чтобы важное не проходило мимо. Когда она прижилась у нас, открыли её для коллег по отрасли — бесплатно и в том же виде, каким пользуемся сами.</p></div></div>
+ <div class="grid4 rv">
+        <div><h4>Цифра без источника не выходит</h4><p>Каждая новость проходит проверку: нет источника и даты — карточка в выпуск не попадает.</p></div>
+        <div><h4>Только грузовая техника</h4><p>Тяжёлые грузовики, прицепы, сервис и рынок вокруг них — без лёгкого коммерческого транспорта.</p></div>
+        <div><h4>«Практик считает»</h4><p>Разборы с расчётами от практиков отрасли — когда у автора выходит свежий пост с цифрами.</p></div>
+        <div><h4><span class="nw">Мини-приложение</span></h4><p>Выпуск карточками и отметки «полезно / мимо» — по ним подбираются темы следующих выпусков.</p></div>
+      </div>
+      <!-- AVTO-20261024 --><p class="avto-h rv">Что делается само</p><div class="grid4 avto3 rv"><div><h4>Собирается без редакции</h4><p>Каждую ночь система читает все каналы и сайты пула и собирает выпуск к 7:00.</p></div><div><h4>Без повторов</h4><p>Факт, который уже был за две недели, и перепечатка одной новости разными изданиями отсекаются.</p></div><div><h4>Не теряется</h4><p>Выпуск не уйдёт дважды и не пропадёт молча: сбой — сразу сигнал редакции.</p></div></div>
+      <ol class="dates rv"><li><b>Старт</b><span><strong>Первый выпуск</strong> и раздел Сводки в ботах ВебВерфи.</span></li><li><b>Читателю</b><span><strong><span class="nw">Мини-приложение</span></strong>: выпуск карточками, отметки читателей, утренняя статистика для редакции.</span></li><li><b>Каналы</b><span><strong>Открытые каналы в Telegram и MAX</strong>, выпуск к 7:00; согласие на обработку данных и удаление своих данных прямо из приложения.</span></li><li><b>Источники</b><span><strong>Источники — целиком и с пополнением</strong>: круг изданий и каналов растёт каждую неделю.</span></li><li><b>Десктоп</b><span><strong><a href="https://xn--90a0am.xn--90abbkc0e2a8d.xn--p1ai/svodka/v/" target="_blank" rel="noopener">Десктоп-версия</a></strong>: выпуск в формате журнального разворота и архив выпусков с поиском.</span></li><li><b>Подписка</b><span><strong>Выпуск — в каналах Telegram и MAX</strong>: подписка как на любой канал, без анкет и настроек.</span></li></ol>
+    </div>
+
+    <!-- Боты под заказ: титульный NIGHT LED (Денис 24.10.2026) -->
+    <div class="yard-part" id="boty">
+      <div class="kicker rv"><span class="lbl">Боты и мини-приложения · MAX и Telegram</span><span class="ln"></span></div>
+      <h2 class="h2 rv">Бот для вашего дела</h2>
+      <p class="lp-sub rv">Малому делу не нужна большая система — нужно, чтобы заявки не терялись в переписке, а клиент сам видел цены, записывался и платил. Каждый проект ниже работает с живыми клиентами.</p>
+
+      <div class="pj-tabs rv" role="tablist" aria-label="Проекты">
+        <button type="button" role="tab" data-pj="nl" aria-selected="true">NIGHT LED</button>
+        <button type="button" role="tab" data-pj="tor" aria-selected="false">ТОР-Эвакуатор</button>
+        <button type="button" role="tab" data-pj="dabu" aria-selected="false">dabu_ice</button>
+        <button type="button" role="tab" data-pj="mbg" aria-selected="false">MBGuitars</button>
+        <button type="button" role="tab" data-pj="pt" aria-selected="false">ПилоТаж</button>
+      </div>
+
+      <article class="pj rv" id="pjCard" aria-live="polite">
+        <div class="pj-shots"><span class="pj-s"><img id="pjS1" src="cases/nl_dark_home.webp" alt="NIGHT LED — главная"></span><span class="pj-s"><img id="pjS2" src="cases/nl_dark_calc.webp" alt="NIGHT LED — расчёт стоимости"></span></div>
+        <div class="pj-info">
+          <span class="lbl" id="pjEy">Титульный проект · MAX и сайт</span>
+          <h3 id="pjH">NIGHT LED</h3>
+          <p class="who" id="pjWho">Мастерская автооптики · Наро-Фоминск</p>
+          <div id="pjPl"><span class="pl" aria-label="Работает: iPhone, Android, Сайт, MAX"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><span class="pl-i" title="Сайт" aria-label="Сайт" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span></span></div>
+          <template id="pl-nl"><span class="pl" aria-label="Работает: iPhone, Android, Сайт, MAX"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><span class="pl-i" title="Сайт" aria-label="Сайт" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span></span></template><template id="pl-tor"><span class="pl" aria-label="Работает: iPhone, Android, Сайт, MAX, Telegram"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><span class="pl-i" title="Сайт" aria-label="Сайт" role="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span><span class="pl-i" title="Telegram" aria-label="Telegram" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1 .4-1 1 0 1.3l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.2-.4-1.7-1.1-1.4zM9.6 14.2l8.6-7.6-6.9 8.6-.3 3.1z"/></svg></span></span></template><template id="pl-dabu"><span class="pl" aria-label="Работает: iPhone, Android, MAX, Telegram"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span><span class="pl-i" title="Telegram" aria-label="Telegram" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1 .4-1 1 0 1.3l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.2-.4-1.7-1.1-1.4zM9.6 14.2l8.6-7.6-6.9 8.6-.3 3.1z"/></svg></span></span></template><template id="pl-mbg"><span class="pl" aria-label="Работает: iPhone, Android, MAX"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span></span></template><template id="pl-pt"><span class="pl" aria-label="Работает: iPhone, Android, MAX, Telegram"><span class="pl-i" title="iPhone" aria-label="iPhone" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.3 1.2 9.7.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.7 1.3-2.7s-2.3-.9-2.3-3.9zM14.1 5.6c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg></span><span class="pl-i" title="Android" aria-label="Android" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 16.5a7.5 7.5 0 0 1 15 0z"/><path d="M7.2 9.4 5.6 6.8M16.8 9.4l1.6-2.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="13.2" r="1" fill="var(--bg)"/><circle cx="15" cy="13.2" r="1" fill="var(--bg)"/></svg></span><i class="pl-dot" aria-hidden="true"></i><span class="pl-i" title="MAX" aria-label="MAX" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.6 21l4.3-1.1A9.5 9.5 0 1 0 12 2.5zm0 4.3a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4z"/></svg></span><span class="pl-i" title="Telegram" aria-label="Telegram" role="img"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 4.2 2.9 11.3c-1 .4-1 1 0 1.3l4.6 1.4 1.8 5.5c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.2-2.1 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.2c.3-1.2-.4-1.7-1.1-1.4zM9.6 14.2l8.6-7.6-6.9 8.6-.3 3.1z"/></svg></span></span></template>
+          <p id="pjP">Сайт с кинематографичным интро, знак NL и фирменный стиль и мини-приложение в MAX.</p>
+          <div class="pj-facts" id="pjF"><div><b>MAX</b>мини-приложение</div><div><b>сайт</b>с интро</div><div><b>СБП</b>предоплата</div></div>
+          <ul id="pjLi"><li>Запись по фото фары</li><li>Расчёт цены до визита</li><li>Предоплата по СБП</li><li>Гарантийный талон по госномеру</li></ul>
+          <figure class="pj-ext" id="pjExt"><img id="pjExtI" src="cases/nl_site.webp" alt="Сайт мастерской NIGHT LED" loading="lazy"><figcaption id="pjExtC">Сайт мастерской</figcaption></figure>
+          <div class="btns"><a class="btn solid" id="pjB1" href="proekt-nightled.html">Страница проекта <span>&rarr;</span></a><a class="btn ln" id="pjB2" href="https://max.ru/se14509304_bot" target="_blank" rel="noopener" hidden>Посмотреть в MAX</a></div>
+        </div>
+      </article>
+
+      <div class="pj-more rv" aria-label="Другие проекты">
+        <button type="button" data-pj="tor"><img src="cases/tor/app_home_dark.webp" alt="" loading="lazy"><b>ТОР-Эвакуатор</b><span>грузовая эвакуация</span></button>
+        <button type="button" data-pj="dabu"><img src="cases/dabu_dark_home.webp" alt="" loading="lazy"><b>dabu_ice</b><span>тренер по фигурному катанию</span></button>
+        <button type="button" data-pj="mbg"><img src="cases/mbg_home.webp" alt="" loading="lazy"><b>MBGuitars</b><span>гитарная мастерская</span></button>
+        <button type="button" data-pj="pt"><img src="cases/pt_dark_home.webp" alt="" loading="lazy"><b>ПилоТаж</b><span>мастер маникюра</span></button>
+      </div>
+
+      <div class="order rv">
+        <div><h3>Нужен такой же — под ваше дело?</h3>
+          <p>Мастерская, студия, салон, тренер, магазин при мастере. Делаем на вашем сервере и под вашим именем:
+            бот и данные клиентов остаются у вас.</p>
+          <div class="btns">
+            <a class="btn solid" href="https://max.ru/se13308383_bot?start=max" target="_blank" rel="noopener" data-goal="bot_order_max">Обсудить бота в MAX <span>&rarr;</span></a>
+            <a class="btn" href="https://t.me/vebverf_bot?start=max" target="_blank" rel="noopener" data-goal="bot_order_tg">Telegram</a>
+          </div></div>
+        <ol>
+          <li>Разбор задачи — бесплатно, смета за день.</li>
+          <li>Первый этап — бот: заявки, цены, запись, уведомления вам. Разработка — от 7 дней.</li>
+          <li>Второй этап — мини-приложение: калькулятор, витрина, кабинет клиента. Готовый продукт — за 14 дней.</li>
+          <li>Дальше по делу: оплата, розыгрыши, отчёты — когда первый этап заработал.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- INTRO / ABOUT -->
 <section class="section" id="about">
   <div class="wrap">
@@ -357,7 +806,7 @@ footer{padding:70px 0 46px}
         <p class="lead">Инструменты, выросшие <em>из реальной работы цеха,</em> а не из презентации.</p>
       </div>
       <div class="r rv">
-        <p>ВебВерфь — студия одного практика. За плечами 26 лет в грузовом автобизнесе: от склада запчастей до управляющего СТО, бренды SCANIA, КАМАЗ, Mercedes-Benz.</p>
+        <p>ВебВерфь — студия одного практика. За плечами 26 лет в грузовом автобизнесе: от склада запчастей до управляющего СТО, бренды SCANIA, КАМАЗ, <span class="nw">Mercedes-Benz</span>.</p>
         <p>Планировщик загрузки, финмодель и управленческий дашборд мы строили сами — для действующего сервиса. Поэтому продукт попадает в процесс с первого раза и говорит на языке тех, кто стоит у подъёмника.</p>
         <div class="metaTable">
           <div class="row"><span class="k">Направление</span><span class="v">Цифровизация грузового сервиса</span></div>
@@ -373,38 +822,38 @@ footer{padding:70px 0 46px}
 <!-- INDEX OF PRODUCTS -->
 <section class="section" id="index">
   <div class="wrap">
-    <div class="kicker rv"><span class="lbl">03 — Продукты</span><span class="ln"></span></div>
-    <h2 class="h2 rv" style="margin-bottom:50px">Пять инструментов одной верфи</h2>
+    <div class="kicker rv"><span class="lbl">Инструменты для СТО</span><span class="ln"></span></div>
+    <h2 class="h2 rv" style="margin-bottom:50px">Инструменты для грузового СТО</h2>
     <div class="idxlist">
       <div class="product rv" id="planner">
         <div class="idxrow" data-src="planner_long.mp4">
           <span class="no">01</span>
-          <div class="ti"><h3>Планировщик ремонта</h3><p>Графическая загрузка механиков, заказ-наряды на сетке, 7 статусов, контроль перегрузки по часам, импорт истории из 1С.</p></div>
-          <div class="rmeta"><span class="pr">от 50 000 ₽</span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
+          <div class="ti"><h3>Планировщик ремонта</h3><p>Графическая загрузка механиков, <span class="nw">заказ-наряды</span> на сетке, 7 статусов, контроль перегрузки по часам, импорт истории из 1С.</p></div>
+          <div class="rmeta"><span class="pr">По смете · зависит от размера цеха · <a href="https://max.ru/se13308383_bot?start=site" target="_blank" rel="noopener" data-goal="tool_max">обсудить в MAX →</a></span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
         </div>
-        <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="planner_long.mp4" poster="planner_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Планировщик</b> · сетка загрузки бригады и заказ-наряды</div></div></div>
+        <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="planner_long.mp4" poster="planner_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Планировщик</b> · сетка загрузки бригады и <span class="nw">заказ-наряды</span></div></div></div>
       </div>
       <div class="product rv" id="finmodel">
         <div class="idxrow" data-src="finmodel_long.mp4">
           <span class="no">02</span>
           <div class="ti"><h3>Финмодель сервиса</h3><p>Факт и прогноз на 2 года, маржинальная лестница, сценарии на ползунках, модуль «Мотивация и ФОТ».</p></div>
-          <div class="rmeta"><span class="pr">от 75 000 ₽ · <a href="finmodel.html" target="_blank" rel="noopener">интерактив →</a></span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
+          <div class="rmeta"><span class="pr">По смете · зависит от размера цеха · <a href="finmodel.html" target="_blank" rel="noopener">интерактив →</a> · <a href="https://max.ru/se13308383_bot?start=site" target="_blank" rel="noopener" data-goal="tool_max">обсудить в MAX →</a></span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
         </div>
-        <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="finmodel_long.mp4" poster="finmodel_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Финмодель</b> · выручка, ВП и прогноз 2025–2027 (обезличено)</div></div></div>
+        <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="finmodel_long.mp4" poster="finmodel_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Финмодель</b> · выручка, ВП и прогноз <span class="nw">2025–2027</span> (обезличено)</div></div></div>
       </div>
       <div class="product rv" id="dashboard">
         <div class="idxrow" data-src="dashboard_long.mp4">
           <span class="no">03</span>
           <div class="ti"><h3>Управленческий дашборд</h3><p>Все цифры сервиса или сети цехов на одном экране: выручка, прибыль, эффективность, тренды, блок МСФО.</p></div>
-          <div class="rmeta"><span class="pr">от 50 000 ₽</span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
+          <div class="rmeta"><span class="pr">По смете · зависит от размера цеха · <a href="https://max.ru/se13308383_bot?start=site" target="_blank" rel="noopener" data-goal="tool_max">обсудить в MAX →</a></span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
         </div>
         <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="dashboard_long.mp4" poster="dashboard_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Дашборд</b> · KPI, графики, помесячная динамика</div></div></div>
       </div>
       <div class="product rv">
         <div class="idxrow" data-src="motivation_long.mp4">
           <span class="no">04</span>
-          <div class="ti"><h3>Мотивация и ФОТ</h3><p>Оклад плюс бонус от чёткой базы — маржа, прибыль, нормо-часы. Динамический штат, документы по должностям.</p></div>
-          <div class="rmeta"><span class="pr">в составе финмодели</span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
+          <div class="ti"><h3>Мотивация и ФОТ</h3><p>Оклад плюс бонус от чёткой базы — маржа, прибыль, <span class="nw">нормо-часы</span>. Динамический штат, документы по должностям.</p></div>
+          <div class="rmeta"><span class="pr">в составе финмодели · <a href="https://max.ru/se13308383_bot?start=site" target="_blank" rel="noopener" data-goal="tool_max">обсудить в MAX →</a></span><span class="exp">смотреть демо <span class="ar">▾</span></span></div>
         </div>
         <div class="rowdemo"><div class="rdwrap"><div class="rdframe"><video data-src="motivation_long.mp4" poster="motivation_long_poster.jpg" muted loop playsinline preload="none"></video></div><div class="rdcap">// <b>Мотивация и ФОТ</b> · штат и бонусы по должностям</div></div></div>
       </div>
@@ -412,13 +861,13 @@ footer{padding:70px 0 46px}
         <div class="idxrow nodemo">
           <span class="no">05</span>
           <div class="ti"><h3>Цифровизация под ключ</h3><p>Система под ваш процесс из готовых модулей, связанная с учётом, под ваши роли — недели, а не месяцы.</p></div>
-          <div class="rmeta"><span class="pr">от 50 000 ₽</span></div>
+          <div class="rmeta"><span class="pr">По смете · зависит от размера цеха · <a href="https://max.ru/se13308383_bot?start=site" target="_blank" rel="noopener" data-goal="tool_max">обсудить в MAX →</a></span></div>
         </div>
       </div>
       <div class="product rv">
         <div class="idxrow nodemo">
           <span class="no">06</span>
-          <div class="ti"><h3>ВебПриёмка <span class="newpill">Новинка</span></h3><p>Приёмка техники и связь с клиентом: статусы ремонта и фотоотчёты — в мессенджере и приложении на телефоне. Сервис и клиент на одной волне, без лишних звонков.</p></div>
+          <div class="ti"><h3>ВебПриёмка</h3><p>Приёмка техники и связь с клиентом: статусы ремонта и фотоотчёты — в мессенджере и приложении на телефоне. Сервис и клиент на одной волне, без лишних звонков.</p></div>
           <div class="rmeta"><span class="pr"><a href="#vebpriemka">развитие продукта →</a></span></div>
         </div>
       </div>
@@ -429,7 +878,7 @@ footer{padding:70px 0 46px}
 <!-- PULL QUOTE -->
 <section class="quote">
   <div class="wrap rv">
-    <blockquote>«Мы понимаем не только код, но и <em>нормо-час, маржу</em> и то, как живёт цех в высокий сезон».</blockquote>
+    <blockquote>«Мы понимаем не только код, но и <em><span class="nw">нормо-час</span>, маржу</em> и то, как живёт цех в высокий сезон».</blockquote>
     <div class="by">// Принцип студии</div>
   </div>
 </section>
@@ -461,7 +910,7 @@ footer{padding:70px 0 46px}
       </div>
       <div class="cnav">
         <button class="carr" id="cprev" aria-label="Назад">‹</button>
-        <div class="ccap" id="ccap">// <b>Планировщик</b> · сетка загрузки и заказ-наряды</div>
+        <div class="ccap" id="ccap">// <b>Планировщик</b> · сетка загрузки и <span class="nw">заказ-наряды</span></div>
         <button class="carr" id="cnext" aria-label="Вперёд">›</button>
       </div>
       <div class="cdots" id="cdots"></div>
@@ -469,52 +918,21 @@ footer{padding:70px 0 46px}
   </div>
 </section>
 
-<!-- ЛЕТОПИСЬ ВЕРСИЙ (ВебПриёмка) -->
-<section class="section" id="vebpriemka" style="padding-top:0">
+<!-- Новое направление: бот и мини-приложение в MAX (06.09.2026) -->
+<section class="section" id="max" style="padding-top:0">
   <div class="wrap">
-    <div class="kicker rv"><span class="lbl">Новая разработка · связь с клиентом</span><span class="ln"></span></div>
-    <div class="lp-head rv">
-      <span class="lp-seal" role="img" aria-label="ВебПриёмка"></span>
-      <h2 class="h2">ВебПриёмка <span class="newpill">Новинка</span></h2>
-    </div>
-    <p class="lp-sub rv">Как за считанные дни продукт вырос от простого бота до <em>приложения на телефоне</em> — и куда движется дальше.</p>
-
+    <div class="kicker rv"><span class="lbl">Новое направление · малый бизнес</span><span class="ln"></span></div>
+    <h2 class="h2 rv">Бот и <span class="nw">мини-приложение</span> в MAX <span class="newpill">Новинка</span></h2>
+    <p class="lp-sub rv">Для мастерских, студий, салонов и магазинов при мастере: заявка с фото, прайс, витрина, розыгрыши и переписка с клиентом — <em>внутри мессенджера, которым уже пользуются</em>. Плюс панель владельца.</p>
     <div class="lp-strip rv">
       <div class="g">
-        <div class="cell"><span class="n">4 дня</span><span class="k">от идеи до первого релиза</span></div>
-        <div class="cell"><span class="n steel">2</span><span class="k">площадки — Telegram и MAX</span></div>
-        <div class="cell"><span class="n">PWA</span><span class="k">приложение на телефоне без установки из магазина</span></div>
-        <div class="cell"><span class="n steel">→</span><span class="k">от бота до полноценного кабинета</span></div>
+        <div class="cell"><span class="n">14 дней</span><span class="k">готовый продукт; разработка — от 7 дней</span></div>
+        <div class="cell"><span class="n steel">3</span><span class="k">этапа: бот и розыгрыши · <span class="nw">мини-приложение</span> · статусы и оплата</span></div>
+        <div class="cell"><span class="n">РФ</span><span class="k">сервер, домен и база — на заказчика, по <span class="nw">152-ФЗ</span></span></div>
+        <div class="cell"><span class="n steel">0 ₽</span><span class="k">разбор задачи — бесплатно</span></div>
       </div>
     </div>
-
-    <div class="lp-rail">
-      <div class="lp-step rv">
-        <span class="lp-seal" aria-hidden="true"></span>
-        <span class="ver">V-1.00</span><span class="flag">Боты</span>
-        <h3>Боты в Telegram и MAX</h3>
-        <p>Клиент видит свою технику и статусы ремонта прямо в мессенджере, с уведомлениями и поиском.</p>
-      </div>
-      <div class="lp-step rv">
-        <span class="lp-seal" aria-hidden="true"></span>
-        <span class="ver">V-1.10</span><span class="flag">Мини-приложения</span>
-        <h3>Мини-приложения внутри мессенджеров</h3>
-        <p>Наглядные карточки техники, фотоотчёты по приёмке и ремонту, отчёты — в пару касаний.</p>
-      </div>
-      <div class="lp-step rv">
-        <span class="lp-seal" aria-hidden="true"></span>
-        <span class="ver">V-1.20</span><span class="flag">Актуальная</span>
-        <h3>Приложение для телефона</h3>
-        <p>Устанавливается на экран телефона и открывается из браузера.</p>
-      </div>
-      <div class="lp-step next rv">
-        <span class="ver">V-1.30</span><span class="flag soon">Скоро</span>
-        <h3>Полноценный веб-кабинет</h3>
-        <p>Полноценный веб-кабинет для команды сервиса: сводка, поиск, карточки техники, отчёты на любом экране.</p>
-      </div>
-    </div>
-
-    <p class="lp-note rv">// Продукт развивается непрерывно — новые версии выходят регулярно.</p>
+    <a class="btn solid" href="max.html">Открыть страницу направления — оффер, этапы, живой кейс <span>&rarr;</span></a>
   </div>
 </section>
 
@@ -523,11 +941,12 @@ footer{padding:70px 0 46px}
   <div class="grid"></div>
   <div class="cta-in wrap">
     <h2>Разберём вашу задачу — бесплатно</h2>
-    <p>Опишите задачу в боте: подскажем цены и сроки за пару минут, а смету по проекту вернём за один рабочий день.</p>
-    <div class="btns">
-      <a class="btn solid" href="#" data-bot="max">Написать в MAX</a>
-      <a class="btn" href="#" data-bot="tg">Написать в Telegram</a>
-    </div>
+    <p>Опишите задачу в боте: сроки скажем сразу, смету вернём за один рабочий день.</p>
+      <div class="btns">
+        <a class="btn solid" href="https://max.ru/se13308383_bot?start=site" target="_blank" rel="noopener" data-bot="max">Написать в MAX</a>
+        <a class="btn" href="https://t.me/vebverf_bot?start=site" target="_blank" rel="noopener" data-bot="tg">Написать в Telegram</a>
+      </div>
+      <p class="cta-alt">Или напрямую: <a href="tel:+79859981336"><span class="nw">+7 985 998-13-36</span></a> · <a href="mailto:andrukhov.d@yandex.ru">andrukhov.d@yandex.ru</a></p>
   </div>
 </section>
 
@@ -544,7 +963,7 @@ footer{padding:70px 0 46px}
           </svg>
           <span class="nm"><b>ВебВерфь</b></span>
         </a>
-        <p class="req">Цифровые инструменты для грузового сервиса.<br>Самозанятый, плательщик НПД.<br>ФИО · ИНН · e-mail · телефон — заполнить</p>
+        <p class="req">Цифровые инструменты для грузового сервиса.<br>Андрухов Денис Евгеньевич, самозанятый (НПД), Москва.<br><a href="mailto:andrukhov.d@yandex.ru" style="display:inline">andrukhov.d@yandex.ru</a> · <a href="tel:+79859981336" style="display:inline"><span class="nw">+7 985 998-13-36</span></a></p>
       </div>
       <div>
         <h5>Студия</h5>
@@ -552,7 +971,7 @@ footer{padding:70px 0 46px}
       </div>
       <div>
         <h5>Документы</h5>
-        <a href="#">Пользовательское соглашение</a><a href="#">Политика конфиденциальности</a><a href="#">Реквизиты</a>
+        <a href="legal.html#terms">Пользовательское соглашение</a><a href="legal.html#privacy">Политика конфиденциальности</a><a href="legal.html#cookies">Cookies и Метрика</a><a href="legal.html#req">Реквизиты</a>
       </div>
     </div>
     <div class="copyr"><span>© 2026 ВебВерфь</span><span>Сделано на верфи · Москва</span></div>
@@ -566,6 +985,7 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.targ
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 const YM_ID=110117064; function goal(n){try{if(window.ym)ym(YM_ID,'reachGoal',n);}catch(e){}}
 const BOT={max:'https://max.ru/se13308383_bot',tg:'https://t.me/vebverf_bot'};
+document.querySelectorAll('[data-goal]').forEach(a=>a.addEventListener('click',()=>goal(a.dataset.goal)));
 document.querySelectorAll('[data-bot]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goal(a.dataset.bot==='max'?'contact_max':'contact_tg');const u=BOT[a.dataset.bot];if(u)open(u,'_blank','noopener');}));
 document.querySelectorAll('a[href$="finmodel.html"],a[href$="finance_model_DEMO.html"]').forEach(a=>a.addEventListener('click',()=>goal('finmodel_interactive')));
 
@@ -665,5 +1085,144 @@ document.querySelectorAll('.rdframe, .cslide').forEach(box=>{
   new IntersectionObserver((es,ob)=>{es.forEach(e=>{if(e.isIntersecting&&!seen){seen=true;play(slides[0]);}});},{threshold:.3}).observe(car);
 })();
 </script>
-</body>
+<div class="vvck" id="vvck" hidden role="dialog" aria-label="Cookies">
+  <p>Сайт использует cookies и Яндекс.Метрику для статистики посещений. До вашего согласия счётчик не загружается. Подробнее — в <a href="legal.html#cookies">политике конфиденциальности</a>.</p>
+  <div class="b"><button type="button" class="ok" id="vvckYes">Принять</button><button type="button" id="vvckNo">Отклонить</button></div>
+</div>
+<script>
+(function(){
+  var el=document.getElementById('vvck'); if(!el)return;
+  if(!window.vvTop)return;
+  if(vvConsent()!==null)return;
+  el.hidden=false;
+  function set(v){try{localStorage.setItem('vv_consent',JSON.stringify({v:v,ts:Date.now()}));}catch(e){} el.hidden=true; if(v==='yes')vvLoadMetrika();}
+  document.getElementById('vvckYes').onclick=function(){set('yes');};
+  document.getElementById('vvckNo').onclick=function(){set('no');};
+})();
+</script>
+<script>
+/* «Три двери» 24.10.2026: тема, проекты ботов, Диспетчерская на демо-данных */
+(function(){
+  // тема: по умолчанию тёмная, выбор помним
+  var root=document.documentElement;
+  function paint(){var l=root.dataset.theme==='light';
+    document.querySelectorAll('[data-theme-toggle]').forEach(function(b){
+      if(b.classList.contains('wide'))b.textContent=l?'Тёмная тема':'Светлая тема';
+      else{b.textContent=l?'☾':'☀';b.setAttribute('aria-label',l?'Тёмная тема':'Светлая тема');}});
+    var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=l?'#f3f1ea':'#0e1217';}
+  document.querySelectorAll('[data-theme-toggle]').forEach(function(b){b.addEventListener('click',function(){
+    if(root.dataset.theme==='light'){delete root.dataset.theme;try{localStorage.setItem('vv.theme','dark')}catch(e){}}
+    else{root.dataset.theme='light';try{localStorage.setItem('vv.theme','light')}catch(e){}}
+    paint();});});
+  paint();
+
+  // проекты ботов
+  var P={
+    nl:{ey:'Титульный проект · MAX и сайт',h:'NIGHT LED',who:'Мастерская автооптики · Наро-Фоминск',
+      s:['nl_dark_home.webp','nl_dark_calc.webp'],p:'Сайт с кинематографичным интро, знак NL и фирменный стиль и мини-приложение в MAX.',
+      f:[['MAX','мини-приложение'],['сайт','с интро'],['СБП','предоплата']],
+      li:['Запись по фото фары','Расчёт цены до визита','Предоплата по СБП','Гарантийный талон по госномеру'],
+      ext:['nl_site.webp','Сайт мастерской'],b1:'proekt-nightled.html',b2:['https://xn--90abbkc0e2a8d.xn--p1ai/demo/nightled/','Сайт мастерской ↗']},
+    tor:{ey:'Новое · MAX и Telegram',h:'ТОР-Эвакуатор',who:'Грузовая эвакуация · Наро-Фоминск, Москва и область',
+      s:['tor/app_home_dark.webp','tor/demo_order.webp'],p:'Вызов грузового эвакуатора прямо в мессенджере: цена до заказа, статус как в такси, панель хозяина службы.',
+      f:[['24/7','заявки'],['1 мин','до цены'],['6','статусов']],
+      li:['Цена по маршруту за минуту','Подача от текущего места эвакуатора','Статус заявки на каждом шаге','Фото-осмотр и приёмка'],
+      ext:['tor/map_calc_dark.webp','Маршрут и подача на карте'],b1:'proekt-tor.html',b2:['https://xn--n1aee.xn--90abbkc0e2a8d.xn--p1ai/','Сайт службы ↗']},
+    dabu:{ey:'MAX и Telegram',h:'dabu_ice',who:'Тренер по фигурному катанию · Москва, шесть катков',
+      s:['dabu_dark_home.webp','dabu_dark_book.webp'],p:'Бренд с нуля и бот с мини-приложением: запись на пробное, цены, катки и дневник ученика.',
+      f:[['2','мессенджера'],['6','катков'],['видео','на разбор']],
+      li:['Запись на пробное в пару касаний','Катки со ссылками на карты','Дневник прогресса','Видео на разбор тренеру'],
+      ext:null,b1:'proekt-dabu.html',b2:['https://max.ru/se14509304_bot','Посмотреть в MAX']},
+    mbg:{ey:'MAX',h:'MBGuitars',who:'Гитарная мастерская · Наро-Фоминск',
+      s:['mbg_home.webp','mbg_calc.webp'],p:'Заявки перестали теряться в переписке: клиент сам считает ремонт, присылает фото и следит за статусом.',
+      f:[['14 дней','готовый продукт'],['5 фото','в заявке'],['PDF','бланк заявки']],
+      li:['Заявка с фото','Калькулятор с корзиной','Колесо фортуны','Газета мастерской'],
+      ext:null,b1:'proekt-mbguitars.html',b2:['https://max.ru/se14126022_bot','Посмотреть в MAX']},
+    pt:{ey:'MAX и Telegram',h:'ПилоТаж',who:'Бот мастера маникюра под своим именем',
+      s:['pt_dark_home.webp','pt_dark_book.webp'],p:'Запись в свободное окно, цена до визита, галерея работ и кабинет клиентки с историей визитов.',
+      f:[['окна','запись'],['кабинет','клиентки'],['магазин','в приложении']],
+      li:['Запись в свободное окно','Калькулятор цены','Галерея работ','Магазин и кабинет клиентки'],
+      ext:null,b1:'proekt-pilotazh.html',b2:['https://max.ru/se13308383_bot?start=max','Хочу демо в MAX']}
+  };
+  function $(id){return document.getElementById(id)}
+  function show(k){var p=P[k];if(!p||!$('pjCard'))return;
+    $('pjS1').src='cases/'+p.s[0];$('pjS1').alt=p.h+' — главная';$('pjS2').src='cases/'+p.s[1];$('pjS2').alt=p.h+' — экран приложения';
+    $('pjEy').textContent=p.ey;$('pjH').textContent=p.h;$('pjWho').textContent=p.who;$('pjP').textContent=p.p;
+    var tp=document.getElementById('pl-'+k);if(tp)$('pjPl').innerHTML=tp.innerHTML;
+    $('pjF').innerHTML=p.f.map(function(f){return '<div><b>'+f[0]+'</b>'+f[1]+'</div>'}).join('');
+    $('pjLi').innerHTML=p.li.map(function(l){return '<li>'+l+'</li>'}).join('');
+    $('pjExt').hidden=!p.ext;if(p.ext){$('pjExtI').src='cases/'+p.ext[0];$('pjExtI').alt=p.ext[1];$('pjExtC').textContent=p.ext[1];}
+    $('pjB1').href=p.b1;$('pjB2').hidden=false;$('pjB2').href=p.b2[0];$('pjB2').textContent=p.b2[1];
+    document.querySelectorAll('.pj-tabs [data-pj]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.pj===k?'true':'false')});
+    document.querySelectorAll('.pj-more [data-pj]').forEach(function(b){b.hidden=b.dataset.pj===k});
+  }
+  document.querySelectorAll('[data-pj]').forEach(function(b){b.addEventListener('click',function(){show(b.dataset.pj);
+    if(b.closest('.pj-more')){var c=$('pjCard');window.scrollTo({top:c.getBoundingClientRect().top+pageYOffset-90,behavior:'smooth'});}});});
+  show('nl');
+
+  // Диспетчерская: демо-данные (вымышленные фамилии и номера)
+  var bars=$('dispBars'),grid=$('dispGrid');
+  if(bars){
+    // [день, д/н, ресурс слесарей ч, занято %, ресурс электриков ч, занято %, сегодня, выходной] — демо-данные
+    var D=[['24','сб',60,122,20,100,1,1],['25','вс',60,100,20,78,0,1],['26','пн',120,91,40,19],['27','вт',120,66,40,25],['28','ср',110,8,40,0],
+           ['29','чт',110,0,40,0],['30','пт',120,30,40,11],['31','сб',120,20,40,0,0,1],['01','вс',110,22,40,0,0,1],['02','пн',90,29,40,0],['03','вт',90,14,40,0]];
+    var MX=0;D.forEach(function(d){MX=Math.max(MX,d[2],d[2]*d[3]/100,d[4],d[4]*d[5]/100)});
+    function bar(cap,pct,cls){var h=function(v){return (v/MX*100).toFixed(1)+'%'};
+      return '<span class="bw '+cls+'"><i class="cap" style="height:'+h(cap)+'"></i><i class="fill" style="height:'+h(Math.max(cap*pct/100,pct?1.5:0))+'"></i></span>'}
+    bars.innerHTML=D.map(function(d){var lab=function(p){return p?'<b>'+p+'%</b>':'<b></b>'};
+      return '<div class="d'+(d[6]?' today':'')+(d[7]?' wkend':'')+'"><small>'+lab(d[3])+lab(d[5])+'</small><span class="col">'+bar(d[2],d[3],'s')+bar(d[4],d[5],'e')+'</span><em>'+d[0]+'<br><u>'+d[1]+'</u>'+(d[6]?'<br><span class="td">сегодня</span>':'')+'</em></div>'}).join('');
+    var H=[8,9,10,11,12,13,14,15,16,17,18,19,20,21];
+    var R=[['s','Слесари по ремонту'],['Белов А. С.',[[1,9,'А412ВС750']]],['Мельников В. Ю.',[[1,5,'К305МН799'],[6,9,'К305МН799']]],['Лапин С. В.',[[2,12,'Т418КР799']]],['Гришин П. А.',[[1,4,'Е920ОР750'],[5,8,'Е920ОР750'],[10,13,'М117АХ777']]],
+           ['e','Автоэлектрики'],['Карпов И. Н.',[[3,7,'Т418КР799']],1],['Зуев Д. Р.',[[1,3,'А412ВС750'],[8,11,'М117АХ777']],1]];
+    var html='<span class="hd" style="grid-row:1;grid-column:1">6 в смене</span>'+H.map(function(h,i){return '<span class="hd" style="grid-row:1;grid-column:'+(i+2)+'">'+h+':00</span>'}).join('');
+    R.forEach(function(r,i){var row=i+2;
+      if(r[0]==='s'||r[0]==='e'){html+='<span class="sec '+r[0]+'" style="grid-row:'+row+'">'+r[1]+'</span>';return;}
+      html+='<span class="nm" style="grid-row:'+row+'">'+r[0]+'</span>'+r[1].map(function(b){return '<span class="bk'+(r[2]?' e':'')+'" style="grid-row:'+row+';grid-column:'+(b[0]+1)+'/'+(b[1]+2)+'">'+b[2]+'</span>'}).join('');});
+    grid.innerHTML=html;
+  }
+})();
+/* кнопка возврата «Капсула по центру» (Денис 24.10.2026):
+   - после перехода по ссылке-разделу — капсула по центру «К разделам»/«Назад», ведёт к месту, откуда ушёл;
+     долистал туда сам — снова кружок «наверх»;
+   - листаешь вниз — кнопка прячется, вверх — появляется;
+   - поднимается над cookie-баннером, учитывает полоску iPhone (safe-area в CSS) */
+(function(){
+  var UP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+  var BACK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>';
+  var b=document.createElement('button');b.type='button';b.className='backbtn up';document.body.appendChild(b);
+  var from=null,fromLbl='',lock=0,lastY=window.pageYOffset,shown=false,mode='';
+  var doors=document.querySelector('.doors');
+  function setMode(m){if(m===mode)return;mode=m;
+    if(m==='cap'){b.className='backbtn cap'+(shown?' on':'');b.innerHTML=BACK+'<span>'+fromLbl+'</span>';b.setAttribute('aria-label',fromLbl);}
+    else{b.className='backbtn up'+(shown?' on':'');b.innerHTML=UP;b.setAttribute('aria-label','Наверх');}}
+  function show(v){shown=v;b.classList.toggle('on',v);}
+  function upd(){var y=window.pageYOffset,dy=y-lastY;lastY=y;
+    if(from!==null&&Date.now()>lock&&Math.abs(y-from)<200)from=null;
+    setMode(from!==null&&from>=200?'cap':'up');
+    if(Date.now()<lock){show(true);return;}            // только что перешли — капсула видна
+    if(y<window.innerHeight*.8&&mode==='up'){show(false);return;}
+    if(dy>4)show(false);else if(dy<-4)show(true);       // вниз — прячем, вверх — показываем
+  }
+  document.addEventListener('click',function(e){var a=e.target.closest('a[href^="#"]');
+    if(!a||a.getAttribute('href').length<2)return;
+    from=window.pageYOffset;
+    var inDoors=doors&&doors.contains(a)||a.closest('.menu,.mobmenu');
+    fromLbl=inDoors?'К разделам':'Назад';
+    lock=Date.now()+2500;mode='';setTimeout(upd,60);},true);
+  b.addEventListener('click',function(){var t=from!==null&&from>=200?from:0;from=null;lock=0;show(false);
+    window.scrollTo({top:t,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});});
+  var tk=0;window.addEventListener('scroll',function(){if(!tk){tk=1;requestAnimationFrame(function(){tk=0;upd();});}},{passive:true});
+  var ck=document.querySelector('.vvck');
+  function lift(){var h=ck&&!ck.hidden&&ck.offsetHeight?ck.offsetHeight+16:0;b.style.setProperty('--bb-lift',h+'px');}
+  if(ck&&window.MutationObserver)new MutationObserver(lift).observe(ck,{attributes:true});
+  lift();window.addEventListener('resize',lift);setMode('up');
+})();
+/* цифра дня Сводки: /svodka_day.json обновляет таймер verf-svodka-day на сервере; нет файла — блок скрыт */
+(function(){var box=document.getElementById('svDay');if(!box||!window.fetch)return;
+  fetch('/svodka_day.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){
+    if(!d||!d.fig)return;function t(id,v){document.getElementById(id).textContent=v}
+    t('svFig',d.fig);t('svCap',d.cap);t('svSrc',d.src||'');box.hidden=false;}).catch(function(){});
+})();
+</script>
+<script>document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a||a.getAttribute("href").length<2)return;var t=document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1)));if(!t)return;[450,900,1500].forEach(function(ms){setTimeout(function(){t.scrollIntoView({block:"start"})},ms)})});</script></body>
 </html>
