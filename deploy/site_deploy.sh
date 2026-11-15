@@ -8,7 +8,9 @@ set -euo pipefail
 HOST=priemka
 DIR=/var/www/verf
 DOMAIN=https://xn--90abbkc0e2a8d.xn--p1ai        # вебверфь.рф в punycode
-RS=(rsync -az --exclude 'blog/' --exclude '*.bak_*' --exclude '_backup_*' --exclude '.git/')
+# в веб-корень уходят только файлы сайта: README, скрипты и служебные файлы репозитория — нет
+RS=(rsync -az --exclude 'blog/' --exclude '*.bak_*' --exclude '_backup_*' --exclude '.git/' \
+    --exclude '.gitignore' --exclude 'README.md' --exclude 'deploy/' --exclude '.well-known/')
 DRY=${1:-}
 
 cd "$(dirname "$0")/.."
